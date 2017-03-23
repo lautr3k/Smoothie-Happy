@@ -1,0 +1,11 @@
+/** @type {String} */ export const LOAD     = 'load'
+/** @type {String} */ export const ABORT    = 'abort'
+/** @type {String} */ export const ERROR    = 'error'
+/** @type {String} */ export const TIMEOUT  = 'timeout'
+/** @type {String} */ export const PROGRESS = 'progress'
+
+/** @type {String} */ export const UPLOAD_LOAD     = 'upload.load'
+/** @type {String} */ export const UPLOAD_ABORT    = 'upload.abort'
+/** @type {String} */ export const UPLOAD_ERROR    = 'upload.error'
+/** @type {String} */ export const UPLOAD_TIMEOUT  = 'upload.timeout'
+/** @type {String} */ export const UPLOAD_PROGRESS = 'upload.progress'

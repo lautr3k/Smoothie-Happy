@@ -1,5 +1,7 @@
 import uuid from 'uuid/v4'
-import { RequestEvent, ProgressEvent } from './events'
+import * as events from './events/types'
+import RequestEvent from './events/request'
+import ProgressEvent from './events/progress'
 
 /**
 * `XMLHttpRequest` wrapper with `Promise` logic.
@@ -222,7 +224,7 @@ class Request {
       this.xhr.timeout = this.timeout
 
       // on load
-      let LOAD_EVENT = 'load'
+      let LOAD_EVENT = events.LOAD
 
       this.xhr.onload = () => {
         if (this.xhr.status >= 200 && this.xhr.status < 300) {
@@ -235,37 +237,37 @@ class Request {
 
       // on error
       this.xhr.onerror = () => {
-        reject(new RequestEvent('error', this))
+        reject(new RequestEvent(events.ERROR, this))
       }
 
       // on timeout
       this.xhr.ontimeout = () => {
-        reject(new RequestEvent('timeout', this))
+        reject(new RequestEvent(events.TIMEOUT, this))
       }
 
       // on abort
       this.xhr.onabort = () => {
-        reject(new RequestEvent('abort', this))
+        reject(new RequestEvent(events.ABORT, this))
       }
 
       // on upload.load
       this.xhr.upload.onload = () => {
-        LOAD_EVENT = 'upload.load'
+        LOAD_EVENT = events.UPLOAD_LOAD
       }
 
       // on upload.error
       this.xhr.upload.onerror = () => {
-        reject(new RequestEvent('upload.error', this))
+        reject(new RequestEvent(events.UPLOAD_ERROR, this))
       }
 
       // on upload.timeout
       this.xhr.upload.ontimeout = () => {
-        reject(new RequestEvent('upload.timeout', this))
+        reject(new RequestEvent(events.UPLOAD_TIMEOUT, this))
       }
 
       // on upload.abort
       this.xhr.upload.onabort = () => {
-        reject(new RequestEvent('upload.abort', this))
+        reject(new RequestEvent(events.UPLOAD_ABORT, this))
       }
 
       // set request headers
@@ -297,7 +299,7 @@ class Request {
     // register progress event
     this.xhr.onprogress = event => {
       if (event.lengthComputable) {
-        progressHandler.call(context || this, new ProgressEvent('progress', this, event))
+        progressHandler.call(context || this, new ProgressEvent(events.PROGRESS, this, event))
       }
     }
 
@@ -321,7 +323,7 @@ class Request {
     // register upload progress event
     this.xhr.upload.onprogress = event => {
       if (event.lengthComputable) {
-        progressHandler.call(context || this, new ProgressEvent('upload.progress', this, event))
+        progressHandler.call(context || this, new ProgressEvent(events.UPLOAD_PROGRESS, this, event))
       }
     }
 

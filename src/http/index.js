@@ -74,4 +74,5 @@ function post(settings = {}) {
 }
 
 // Exports
+export default request
 export { request, get, post }
