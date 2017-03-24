@@ -1,4 +1,6 @@
 import PubSub from '../pubsub'
+import * as events from './events'
+import BoardCommand from './command'
 
 // Enable cross-tab communication
 // PubSub.crossTabCommunication(true)
@@ -8,11 +10,10 @@ import PubSub from '../pubsub'
 */
 class Board extends PubSub {
   /**
-  * @param {String|Object}      address|settings         Board address or settings.
-  * @param {Object}             [settings]               Board settings.
-  * @param {String}             [settings.address]       Board address (ip or hostname).
-  * @param {Integer}            [settings.timeout]       Default response timeout in milliseconds for all commands.
-  * @param {Integer|null|false} [settings.retryInterval] Retry interval in milliseconds for all commands.
+  * @param {String|Object} address|settings        Board address or settings.
+  * @param {Object}        [settings]              Board settings.
+  * @param {String}        [settings.address]      Board address (ip or hostname).
+  * @param {Integer}       [settings.timeout=2000] Default response timeout for all commands (in milliseconds).
   */
   constructor(address, settings = {}) {
     super()
@@ -39,7 +40,7 @@ class Board extends PubSub {
     * @type {Object}
     * @protected
     */
-    this.settings = settings
+    this.timeout = settings.timeout || 2000
   }
 
   /**
@@ -74,6 +75,35 @@ class Board extends PubSub {
   */
   publish(topic, data = null, async = true) {
     return Board.publish(this.address + '/' + topic, data, async)
+  }
+
+  /**
+  * Send an arbitrary command to the board.
+  *
+  * @param  {String|Object} command|settings   Command to send or command settings object.
+  * @param  {Object}        [settings]         Command settings (see {@link Request} for more details).
+  * @param  {String}        [settings.command] Command to send.
+  * @return {Request}
+  */
+  send(command, settings = {}) {
+    // settings provided on first argument
+    if (typeof command === 'object') {
+        settings = command
+        command  = settings.command
+    }
+    else {
+      settings.command = command
+    }
+
+    // create the command request
+    let boardCommand = new BoardCommand(this, settings)
+
+    this.publish(events.COMMAND, boardCommand)
+
+    return boardCommand.send().then(event => {
+      this.publish(events.RESPONSE, event)
+      return Promise.resolve(event)
+    })
   }
 }
 
