@@ -1,5 +1,17 @@
 import uuid from 'uuid/v4'
 
+// Cross-tab communication
+let CROSS_TAB_COMMUNICATION_ENABLED   = false
+let CROSS_TAB_COMMUNICATION_STORE_KEY = '__PubSubCrossTabCommunication__'
+
+// On message received from tab
+function onCrossTabMessage(event) {
+  if (event.newValue && event.key === CROSS_TAB_COMMUNICATION_STORE_KEY) {
+    let { topic, data, async, crossTab } = JSON.parse(event.newValue)
+    publish(topic, data, async, true)
+  }
+}
+
 // Topics subscriptions
 const SUBSCRIPTIONS = new Map()
 
@@ -36,13 +48,20 @@ function subpath(topic) {
 }
 
 // Publish to topic
-function publish(topic, data, async = true) {
+function publish(topic, data, async = true, crossTab = false) {
   return new Promise((resolve, reject) => {
+    let event = { topic, data, async, crossTab, uuid: uuid() }
+
+    // relay topic to other tabs
+    if (CROSS_TAB_COMMUNICATION_ENABLED && ! event.crossTab) {
+      localStorage.setItem(CROSS_TAB_COMMUNICATION_STORE_KEY, JSON.stringify(event))
+      localStorage.removeItem(CROSS_TAB_COMMUNICATION_STORE_KEY)
+    }
+
     let promises = []
 
     if (SUBSCRIPTIONS.has(topic)) {
       SUBSCRIPTIONS.get(topic).forEach(subscription => {
-        let event = { topic, data, async, uuid: uuid() }
         promises.push(call(subscription, event))
       })
     }
@@ -73,6 +92,27 @@ function publishAll(topic, data, async) {
 * PubSub class.
 */
 class PubSub {
+  /**
+  * Enable/Disable cross-tab communication.
+  *
+  * @param {Boolean} enable True for enable, False for disable, Null to get the current value.
+  * @return {Boolean} Return True if enabled.
+  */
+  static crossTabCommunication(enable = null) {
+    if (enable !== null) {
+      if (! CROSS_TAB_COMMUNICATION_ENABLED && enable) {
+        window.addEventListener('storage', onCrossTabMessage, false)
+        CROSS_TAB_COMMUNICATION_ENABLED = true
+      }
+      else if (CROSS_TAB_COMMUNICATION_ENABLED && ! enable) {
+        window.removeEventListener('storage', onCrossTabMessage, false)
+        CROSS_TAB_COMMUNICATION_ENABLED = false
+      }
+    }
+
+    return CROSS_TAB_COMMUNICATION_ENABLED
+  }
+
   /**
   * Subscribe to topic.
   *
