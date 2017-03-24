@@ -50,7 +50,7 @@ function subpath(topic) {
 // Publish to topic
 function publish(topic, data, async = true, crossTab = false) {
   return new Promise((resolve, reject) => {
-    let event = { topic, data, async, crossTab, uuid: uuid() }
+    let event = new PubSubEvent(topic, data, async, crossTab)
 
     // relay topic to other tabs
     if (CROSS_TAB_COMMUNICATION_ENABLED && ! event.crossTab) {
@@ -86,6 +86,88 @@ function publishAll(topic, data, async) {
       return resolve([].concat.apply([], subscriptions))
     })
   })
+}
+
+/**
+* Subscription wrapper.
+*/
+class Subscription {
+  /**
+  * @param {String}  topic    Topic name.
+  * @param {Mixed}   data     Mixed data.
+  * @param {Boolean} async    Is async event.
+  * @param {Boolean} crossTab Is from another tab.
+  */
+  constructor(callback, context) {
+    /**
+    * Unique identifier (uuid/v4)
+    * @type {String}
+    * @protected
+    */
+    this.uuid = uuid()
+
+    /**
+    * Callback function.
+    * @type {Function}
+    * @protected
+    */
+    this.callback = callback
+
+    /**
+    * Callback function context.
+    * @type {Object}
+    * @protected
+    */
+    this.context = context || callback
+  }
+}
+
+/**
+* PubSub event class.
+*/
+class PubSubEvent {
+  /**
+  * @param {String}  topic    Topic name.
+  * @param {Mixed}   data     Mixed data.
+  * @param {Boolean} async    Is async event.
+  * @param {Boolean} crossTab Is from another tab.
+  */
+  constructor(topic, data, async, crossTab) {
+    /**
+    * Unique identifier (uuid/v4)
+    * @type {String}
+    * @protected
+    */
+    this.uuid = uuid()
+
+    /**
+    * Topic name.
+    * @type {String}
+    * @protected
+    */
+    this.topic = topic
+
+    /**
+    * Mixed data.
+    * @type {Mixed}
+    * @protected
+    */
+    this.data = data
+
+    /**
+    * Is async event.
+    * @type {Boolean}
+    * @protected
+    */
+    this.async = async
+
+    /**
+    * Is from another tab.
+    * @type {Boolean}
+    * @protected
+    */
+    this.crossTab = crossTab
+  }
 }
 
 /**
@@ -129,7 +211,7 @@ class PubSub {
     }
 
     // create new subscription
-    let subscription = { uuid: uuid(), callback, context: context || callback }
+    let subscription = new Subscription(callback, context)
 
     // register new subscription
     SUBSCRIPTIONS.get(topic).set(subscription.uuid, subscription)
@@ -227,4 +309,4 @@ class PubSub {
 
 // Exports
 export default PubSub
-export { PubSub }
+export { PubSub, PubSubEvent, Subscription }
