@@ -5,15 +5,45 @@ import { post } from '../http'
 */
 class BoardCommandPayload {
   /**
-  * @param {Board}  board              Board instance.
-  * @param {Object} [settings]         Command settings (see {@link Request} for more details).
-  * @param {String} [settings.command] Command to send.
+  * @param {Object}  payload Command payload.
   */
   constructor(payload) {
+    /**
+    * Request event instance.
+    * @type {RequestEvent}
+    * @protected
+    */
     this.event = payload.event
+
+    /**
+    * Response data (parsed).
+    * @type {Object}
+    * @protected
+    */
     this.data = payload.data
-    this.error = payload.error || false
+
+    // force error instance
+    let error = false
+
+    if (payload.error && typeof payload.error === 'string') {
+      error = new Error(payload.error)
+    }
+
+    /**
+    * Error instance if any.
+    * @type {Error|false}
+    * @protected
+    */
+    this.error = error
   }
+}
+
+function rejectCommand(event, error) {
+  return Promise.reject(new BoardCommandPayload({ event, error }))
+}
+
+function resolveCommand(event, data) {
+  return Promise.resolve(new BoardCommandPayload({ event, data }))
 }
 
 /**
@@ -26,10 +56,18 @@ class BoardCommand {
   * @param {String} [settings.command] Command to send.
   */
   constructor(board, settings = {}) {
-    // board instance
+    /**
+    * Board instance.
+    * @type {Board}
+    * @protected
+    */
     this.board = board
 
-    // default settings from board
+    /**
+    * Default settings from board.
+    * @type {Object}
+    * @protected
+    */
     this.settings = Object.assign({
       timeout: board.timeout
     }, settings)
@@ -41,7 +79,11 @@ class BoardCommand {
     this.settings.data = this.settings.command.trim() + '\n'
     this.settings.url  = 'http://' + this.board.address + '/command'
 
-    // create new post request
+    /**
+    * Request instance.
+    * @type {Request}
+    * @protected
+    */
     this.request = post(this.settings)
   }
 
@@ -57,15 +99,10 @@ class BoardCommand {
 
       // unsupported command...
       if (raw.indexOf('error:Unsupported command') === 0) {
-        let error   = new Error(raw.substr(6))
-        let payload = new BoardCommandPayload({ event, error })
-
-        return Promise.reject(payload)
+        return rejectCommand(event, raw.substr(6))
       }
 
-      let payload = new BoardCommandPayload({ event, data: raw })
-
-      return Promise.resolve(payload)
+      return resolveCommand(event, raw)
     })
   }
 }

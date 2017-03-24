@@ -80,8 +80,8 @@ class Board extends PubSub {
   /**
   * Send an arbitrary command to the board.
   *
-  * @param  {String|Object} command|settings   Command to send or command settings object.
-  * @param  {Object}        [settings]         Command settings (see {@link Request} for more details).
+  * @param  {String|Object} command            Command to send or command settings object.
+  * @param  {Object}        [settings={}]      Command settings (see {@link Request} for more details).
   * @param  {String}        [settings.command] Command to send.
   * @return {Request}
   */
