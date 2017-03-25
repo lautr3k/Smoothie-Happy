@@ -130,7 +130,7 @@ class BoardCommand {
         let data    = this.settings.parse ? this._parseResponse(raw) : raw
         let promise = resolveCommand(event, data)
 
-        this.board.publish(events.COMMAND + '/' + this.name, data)
+        this.board.publish(events.COMMAND + '/' + this.name, this)
 
         return promise
       }
