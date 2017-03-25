@@ -10,10 +10,12 @@ import BoardCommand from './command'
 */
 class Board extends PubSub {
   /**
-  * @param {String|Object} address|settings        Board address or settings.
-  * @param {Object}        [settings]              Board settings.
-  * @param {String}        [settings.address]      Board address (ip or hostname).
-  * @param {Integer}       [settings.timeout=2000] Default response timeout for all commands (in milliseconds).
+  * @param {String|Object} address|settings              Board address or settings.
+  * @param {Object}        [settings]                    Board settings.
+  * @param {String}        [settings.address]            Board address (ip or hostname).
+  * @param {Integer}       [settings.timeout=5000]       Default response timeout for all commands (in milliseconds).
+  * @param {Integer}       [settings.retryLimit=5]       Number of retry before rejection.
+  * @param {Integer}       [settings.retryInterval=5000] Retry interval in milliseconds for all commands.
   */
   constructor(address, settings = {}) {
     super()
@@ -28,6 +30,13 @@ class Board extends PubSub {
       throw new Error('No address provided.')
     }
 
+    // defaults settings
+    settings = Object.assign({
+      timeout      : 5000,
+      retryLimit   : 5,
+      retryInterval: 5000
+    }, settings)
+
     /**
     * Board address (ip or hostname).
     * @type {String}
@@ -41,7 +50,37 @@ class Board extends PubSub {
     * @default 5000
     * @protected
     */
-    this.timeout = settings.timeout || 5000
+    this.timeout = settings.timeout
+
+    /**
+    * Is board online.
+    * @type {Boolean}
+    * @default false
+    * @protected
+    */
+    this.online = false
+
+    /**
+    * Last time the board was seen online.
+    * @type {Integer}
+    * @default null
+    * @protected
+    */
+    this.lastOnlineTime = null
+
+    /**
+    * Number of retry before rejection.
+    * @type {Integer}
+    * @default 5
+    */
+    this.retryLimit = settings.retryLimit
+
+    /**
+    * Retry interval in milliseconds for all commands.
+    * @type {Integer}
+    * @default 5000
+    */
+    this.retryInterval = settings.retryInterval
   }
 
   /**
@@ -88,7 +127,7 @@ class Board extends PubSub {
   _createCommand(command, settings = {}) {
     // settings provided on first argument
     if (typeof command === 'object') {
-        settings = command
+      settings = command
     }
     else {
       settings.command = command
@@ -107,6 +146,16 @@ class Board extends PubSub {
   */
   send(command, settings = {}) {
     return this._createCommand(command, settings).send()
+    .then(event => {
+      // set board online flag
+      this.online = true
+
+      // set board last online time
+      this.lastOnlineTime = Date.now()
+
+      // resolve
+      return Promise.resolve(event)
+    })
   }
 }
 

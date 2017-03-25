@@ -1,6 +1,8 @@
+import uuid from 'uuid/v4'
 import { post } from '../http'
 import * as events from './events'
 import * as commands from './commands'
+import RequestEvent from '../http/events/request'
 
 /**
 * Command payload class.
@@ -65,6 +67,13 @@ class BoardCommand {
   */
   constructor(board, settings = {}) {
     /**
+    * Unique identifier.
+    * @type {String}
+    * @protected
+    */
+    this.uuid = uuid()
+
+    /**
     * Board instance.
     * @type {Board}
     * @protected
@@ -123,6 +132,26 @@ class BoardCommand {
     */
     this.response = null
 
+    /**
+    * Number of retry occured.
+    * @type {Integer}
+    * @default 0
+    * @protected
+    */
+    this.retryCount = 0
+
+    /**
+    * Number of retry before rejection.
+    * @type {Integer}
+    */
+    this.retryLimit = board.retryLimit
+
+    /**
+    * Retry interval in milliseconds for all commands.
+    * @type {Integer}
+    */
+    this.retryInterval = board.retryInterval
+
     // publish command/create event
     this._publish(events.COMMAND_CREATE)
   }
@@ -149,7 +178,7 @@ class BoardCommand {
     let payload = { event, error }
     let promise = Promise.reject(new CommandPayload(this, payload))
 
-    this._publish(events.ERROR, payload)
+    this._publish(events.COMMAND_ERROR, payload)
 
     return promise
   }
@@ -200,6 +229,40 @@ class BoardCommand {
       catch (error) {
         return this._reject(event, error)
       }
+    })
+    .catch(event => {
+      // fatal error
+      if (! (event instanceof RequestEvent)) {
+        return Promise.reject(event)
+      }
+
+      // network error
+      // if retry limit not reached
+      if (this.retryCount < this.retryLimit) {
+        // create and return a new Promise
+        return new Promise((resolve, reject) => {
+          // create new request
+          this.request = post(this.settings)
+
+          // increment retry counter
+          this.retryCount++
+
+          // publish some events
+          this._publish(events.COMMAND_ERROR, { event, error: event.name })
+          this._publish(events.COMMAND_RETRY, { event, data: {
+            count   : this.retryCount,
+            limit   : this.retryLimit,
+            interval: this.retryInterval
+          }})
+
+          // delayed retry
+          setTimeout(() => {
+            this.send().then(resolve).catch(reject)
+          }, this.retryInterval);
+        })
+      }
+
+      return this._reject(event, event.name)
     })
   }
 
