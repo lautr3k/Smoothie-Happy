@@ -79,6 +79,26 @@ class Board extends PubSub {
   }
 
   /**
+  * Create an arbitrary command.
+  *
+  * @param  {String|Object} command       Command to send or command settings object.
+  * @param  {Object}        [settings={}] Command settings (see {@link BoardCommand} and {@link Request} for more details).
+  * @return {BoardCommand}
+  */
+  _createCommand(command, settings = {}) {
+    // settings provided on first argument
+    if (typeof command === 'object') {
+        settings = command
+    }
+    else {
+      settings.command = command
+    }
+
+    // create the command request
+    return new BoardCommand(this, settings)
+  }
+
+  /**
   * Send an arbitrary command to the board.
   *
   * @param  {String|Object} command       Command to send or command settings object.
@@ -86,24 +106,7 @@ class Board extends PubSub {
   * @return {Request}
   */
   send(command, settings = {}) {
-    // settings provided on first argument
-    if (typeof command === 'object') {
-        settings = command
-        command  = settings.command
-    }
-    else {
-      settings.command = command
-    }
-
-    // create the command request
-    let boardCommand = new BoardCommand(this, settings)
-
-    this.publish(events.COMMAND, boardCommand)
-
-    return boardCommand.send().then(event => {
-      this.publish(events.RESPONSE, event)
-      return Promise.resolve(event)
-    })
+    return this._createCommand(command, settings).send()
   }
 }
 

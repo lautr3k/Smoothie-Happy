@@ -3,19 +3,34 @@ import * as events from './events'
 import * as commands from './commands'
 
 /**
-* Board command class.
+* Command payload class.
 */
 class CommandPayload {
   /**
-  * @param {Object}  payload Command payload.
+  * @param {Board}  command Board instance.
+  * @param {Object} [payload={}] Command payload.
   */
-  constructor(payload) {
+  constructor(command, payload = {}) {
+    /**
+    * Command instance.
+    * @type {BoardCommand}
+    * @protected
+    */
+    this.command = command
+
+    /**
+    * Board instance.
+    * @type {Board}
+    * @protected
+    */
+    this.board = command.board
+
     /**
     * Request event instance.
     * @type {RequestEvent}
     * @protected
     */
-    this.event = payload.event
+    this.event = payload.event || null
 
     /**
     * Response data (parsed).
@@ -36,14 +51,6 @@ class CommandPayload {
       this.error = new Error(this.error)
     }
   }
-}
-
-function rejectCommand(event, error) {
-  return Promise.reject(new CommandPayload({ event, error }))
-}
-
-function resolveCommand(event, data) {
-  return Promise.resolve(new CommandPayload({ event, data }))
 }
 
 /**
@@ -108,6 +115,60 @@ class BoardCommand {
     * @protected
     */
     this.request = post(this.settings)
+
+    /**
+    * Response data.
+    * @type {Mixed}
+    * @protected
+    */
+    this.response = null
+
+    // publish command/create event
+    this._publish(events.COMMAND_CREATE)
+  }
+
+  /**
+  * Publish on topic.
+  *
+  * @param {String}       topic        Topic name.
+  * @param {RequestEvent} [payload={}] Command payload.
+  * @return {Promise}
+  */
+  _publish(topic, payload = {}) {
+    return this.board.publish(topic, new CommandPayload(this, payload))
+  }
+
+  /**
+  * Return an rejected Promise.
+  *
+  * @param {RequestEvent} event Request event instance.
+  * @param {Error|String} error Error message or Error instance.
+  * @return {Promise}
+  */
+  _reject(event, error) {
+    let payload = { event, error }
+    let promise = Promise.reject(new CommandPayload(this, payload))
+
+    this._publish(events.ERROR, payload)
+
+    return promise
+  }
+
+  /**
+  * Return an resolved Promise.
+  *
+  * @param {RequestEvent} event Request event instance.
+  * @param {Mixed}        data Mixed data.
+  * @return {Promise}
+  */
+  _resolve(event, data) {
+    let payload = { event, data }
+    let promise = Promise.resolve(new CommandPayload(this, payload))
+
+    this._publish(events.RESPONSE + '/' + this.name, payload)
+    this._publish(events.RESPONSE, payload)
+
+    return promise
   }
 
   /**
@@ -116,26 +177,28 @@ class BoardCommand {
   * @return {Request}
   */
   send() {
-    return this.request.send().then(event => {
+    this._publish(events.COMMAND_SEND)
+
+    let request = this.request.send()
+
+    this._publish(events.COMMAND_SENT, { data: request })
+
+    return request.then(event => {
       // raw response text
       let raw = event.response.raw
 
       // unsupported command...
       if (raw.indexOf('error:Unsupported command') === 0) {
-        return rejectCommand(event, raw.substr(6))
+        return this._reject(event, raw.substr(6))
       }
 
-      // parse response string
       try {
-        let data    = this.settings.parse ? this._parseResponse(raw) : raw
-        let promise = resolveCommand(event, data)
-
-        this.board.publish(events.COMMAND + '/' + this.name, this)
-
-        return promise
+        // handle raw response string
+        this.response = this.settings.parse ? this._parse(raw) : raw
+        return this._resolve(event, this.response)
       }
       catch (error) {
-        return rejectCommand(event, error)
+        return this._reject(event, error)
       }
     })
   }
@@ -148,7 +211,7 @@ class BoardCommand {
   * @param  {String} raw Raw command response string.
   * @return {Object|Error}
   */
-  _parseResponse(raw) {
+  _parse(raw) {
     // if undefined command
     if (! commands[this.name]) {
       // return an Error message
