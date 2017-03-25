@@ -244,19 +244,20 @@ class BoardCommand {
           // create new request
           this.request = post(this.settings)
 
-          // increment retry counter
-          this.retryCount++
-
           // publish some events
           this._publish(events.COMMAND_ERROR, { event, error: event.name })
           this._publish(events.COMMAND_RETRY, { event, data: {
-            count   : this.retryCount,
+            count   : this.retryCount + 1,
             limit   : this.retryLimit,
             interval: this.retryInterval
           }})
 
           // delayed retry
           setTimeout(() => {
+            // increment retry counter
+            this.retryCount++
+
+            // resend the request
             this.send().then(resolve).catch(reject)
           }, this.retryInterval);
         })
