@@ -38,9 +38,10 @@ class Board extends PubSub {
     /**
     * Board settings.
     * @type {Object}
+    * @default 5000
     * @protected
     */
-    this.timeout = settings.timeout || 2000
+    this.timeout = settings.timeout || 5000
   }
 
   /**
@@ -80,9 +81,8 @@ class Board extends PubSub {
   /**
   * Send an arbitrary command to the board.
   *
-  * @param  {String|Object} command            Command to send or command settings object.
-  * @param  {Object}        [settings={}]      Command settings (see {@link Request} for more details).
-  * @param  {String}        [settings.command] Command to send.
+  * @param  {String|Object} command       Command to send or command settings object.
+  * @param  {Object}        [settings={}] Command settings (see {@link BoardCommand} and {@link Request} for more details).
   * @return {Request}
   */
   send(command, settings = {}) {

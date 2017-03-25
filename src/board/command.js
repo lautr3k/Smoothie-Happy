@@ -1,9 +1,11 @@
 import { post } from '../http'
+import * as events from './events'
+import * as commands from './commands'
 
 /**
 * Board command class.
 */
-class BoardCommandPayload {
+class CommandPayload {
   /**
   * @param {Object}  payload Command payload.
   */
@@ -20,30 +22,28 @@ class BoardCommandPayload {
     * @type {Object}
     * @protected
     */
-    this.data = payload.data
-
-    // force error instance
-    let error = false
-
-    if (payload.error && typeof payload.error === 'string') {
-      error = new Error(payload.error)
-    }
+    this.data = payload.data || null
 
     /**
     * Error instance if any.
-    * @type {Error|false}
+    * @type {Error|null}
     * @protected
     */
-    this.error = error
+    this.error = payload.error || null
+
+    // force error instance
+    if (typeof this.error === 'string') {
+      this.error = new Error(this.error)
+    }
   }
 }
 
 function rejectCommand(event, error) {
-  return Promise.reject(new BoardCommandPayload({ event, error }))
+  return Promise.reject(new CommandPayload({ event, error }))
 }
 
 function resolveCommand(event, data) {
-  return Promise.resolve(new BoardCommandPayload({ event, data }))
+  return Promise.resolve(new CommandPayload({ event, data }))
 }
 
 /**
@@ -51,9 +51,10 @@ function resolveCommand(event, data) {
 */
 class BoardCommand {
   /**
-  * @param {Board}  board              Board instance.
-  * @param {Object} [settings]         Command settings (see {@link Request} for more details).
-  * @param {String} [settings.command] Command to send.
+  * @param {Board}  board                 Board instance.
+  * @param {Object} [settings]            Command settings (see {@link Request} for more details).
+  * @param {String} [settings.command]    Command line to send.
+  * @param {String} [settings.parse=true] Parse the response string.
   */
   constructor(board, settings = {}) {
     /**
@@ -69,15 +70,37 @@ class BoardCommand {
     * @protected
     */
     this.settings = Object.assign({
-      timeout: board.timeout
+      timeout: board.timeout,
+      parse  : true
     }, settings)
+
+    /**
+    * Raw command line.
+    * @type {String}
+    * @protected
+    */
+    this.line = this.settings.command.trim()
+
+    /**
+    * Command arguments.
+    * @type {Array}
+    * @protected
+    */
+    this.args = this.line.split(' ').map(arg => arg.trim())
+
+    /**
+    * Command name.
+    * @type {Object}
+    * @protected
+    */
+    this.name = this.args.shift()
+
+    // request settings
+    this.settings.data = this.line + '\n'
+    this.settings.url  = 'http://' + this.board.address + '/command'
 
     // disable auto-send
     this.settings.send = false
-
-    // request settings
-    this.settings.data = this.settings.command.trim() + '\n'
-    this.settings.url  = 'http://' + this.board.address + '/command'
 
     /**
     * Request instance.
@@ -102,11 +125,41 @@ class BoardCommand {
         return rejectCommand(event, raw.substr(6))
       }
 
-      return resolveCommand(event, raw)
+      // parse response string
+      try {
+        let data    = this.settings.parse ? this._parseResponse(raw) : raw
+        let promise = resolveCommand(event, data)
+
+        this.board.publish(events.COMMAND + '/' + this.name, data)
+
+        return promise
+      }
+      catch (error) {
+        return rejectCommand(event, error)
+      }
     })
+  }
+
+  /**
+  * Parse the command response
+  * and return the parsed response data as object
+  * or throw an Error if any error occured.
+  *
+  * @param  {String} raw Raw command response string.
+  * @return {Object|Error}
+  */
+  _parseResponse(raw) {
+    // if undefined command
+    if (! commands[this.name]) {
+      // return an Error message
+      throw new Error('Sorry! The "' + this.name + '" command is not (yet) implemented.')
+    }
+
+    // parse and return the command response
+    return commands[this.name](raw, this.args)
   }
 }
 
 // Exports
 export default BoardCommand
-export { BoardCommand }
+export { BoardCommand, CommandPayload }
