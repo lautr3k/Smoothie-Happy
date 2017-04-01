@@ -328,7 +328,7 @@ class Request {
               // (re)send the request
               return this.send().then(resolve).catch(reject)
             }, this.settings.attemptDelay)
-          )}
+          })
         }
 
         // call user callback
