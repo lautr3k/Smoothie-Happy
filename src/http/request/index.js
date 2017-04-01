@@ -317,36 +317,37 @@ class Request {
           triggerEvent(eventTypes.BEFORE_RETRY, event)
 
           // delayed retry
-          return new Promise((resolve, reject) => setTimeout(() => {
-            // reset xhr object
-            this.xhr = null
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              // reset xhr object
+              this.xhr = null
 
-            // call user callback
-            triggerEvent(eventTypes.RETRY, event)
+              // call user callback
+              triggerEvent(eventTypes.RETRY, event)
 
-            // (re)send the request
-            return this.send().then(resolve).catch(reject)
-          }, this.settings.attemptDelay)
-        )
+              // (re)send the request
+              return this.send().then(resolve).catch(reject)
+            }, this.settings.attemptDelay)
+          )}
+        }
+
+        // call user callback
+        triggerEvent(eventTypes.RETRY_LIMIT, event)
+
+        let payload = new Error('Too many attempts (max: ' + this.attempts + ').')
+        event       = new RequestEvent(eventTypes.DOWNLOAD_ERROR, event.event, this, payload)
       }
 
-      // call user callback
-      triggerEvent(eventTypes.RETRY_LIMIT, event)
+      return Promise.reject(event)
+    })
+  }
 
-      let payload = new Error('Too many attempts (max: ' + this.attempts + ').')
-      event       = new RequestEvent(eventTypes.DOWNLOAD_ERROR, event.event, this, payload)
-    }
-
-    return Promise.reject(event)
-  })
-}
-
-/**
-* Abort the this.
-*/
-abort() {
-  this.xhr && this.xhr.abort()
-}
+  /**
+  * Abort the this.
+  */
+  abort() {
+    this.xhr && this.xhr.abort()
+  }
 }
 
 export default Request
