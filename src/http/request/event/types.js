@@ -1,3 +1,7 @@
+/** @type {String} */ export const BEFORE_RETRY = 'before.retry'
+/** @type {String} */ export const RETRY        = 'retry'
+/** @type {String} */ export const RETRY_LIMIT  = 'retry.limit'
+
 /** @type {String} */ export const DOWNLOAD_LOAD     = 'download.load'
 /** @type {String} */ export const DOWNLOAD_ABORT    = 'download.abort'
 /** @type {String} */ export const DOWNLOAD_ERROR    = 'download.error'

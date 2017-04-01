@@ -4,6 +4,7 @@ import * as eventTypes from './event/types'
 import RequestEvent from './event/request'
 import Progress from './payload/progress'
 import Response from './payload/response'
+import Attempt from './payload/attempt'
 
 /**
 * `XMLHttpRequest` wrapper with `Promise` logic.
@@ -88,11 +89,29 @@ class Request {
     this.elapsedTime = null
 
     /**
+    * Number of attempts.
+    * @type {Integer}
+    * @protected
+    */
+    this.attempts = 0
+
+    /**
     * `XMLHttpRequest` instance.
     * @type {XMLHttpRequest}
     * @protected
     */
     this.xhr = null
+  }
+
+  /**
+  * Trigger an user defined event.
+  *
+  * @throws {Error}
+  */
+  _triggerEvent(event) {
+    if (typeof this.settings.on[event.type] === 'function') {
+      this.settings.on[event.type](event)
+    }
   }
 
   /**
@@ -107,25 +126,28 @@ class Request {
       throw new Error('You can not send the same request twice.')
     }
 
+    // increment attempts counter
+    this.attempts++
+
     // set send time
     this.sendTime = Date.now()
 
+    // local settings
+    let settings = Object.assign({}, this.settings)
+
+    // normalize settings
+    settings.url    = settings.url.trim()
+    settings.method = settings.method.toUpperCase()
+    settings.data   = Request.encodeData(settings.data)
+
+    if (settings.method !== 'POST' && settings.data) {
+      // append data to uri and reset data
+      settings.url  = Request.joinUrlData(settings.url, settings.data)
+      settings.data = null
+    }
+
     // wrap the request in promise
     return new Promise((resolve, reject) => {
-      // local settings
-      let settings = Object.assign({}, this.settings)
-
-      // normalize settings
-      settings.url    = settings.url.trim()
-      settings.method = settings.method.toUpperCase()
-      settings.data   = Request.encodeData(settings.data)
-
-      if (settings.method !== 'POST' && settings.data) {
-        // append data to uri and reset data
-        settings.url  = Request.joinUrlData(settings.url, settings.data)
-        settings.data = null
-      }
-
       // create http request object
       this.xhr = new XMLHttpRequest()
 
@@ -138,17 +160,10 @@ class Request {
       // status
       let rejected = false
 
-      // trigger user callback
-      let triggerEvent = event => {
-        if (typeof settings.on[event.type] === 'function') {
-          settings.on[event.type](event)
-        }
-      }
-
       // create, trigger and return an RequestEvent
       let createEvent = (type, event, payload = null) => {
         let requestEvent = new RequestEvent(type, event, this, payload)
-        ! rejected && triggerEvent(requestEvent)
+        ! rejected && this._triggerEvent(requestEvent)
         return requestEvent
       }
 
@@ -250,15 +265,49 @@ class Request {
   * @return {Promise}
   */
   send() {
-    return this._send()
-  }
+    return this._send().catch(event => {
+      // trigger user callback
+      let triggerEvent = (type, event) => this._triggerEvent(
+        new RequestEvent(type, event.event, this, new Attempt(this))
+      )
 
-  /**
-  * Abort the this.
-  */
-  abort() {
-    this.xhr && this.xhr.abort()
-  }
+      // retry on timeout error if attempts limit is not reached
+      if (event.type.endsWith('timeout')) {
+        if (this.attempts < this.settings.maxAttempts) {
+          // call user callback
+          triggerEvent(eventTypes.BEFORE_RETRY, event)
+
+          // delayed retry
+          return new Promise((resolve, reject) => setTimeout(() => {
+            // reset xhr object
+            this.xhr = null
+
+            // call user callback
+            triggerEvent(eventTypes.RETRY, event)
+
+            // (re)send the request
+            return this.send().then(resolve).catch(reject)
+          }, this.settings.attemptDelay)
+        )
+      }
+
+      // call user callback
+      triggerEvent(eventTypes.RETRY_LIMIT, event)
+
+      let payload = new Error('Too many attempts (max: ' + this.attempts + ').')
+      event       = new RequestEvent(eventTypes.DOWNLOAD_ERROR, event.event, this, payload)
+    }
+
+    return Promise.reject(event)
+  })
+}
+
+/**
+* Abort the this.
+*/
+abort() {
+  this.xhr && this.xhr.abort()
+}
 }
 
 export default Request
