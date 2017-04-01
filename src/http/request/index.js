@@ -9,6 +9,45 @@ import Attempt from './payload/attempt'
 /**
 * `XMLHttpRequest` wrapper with `Promise` logic.
 *
+* @example
+* function on(event) {
+*   console.info('on:', event.type, event);
+* }
+*
+* new Request({
+*   url   : url,
+*   method: 'POST',
+*   data  : 'version\n',
+*   on    : {
+*     'before.retry'     : on,
+*     'retry'            : on,
+*     'retry.limit'      : on,
+*
+*     'download.load'    : on,
+*     'download.error'   : on,
+*     'download.abort'   : on,
+*     'download.timeout' : on,
+*     'download.progress': on,
+*
+*     'upload.load'      : on,
+*     'upload.error'     : on,
+*     'upload.abort'     : on,
+*     'upload.timeout'   : on,
+*     'upload.progress'  : on
+*   },
+*   filters: {
+*     status  : status => status === 200,
+*     response: response => JSON.stringify(response)
+*   }
+* })
+* .send()
+* .then(event => {
+*   console.info('then:', event);
+* })
+* .catch(event => {
+*   console.error('catch:', event);
+* });
+*
 * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 * @see https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 */
