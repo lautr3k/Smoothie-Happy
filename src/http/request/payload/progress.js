@@ -1,9 +1,9 @@
 /**
-* Progress event abstraction class.
+* Progression payload.
 */
-class ProgressPayload {
+class Progress {
   /**
-  * @param {window.ProgressEvent} event Original progress event.
+  * @param {ProgressEvent} event Original progress event.
   */
   constructor(event) {
     /**
@@ -11,24 +11,31 @@ class ProgressPayload {
     * @type {Integer}
     * @protected
     */
-    this.total = event.total
+    this.total = event.total || 0
 
     /**
     * Loaded bytes.
     * @type {Integer}
     * @protected
     */
-    this.loaded = event.loaded
+    this.loaded = event.loaded || 0
+
+    /**
+    * Is computable.
+    * @type {Boolean}
+    * @protected
+    */
+    this.computable = event.lengthComputable
 
     /**
     * Loaded percent.
     * @type {Integer}
     * @protected
     */
-    this.percent = parseInt(event.loaded / event.total * 100)
+    this.percent = this.computable ? parseInt(this.loaded / this.total * 100) : 0
   }
 }
 
 // Exports
-export default ProgressPayload
-export { ProgressPayload }
+export default Progress
+export { Progress }

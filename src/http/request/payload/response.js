@@ -1,33 +1,18 @@
 /**
-* XMLHttpRequest response abstraction class.
+* Response payload.
 */
-class ResponsePayload {
+class Response {
   /**
-  * @param {XMLHttpRequest} xhr An `XMLHttpRequest` instance.
+  * @param {XMLHttpRequest} xhr    An `XMLHttpRequest` instance.
+  * @param {Function}       filter Response filter.
   */
-  constructor(xhr) {
-    /**
-    * Response time.
-    * @type {Integer}
-    * @protected
-    */
-    this.time = Date.now()
-
-    // text/xml response available ?
-    let responseText = null
-    let responseXML  = null
-
-    if (xhr.responseType === '' || xhr.responseType === 'document') {
-      responseText = xhr.responseText
-      responseXML  = xhr.responseXML
-    }
-
+  constructor(xhr, filter = null) {
     /**
     * Response status code.
     * @type {Integer}
     * @protected
     */
-    this.code = xhr.status
+    this.status = xhr.status
 
     /**
     * Respons status text.
@@ -37,42 +22,18 @@ class ResponsePayload {
     this.message = xhr.statusText
 
     /**
-    * Response type.
-    * @type {String}
-    * @protected
-    */
-    this.type = xhr.responseType
-
-    /**
-    * Response url.
-    * @type {String}
-    * @protected
-    */
-    this.url = xhr.responseURL
-
-    /**
-    * Response XML.
-    * @type {String}
-    * @protected
-    */
-    this.xml = responseXML
-
-    /**
-    * Response text.
-    * @type {String}
-    * @protected
-    */
-    this.text = responseText
-
-    /**
-    * Raw response.
+    * Response data.
     * @type {Mixed}
     * @protected
     */
-    this.raw = xhr.response
+    this.data = xhr.response
+
+    if (typeof filter === 'function') {
+      this.data = filter(this.data)
+    }
   }
 }
 
 // Exports
-export default ResponsePayload
-export { ResponsePayload }
+export default Response
+export { Response }

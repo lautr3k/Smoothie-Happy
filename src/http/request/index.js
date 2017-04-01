@@ -1,139 +1,91 @@
 import uuid from 'uuid/v4'
-import RequestEvent from './events/request'
-import ProgressEvent from './events/progress'
-import * as EventsTypes from './events/types'
+import { settings as defaults } from './settings'
+import * as eventTypes from './event/types'
+import RequestEvent from './event/request'
+import Progress from './payload/progress'
+import Response from './payload/response'
 
 /**
 * `XMLHttpRequest` wrapper with `Promise` logic.
 *
 * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 * @see https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
-* @example
-* // Send GET request
-* new Request({
-*   url: 'hello.html',
-*   on : {
-*     retry: event => {
-*       // notify retry event
-*       console.info('on:retry', event)
-*     }
-*   }
-* })
-* .on('progress', event => {
-*   // notify progression
-*   console.info('on:progress', event)
-* })
-* .send()
-* .then(event => {
-*   // hello.html is loaded
-*   console.info('on:load', event)
-*
-*   // return result for final then
-*   return { event: event, error: false }
-* })
-* .catch(event => {
-*   // error loading hello.html
-*   console.warn('on:error', event)
-*
-*   // return error for final then
-*   return { event: event, error: true }
-* })
-* .then(result => {
-*   // finally, always ...
-*   let event = result.event
-*   let type  = result.error ? 'error' : 'info'
-*
-*   console[type]('finally:', event)
-* })
 */
 class Request {
   /**
-  * @param {Object}  settings                      Request settings.
-  * @param {String}  [settings.url        = '/']   Absolute or relative URL.
-  * @param {String}  [settings.method     = 'GET'] 'GET', 'POST', 'DELETE', ...
-  * @param {Mixed}   [settings.data       = null]  Data to send with the request.
-  * @param {Boolean} [settings.send       = false] Send the request after creation.
-  * @param {Object}  [settings.on         = {}]    Collection of events callbacks.
-  * @param {Object}  [settings.headers    = {}]    Headers to send with the request.
-  * @param {Integer} [settings.timeout    = 5000]  Timeout for this request in milliseconds.
-  * @param {Object}  [settings.xhrOptions = {}]    An `XMLHttpRequest` object of properties/methods to overwrite.
+  * Encode data object to uri string `key_1=value_1&key_2=value_2`.
+  *
+  * @param  {Object} data
+  * @return {Object}
+  */
+  static encodeData(data) {
+    // no data
+    if (data) {
+      // stringify data object
+      if (typeof data === 'object') {
+        data = Object.keys(data).map(key => {
+          return encodeURIComponent(key) + '=' + encodeURIComponent(data[key])
+        }).join('&')
+      }
+
+      // remove the first char if it is an '?'
+      if (data.startsWith('?')) {
+        data = data.substr(1)
+      }
+    }
+
+    return data
+  }
+
+  /**
+  * Join data to url.
+  *
+  * @param  {String}        url
+  * @param  {String|Object} data
+  * @return {String}
+  */
+  static joinUrlData(url, data) {
+    return url + (url.indexOf('?') === -1 ? '?' : '&') + Request.encodeData(data)
+  }
+
+  /**
+  * @param {Object} settings See {@link src/http/request/settings.js~settings} for defaults keys/values.
   */
   constructor(settings = {}) {
     /**
-    * Request settings.
+    * Request settings, see {@link src/http/request/settings.js~settings} for defaults keys/values.
     * @type {Object}
     * @protected
     */
-    this.settings = Object.assign({
-      url       : '/',
-      method    : 'GET',
-      data      : null,
-      on        : {},
-      headers   : {},
-      send      : false,
-      timeout   : 5000,
-      xhrOptions: {}
-    }, settings)
+    this.settings = Object.assign({}, defaults, settings)
 
     /**
-    * Request send time (set just before send).
-    * @type {Integer}
-    * @protected
-    */
-    this.time = null
-
-    /**
-    * Unique identifier.
+    * Unique identifier (uuid/v4).
     * @type {String}
     * @protected
     */
     this.uuid = uuid()
 
     /**
-    * Request url.
-    * @type {String}
-    * @protected
-    */
-    this.url = this.settings.url.trim()
-
-    /**
-    * Request method.
-    * @type {String}
-    * @default 'GET'
-    * @protected
-    */
-    this.method = this.settings.method.trim().toUpperCase()
-
-    /**
-    * Request data.
-    * @type {Mixed}
-    * @default null
-    * @protected
-    */
-    this.data = this.settings.data
-
-    /**
-    * Request headers.
-    * @type {Object}
-    * @default {}
-    * @protected
-    */
-    this.headers = this.settings.headers
-
-    /**
-    * Request timeout in milliseconds.
+    * Creation time.
     * @type {Integer}
-    * @default 5000
     * @protected
     */
-    this.timeout = this.settings.timeout
+    this.time = Date.now()
 
     /**
-    * An `XMLHttpRequest` object of properties/methods to overwrite..
-    * @type {Object}
+    * Send time.
+    * @type {Integer}
     * @protected
     */
-    this.xhrOptions = this.settings.xhrOptions
+    this.sendTime = null
+
+    /**
+    * Elapsed time.
+    * @type {Integer}
+    * @protected
+    */
+    this.elapsedTime = null
 
     /**
     * `XMLHttpRequest` instance.
@@ -141,302 +93,173 @@ class Request {
     * @protected
     */
     this.xhr = null
-
-    /**
-    * Callbacks collection.
-    * @type {Object}
-    * @protected
-    */
-    this.callbacks = {}
-
-    /**
-    * Locking flag.
-    * @type {Boolean}
-    * @default false
-    * @protected
-    */
-    this.locked = false
-
-    /**
-    * `Promise` instance.
-    * @type {Promise}
-    * @protected
-    */
-    this.promise = null
-
-    // encode data settings and append data to url if not a POST method
-    this.encodeDataSetting()
-    this.appendDataToURL()
-
-    // register callbacks
-    this.registerCallbacks()
-
-    // Send the request ?
-    this.settings.send && this.send()
   }
 
   /**
-  * Encode data settings.
-  *
-  * @protected
-  */
-  encodeDataSetting() {
-    // no data
-    if (! this.data) {
-      return null
-    }
-
-    // stringify data object
-    if (typeof this.data === 'object') {
-      this.data = Object.keys(this.data).map(key => {
-        return encodeURIComponent(key) + '=' + encodeURIComponent(this.data[key])
-      }).join('&')
-    }
-  }
-
-  /**
-  * Append data to url if not a POST method
-  *
-  * @protected
-  */
-  appendDataToURL() {
-    if (this.method !== 'POST' && this.data) {
-      // remove the first char if it is an '?'
-      if (this.data.startsWith('?')) {
-        this.data = this.data.substr(1)
-      }
-
-      // append '?' or '&' to the uri if not already set
-      this.url += (this.url.indexOf('?') === -1) ? '?' : '&'
-
-      // append data to uri
-      this.url += this.data
-
-      // reset data
-      this.data = null
-    }
-  }
-
-  /**
-  * Register callbacks from settings.
-  *
-  * @protected
-  */
-  registerCallbacks() {
-    Object.keys(this.settings.on).map(eventName => {
-      let callback = this.settings.on[eventName]
-
-      if (typeof callback === 'function') {
-        this.on(eventName, callback)
-      }
-
-      if (Array.isArray(callback)) {
-        this.on(eventName, callback[0], callback[1])
-      }
-    })
-  }
-
-  /**
-  * Send the request.
-  *
-  * @return {Request} this
-  */
-  send() {
-    // is locked ?
-    if (this.locked) {
-      throw new Error('This request is locked, wait for an response or call the abort method.')
-    }
-
-    // set locked flag
-    this.locked = true
-
-    // request time
-    if (! this.time) {
-      this.time = Date.now()
-    }
-
-    // create http request object
-    this.xhr = new XMLHttpRequest()
-
-    // execute the request
-    this.promise = this.execute()
-
-    // chainable
-    return this
-  }
-
-  /**
-  * Execute the request and return a Promise.
+  * Send the request and return a Promise.
   *
   * @return {Promise}
-  * @protected
+  * @throws {Error}
   */
-  execute() {
-    // create and return the Promise
+  _send() {
+    // prevent calling twice
+    if (this.xhr) {
+      throw new Error('You can not send the same request twice.')
+    }
+
+    // set send time
+    this.sendTime = Date.now()
+
+    // wrap the request in promise
     return new Promise((resolve, reject) => {
-      // resolve wrapper
-      let _resolve = event => {
-        event = new RequestEvent(event, this)
-        this.trigger(event)
-        resolve(event)
+      // local settings
+      let settings = Object.assign({}, this.settings)
+
+      // normalize settings
+      settings.url    = settings.url.trim()
+      settings.method = settings.method.toUpperCase()
+      settings.data   = Request.encodeData(settings.data)
+
+      if (settings.method !== 'POST' && settings.data) {
+        // append data to uri and reset data
+        settings.url  = Request.joinUrlData(settings.url, settings.data)
+        settings.data = null
       }
 
-      // reject wrapper
-      let _reject = event => {
-        event = new RequestEvent(event, this)
-        this.trigger(event)
-        reject(event)
-      }
+      // create http request object
+      this.xhr = new XMLHttpRequest()
 
-      // on load event (load or upload.load)
-      let LOAD_EVENT = EventsTypes.LOAD
+      // override mime type
+      this.xhr.overrideMimeType(settings.mimeType)
 
-      // open the request (async)
-      this.xhr.open(this.method, this.url, true)
+      // open async request
+      this.xhr.open(settings.method, settings.url, true)
 
-      // overwrite xhr properties
-      Object.assign(this.xhr, this.xhrOptions)
+      // status
+      let rejected = false
 
-      // force timeout
-      this.xhr.timeout = this.timeout
-
-      this.xhr.onload = () => {
-        if (this.xhr.status >= 200 && this.xhr.status < 300) {
-          _resolve(LOAD_EVENT)
-        }
-        else {
-          _reject(EventsTypes.ERROR)
+      // trigger user callback
+      let triggerEvent = event => {
+        if (typeof settings.on[event.type] === 'function') {
+          settings.on[event.type](event)
         }
       }
 
-      // on error
-      this.xhr.onerror = () => {
-        _reject(EventsTypes.ERROR)
+      // create, trigger and return an RequestEvent
+      let createEvent = (type, event, payload = null) => {
+        let requestEvent = new RequestEvent(type, event, this, payload)
+        ! rejected && triggerEvent(requestEvent)
+        return requestEvent
       }
 
-      // on timeout
-      this.xhr.ontimeout = () => {
-        _reject(EventsTypes.TIMEOUT)
+      // on abort, error, timeout
+      let _reject = (type, event, error) => {
+        this.elapsedTime = Date.now() - this.sendTime
+        reject(createEvent(type, event, error instanceof Error ? error : new Error(error)))
+        rejected = true
       }
 
-      // on abort
-      this.xhr.onabort = () => {
-        _reject(EventsTypes.ABORT)
+      let onAbort = (type, event) => {
+        _reject(type, event, 'Connection aborted.')
+      }
+
+      let onError = (type, event) => {
+        _reject(type, event, 'Unknown network error.')
+      }
+
+      let onTimeout = (type, event) => {
+        _reject(type, event, 'Connection timed out (>' + settings.timeout + 'ms).')
       }
 
       // on progress
-      this.xhr.onprogress = event => {
-        if (event.lengthComputable) {
-          this.trigger(new ProgressEvent(EventsTypes.PROGRESS, this, event))
+      let onProgress = (type, event) => {
+        createEvent(type, event, new Progress(event))
+      }
+
+      // on load
+      let onLoad = (type, event) => {
+        // check status
+        let status = this.xhr.status
+
+        if (! status) {
+          return _reject(eventTypes.DOWNLOAD_ERROR, event, 'Unknown HTTP error.')
         }
-      }
 
-      // on upload.load
-      this.xhr.upload.onload = () => {
-        LOAD_EVENT = EventsTypes.UPLOAD_LOAD
-      }
-
-      // on upload.error
-      this.xhr.upload.onerror = () => {
-        _reject(EventsTypes.UPLOAD_ERROR)
-      }
-
-      // on upload.timeout
-      this.xhr.upload.ontimeout = () => {
-        _reject(EventsTypes.UPLOAD_TIMEOUT)
-      }
-
-      // on upload.abort
-      this.xhr.upload.onabort = () => {
-        _reject(EventsTypes.UPLOAD_ABORT)
-      }
-
-      // on upload.progress
-      this.xhr.upload.onprogress = event => {
-        if (event.lengthComputable) {
-          this.trigger(new ProgressEvent(EventsTypes.UPLOAD_PROGRESS, this, event))
+        // let user check the status
+        if (typeof settings.filters.status === 'function') {
+          status = settings.filters.status(status)
         }
+
+        if (! status) {
+          return _reject(type, event, this.xhr.status + ' ' + this.xhr.statusText)
+        }
+
+        // response payload
+        let payload
+
+        try { // catch filter error
+          payload = new Response(this.xhr, settings.filters.response)
+        }
+        catch (error) {
+          return _reject(type, event, error)
+        }
+
+        // set elapsed time
+        this.elapsedTime = Date.now() - this.sendTime
+
+        // resolve the promise
+        resolve(createEvent(type, event, payload))
       }
+
+      let onUploaLoad = (type, event) => {
+        createEvent(type, event, settings.data)
+      }
+
+      // download events
+      this.xhr.onload     = event => onLoad(eventTypes.DOWNLOAD_LOAD, event)
+      this.xhr.onabort    = event => onAbort(eventTypes.DOWNLOAD_ABORT, event)
+      this.xhr.onerror    = event => onError(eventTypes.DOWNLOAD_ERROR, event)
+      this.xhr.ontimeout  = event => onTimeout(eventTypes.DOWNLOAD_TIMEOUT, event)
+      this.xhr.onprogress = event => onProgress(eventTypes.DOWNLOAD_PROGRESS, event)
+
+      // upload events
+      this.xhr.upload.onload     = event => onProgress(eventTypes.UPLOAD_LOAD, event)
+      this.xhr.upload.onabort    = event => onAbort(eventTypes.UPLOAD_ABORT, event)
+      this.xhr.upload.onerror    = event => onError(eventTypes.UPLOAD_ERROR, event)
+      this.xhr.upload.ontimeout  = event => onTimeout(eventTypes.UPLOAD_TIMEOUT, event)
+      this.xhr.upload.onprogress = event => onProgress(eventTypes.UPLOAD_PROGRESS, event)
 
       // set request headers
-      for (let header in this.headers) {
-        this.xhr.setRequestHeader(header, this.headers[header])
+      if (settings.headers) {
+        for (let header in settings.headers) {
+          this.xhr.setRequestHeader(header, settings.headers[header])
+        }
       }
 
+      // set request timeout
+      this.xhr.timeout = settings.timeout
+
       // send the request
-      this.xhr.send(this.method === 'POST' ? this.data : null)
+      this.xhr.send(settings.data)
     })
   }
 
   /**
-  * Trigger an event.
+  * Send the request and return a Promise.
   *
-  * @param  {RequestEvent|ProgressEvent} event Event instance.
-  * @return {Request} this
-  * @protected
-  */
-  trigger(event) {
-    let callback = this.callbacks[event.name]
-
-    callback && callback.func.call(callback.context, event)
-
-    // chainable
-    return this
-  }
-
-  /**
-  * Register event handler.
-  *
-  * @param  {String}   eventName      Event identifier.
-  * @param  {Function} callback       An function receiving an {@link ProgressEvent} as first parameter.
-  * @param  {Object}   [context=null] The callback context.
-  * @return {Request}  this
-  */
-  on(eventName, callback, context = null) {
-    // register envent callback
-    this.callbacks[eventName] = { func: callback, context: context || callback }
-
-    // backup in settings for cloning
-    if (! this.settings.on[eventName]) {
-      this.settings.on[eventName] = [callback, context || callback]
-    }
-
-    // chainable
-    return this
-  }
-
-  /**
-  * Appends fulfillment and rejection handlers to the promise.
-  *
-  * @param  {Function} onFulfilled Fulfillment callback.
-  * @param  {Function} onRejected  Rejection callback.
   * @return {Promise}
   */
-  then(onFulfilled, onRejected) {
-    // not sent...
-    if (! this.promise) {
-      throw new Error('Call the "send" method before calling the "then" method, or set the "send" settings to true.')
-    }
-
-    return this.promise.then(onFulfilled, onRejected)
+  send() {
+    return this._send()
   }
 
   /**
-  * Appends a rejection handler callback to the promise.
-  *
-  * @param {Function} onRejected Rejection callback.
-  * @return {Promise}
+  * Abort the this.
   */
-  catch(onRejected) {
-    // not sent...
-    if (! this.promise) {
-      throw new Error('Call the "send" method before calling the "catch" method, or set the "send" settings to true.')
-    }
-
-    return this.promise.catch(onRejected)
+  abort() {
+    this.xhr && this.xhr.abort()
   }
 }
 
-// Exports
 export default Request
 export { Request }

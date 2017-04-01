@@ -1,65 +1,38 @@
 import Request from './request'
+import * as eventTypes from './request/event/types'
 
 /**
-* Make, send and return an HTTP request.
+* Make and send an {XMLHttpRequest} and return an Promise.
 *
-* @param  {Object} [settings={}] Request settings. See {@link Request} for details.
-* @return {Request}
-* @example
-* // Send GET request with data
-* request({ method: 'GET', url: 'hello.html', data: { name: 'Jon Doe' } })
-* .then(event => callback)  // done
-* .catch(event => callback) // error
-* .then(result => callback) // always
+* @param  {Object} [settings={}] See {@link src/http/request/settings.js~settings} for defaults keys/values.
+* @return {Promise}
 */
 function request(settings = {}) {
-  // force send request after creation if not defined
-  settings = Object.assign({ send: true }, settings)
-
-  // create (send) and return the request
-  return new Request(settings)
+  return new Request(settings).send()
 }
 
 /**
-* Make, send and return an GET request.
+* Make and send an {XMLHttpRequest} and return an Promise.
 *
-* @param  {Object} [settings={}] Request settings. See {@link Request} for details.
-* @return {Request}
-* @example
-* // Send GET request
-* get({ url: 'hello.html' })
-* .then(event => callback)  // done
-* .catch(event => callback) // error
-* .then(result => callback) // always
+* @param  {Object} [settings={}] See {@link src/http/request/settings.js~settings} for defaults keys/values.
+* @return {Promise}
 */
 function get(settings = {}) {
-  // force GET method
   settings.method = 'GET'
-
-  // create and return the request
-  return request(settings)
+  return new Request(settings).send()
 }
 
 /**
-* Make, send and return an POST request.
+* Make and send an {XMLHttpRequest} and return an Promise.
 *
-* @param  {Object} [settings={}] Request settings. See {@link Request} for details.
-* @return {Request}
-* @example
-* // Send POST request with data
-* post({ url: 'hello.html', data: { name: 'Jon Doe' } })
-* .then(event => callback)  // done
-* .catch(event => callback) // error
-* .then(result => callback) // always
+* @param  {Object} [settings={}] See {@link src/http/request/settings.js~settings} for defaults keys/values.
+* @return {Promise}
 */
 function post(settings = {}) {
-  // force POST method
   settings.method = 'POST'
-
-  // create and return the request
-  return request(settings)
+  return new Request(settings).send()
 }
 
 // Exports
-export default Request
-export { request, get, post }
+export default { Request, request, get, post, eventTypes }
+export { Request, request, get, post, eventTypes }
