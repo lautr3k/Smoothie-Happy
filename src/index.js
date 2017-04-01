@@ -4,6 +4,7 @@
 */
 export const VERSION = '2.0.0'
 
-import http from './http'
+import * as http from './http'
+import * as board from './board'
 
-export { http }
+export { http, board }

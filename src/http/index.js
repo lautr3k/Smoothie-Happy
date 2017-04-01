@@ -34,5 +34,5 @@ function post(settings = {}) {
 }
 
 // Exports
-export default { Request, request, get, post, eventTypes }
+export default Request
 export { Request, request, get, post, eventTypes }
