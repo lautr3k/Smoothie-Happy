@@ -15,7 +15,7 @@ import Attempt from './payload/attempt'
 * }
 *
 * new Request({
-*   url   : url,
+*   url   : 'http://192.168.1.102/command',
 *   method: 'POST',
 *   data  : 'version\n',
 *   on    : {
