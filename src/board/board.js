@@ -68,6 +68,18 @@ class Board {
   /**
   * Send an request to the board (GET by default).
   *
+  * ```
+  * var board = new sh.board.Board({ address: '192.168.1.102' });
+  *
+  * board.sendRequest({ url: 'sd/config' })
+  * .then(function(event) {
+  *   console.info('then:', event);
+  * })
+  * .catch(function(event) {
+  *   console.error('catch:', event);
+  * });
+  * ```
+  *
   * @param  {Object} [settings = {}] Request settings (see {@link BoardRequest} for more details).
   * @return {Promise<RequestEvent>}
   */
@@ -88,6 +100,19 @@ class Board {
 
   /**
   * Send an command to the board.
+  *
+  * ```
+  * var board = new sh.board.Board({ address: '192.168.1.102' });
+  *
+  * board.sendCommand('ls -s sd/')
+  * .then(function(event) {
+  *   console.info('then:', event);
+  *   console.info('data:', event.payload.data);
+  * })
+  * .catch(function(event) {
+  *   console.error('catch:', event);
+  * });
+  * ```
   *
   * @param  {String} command         Command line.
   * @param  {Object} [settings = {}] Request settings (see {@link BoardCommand} for more details).
