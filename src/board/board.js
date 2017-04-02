@@ -155,6 +155,7 @@ class Board {
         this.info = event.payload.data
         resolve(event.payload.data)
       })
+      .catch(reject)
     })
   }
 }
