@@ -43,6 +43,23 @@ class Board {
     * @protected
     */
     this.uuid = uuid()
+
+    /**
+    * Board info parsed from version command.
+    * ```
+    * {
+    *   branch: "edge",
+    *   hash  : "9ab4538",
+    *   date  : "Oct 10 2016 04:09:42",
+    *   mcu   : "LPC1769",
+    *   clock : "120MHz"
+    * }
+    * ```
+    * @type {Object|null}
+    * @default null
+    * @protected
+    */
+    this.info = null
   }
 
   /**
@@ -120,6 +137,25 @@ class Board {
   */
   sendCommand(command, settings = {}) {
     return this.createCommand(command, settings).send()
+  }
+
+  /**
+  * Get the board informations.
+  *
+  * @param  {Boolean} refresh
+  * @return {Promise<Object|RequestEvent>}
+  */
+  getInfo(refresh = false) {
+    return new Promise((resolve, reject) => {
+      if (! refresh && this.info) {
+        resolve(this.info)
+      }
+
+      return this.sendCommand('version').then(event => {
+        this.info = event.payload.data
+        resolve(event.payload.data)
+      })
+    })
   }
 }
 
