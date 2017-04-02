@@ -51,8 +51,8 @@ class Board {
   * @param {String} topic
   * @param {Mixed}  [payload = null]
   */
-  pub(topic, payload = null) {
-    console.log('pub:', { board: this, topic, payload })
+  publish(topic, payload = null) {
+    console.log('publish:', { board: this, topic, payload })
   }
 
   /**
