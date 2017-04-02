@@ -46,10 +46,9 @@
 /**
 * Parse `ls` command response.
 *
+* ### on success
 * - If the `-s` parameter is not provided, the size is set to 0.
 * - The size is also set to 0 on directories.
-*
-* ### on success
 * ```
 * return [
 *   {"name":"project1","path":"sd/project1","root":"sd","type":"directory","size":0},
@@ -66,7 +65,7 @@
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Object}
+* @return {Array}
 * @throws {Error}
 */
 export function ls(raw, args) {
