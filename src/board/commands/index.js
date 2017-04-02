@@ -75,7 +75,7 @@ export function ls(raw, args) {
   size && args.shift()
 
   // extract path and remove trailing slash
-  let path = args[0].replace(/\/$/, '')
+  let path = args[0] ? args[0].replace(/\/$/, '') : ''
 
   // raw response
   raw = raw.trim()
