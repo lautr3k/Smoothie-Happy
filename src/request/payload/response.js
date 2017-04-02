@@ -1,7 +1,7 @@
 /**
 * Response payload.
 */
-class Response {
+class RequestResponsePayload {
   /**
   * @param {XMLHttpRequest} xhr    An `XMLHttpRequest` instance.
   * @param {Function}       filter Response filter.
@@ -35,5 +35,5 @@ class Response {
 }
 
 // Exports
-export default Response
-export { Response }
+export default RequestResponsePayload
+export { RequestResponsePayload }

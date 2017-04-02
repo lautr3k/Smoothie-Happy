@@ -1,10 +1,10 @@
 import uuid from 'uuid/v4'
-import { settings as defaults } from './settings'
-import * as eventTypes from './event/types'
+import requestSettings from './settings'
+import requestEventTypes from './event/types'
 import RequestEvent from './event/request'
-import Progress from './payload/progress'
-import Response from './payload/response'
-import Attempt from './payload/attempt'
+import RequestProgressPayload from './payload/progress'
+import RequestResponsePayload from './payload/response'
+import RequestAttemptPayload from './payload/attempt'
 
 /**
 * `XMLHttpRequest` wrapper with `Promise` logic.
@@ -19,8 +19,8 @@ import Attempt from './payload/attempt'
 *   method: 'POST',
 *   data  : 'version\n',
 *   on    : {
-*     'before.retry'     : on,
 *     'retry'            : on,
+*     'retry.send'       : on,
 *     'retry.limit'      : on,
 *
 *     'download.load'    : on,
@@ -55,8 +55,8 @@ class Request {
   /**
   * Encode data object to uri string `key_1=value_1&key_2=value_2`.
   *
-  * @param  {Object} data
-  * @return {Object}
+  * @param  {Object<String, String>} data
+  * @return {String}
   */
   static encodeData(data) {
     // no data
@@ -80,8 +80,8 @@ class Request {
   /**
   * Join data to url.
   *
-  * @param  {String}        url
-  * @param  {String|Object} data
+  * @param  {String}                        url
+  * @param  {String|Object<String, String>} data
   * @return {String}
   */
   static joinUrlData(url, data) {
@@ -89,15 +89,15 @@ class Request {
   }
 
   /**
-  * @param {Object} settings See {@link src/http/request/settings.js~settings} for defaults keys/values.
+  * @param {Object} settings See {@link src/request/settings.js~requestSettings} for defaults keys/values.
   */
   constructor(settings = {}) {
     /**
-    * Request settings, see {@link src/http/request/settings.js~settings} for defaults keys/values.
+    * Request settings, see {@link src/request/settings.js~requestSettings} for defaults keys/values.
     * @type {Object}
     * @protected
     */
-    this.settings = Object.assign({}, defaults, settings)
+    this.settings = Object.assign({}, requestSettings, settings)
 
     /**
     * Unique identifier (uuid/v4).
@@ -156,7 +156,7 @@ class Request {
   /**
   * Send the request and return a Promise.
   *
-  * @return {Promise}
+  * @return {Promise<RequestEvent>}
   * @throws {Error}
   */
   _send() {
@@ -227,7 +227,7 @@ class Request {
 
       // on progress
       let onProgress = (type, event) => {
-        createEvent(type, event, new Progress(event))
+        createEvent(type, event, new RequestProgressPayload(event))
       }
 
       // on load
@@ -236,7 +236,7 @@ class Request {
         let status = this.xhr.status
 
         if (! status) {
-          return _reject(eventTypes.DOWNLOAD_ERROR, event, 'Unknown HTTP error.')
+          return _reject(requestEventTypes.DOWNLOAD_ERROR, event, 'Unknown HTTP error.')
         }
 
         // let user check the status
@@ -252,7 +252,7 @@ class Request {
         let payload
 
         try { // catch filter error
-          payload = new Response(this.xhr, settings.filters.response)
+          payload = new RequestResponsePayload(this.xhr, settings.filters.response)
         }
         catch (error) {
           return _reject(type, event, error)
@@ -270,18 +270,18 @@ class Request {
       }
 
       // download events
-      this.xhr.onload     = event => onLoad(eventTypes.DOWNLOAD_LOAD, event)
-      this.xhr.onabort    = event => onAbort(eventTypes.DOWNLOAD_ABORT, event)
-      this.xhr.onerror    = event => onError(eventTypes.DOWNLOAD_ERROR, event)
-      this.xhr.ontimeout  = event => onTimeout(eventTypes.DOWNLOAD_TIMEOUT, event)
-      this.xhr.onprogress = event => onProgress(eventTypes.DOWNLOAD_PROGRESS, event)
+      this.xhr.onload     = event => onLoad(requestEventTypes.DOWNLOAD_LOAD, event)
+      this.xhr.onabort    = event => onAbort(requestEventTypes.DOWNLOAD_ABORT, event)
+      this.xhr.onerror    = event => onError(requestEventTypes.DOWNLOAD_ERROR, event)
+      this.xhr.ontimeout  = event => onTimeout(requestEventTypes.DOWNLOAD_TIMEOUT, event)
+      this.xhr.onprogress = event => onProgress(requestEventTypes.DOWNLOAD_PROGRESS, event)
 
       // upload events
-      this.xhr.upload.onload     = event => onProgress(eventTypes.UPLOAD_LOAD, event)
-      this.xhr.upload.onabort    = event => onAbort(eventTypes.UPLOAD_ABORT, event)
-      this.xhr.upload.onerror    = event => onError(eventTypes.UPLOAD_ERROR, event)
-      this.xhr.upload.ontimeout  = event => onTimeout(eventTypes.UPLOAD_TIMEOUT, event)
-      this.xhr.upload.onprogress = event => onProgress(eventTypes.UPLOAD_PROGRESS, event)
+      this.xhr.upload.onload     = event => onProgress(requestEventTypes.UPLOAD_LOAD, event)
+      this.xhr.upload.onabort    = event => onAbort(requestEventTypes.UPLOAD_ABORT, event)
+      this.xhr.upload.onerror    = event => onError(requestEventTypes.UPLOAD_ERROR, event)
+      this.xhr.upload.ontimeout  = event => onTimeout(requestEventTypes.UPLOAD_TIMEOUT, event)
+      this.xhr.upload.onprogress = event => onProgress(requestEventTypes.UPLOAD_PROGRESS, event)
 
       // set request headers
       if (settings.headers) {
@@ -301,20 +301,20 @@ class Request {
   /**
   * Send the request and return a Promise.
   *
-  * @return {Promise}
+  * @return {Promise<RequestEvent>}
   */
   send() {
     return this._send().catch(event => {
       // trigger user callback
       let triggerEvent = (type, event) => this._triggerEvent(
-        new RequestEvent(type, event.event, this, new Attempt(this))
+        new RequestEvent(type, event.event, this, new RequestAttemptPayload(this))
       )
 
       // retry on timeout error if attempts limit is not reached
       if (event.type.endsWith('timeout')) {
         if (this.attempts < this.settings.maxAttempts) {
           // call user callback
-          triggerEvent(eventTypes.BEFORE_RETRY, event)
+          triggerEvent(requestEventTypes.BEFORE_RETRY, event)
 
           // delayed retry
           return new Promise((resolve, reject) => {
@@ -323,7 +323,7 @@ class Request {
               this.xhr = null
 
               // call user callback
-              triggerEvent(eventTypes.RETRY, event)
+              triggerEvent(requestEventTypes.RETRY, event)
 
               // (re)send the request
               return this.send().then(resolve).catch(reject)
@@ -332,10 +332,10 @@ class Request {
         }
 
         // call user callback
-        triggerEvent(eventTypes.RETRY_LIMIT, event)
+        triggerEvent(requestEventTypes.RETRY_LIMIT, event)
 
         let payload = new Error('Too many attempts (max: ' + this.attempts + ').')
-        event       = new RequestEvent(eventTypes.DOWNLOAD_ERROR, event.event, this, payload)
+        event       = new RequestEvent(requestEventTypes.DOWNLOAD_ERROR, event.event, this, payload)
       }
 
       return Promise.reject(event)

@@ -1,7 +1,7 @@
 /**
 * Attempt payload.
 */
-class Attempt {
+class RequestAttemptPayload {
   /**
   * @param {Request} request
   */
@@ -30,5 +30,5 @@ class Attempt {
 }
 
 // Exports
-export default Attempt
-export { Attempt }
+export default RequestAttemptPayload
+export { RequestAttemptPayload }

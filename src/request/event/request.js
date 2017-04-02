@@ -7,14 +7,15 @@
 */
 class RequestEvent {
   /**
-  * @param {String}                  type    Event type, see {@link src/http/request/event/types.js} for possible values.
-  * @param {ProgressEvent}           event   Original progress event.
-  * @param {Request}                 request Request instance.
-  * @param {Progress|Response|Error} payload Request payload.
+  * @param {String}        type    Event type, see {@link src/request/event/types.js~requestEventTypes} for possible values.
+  * @param {ProgressEvent} event   Original progress event.
+  * @param {Request}       request Request instance.
+  * @param {RequestProgressPayload|RequestResponsePayload|RequestAttemptPayload|Error}
+  *                        payload Request payload.
   */
   constructor(type, event, request, payload = null) {
     /**
-    * Event type, see {@link src/http/request/event/types.js} for possible values.
+    * Event type, see {@link src/request/event/types.js~requestEventTypes} for possible values.
     * @type {String}
     * @protected
     */
@@ -36,7 +37,7 @@ class RequestEvent {
 
     /**
     * Event payload.
-    * @type {Mixed}
+    * @type {RequestProgressPayload|RequestResponsePayload|RequestAttemptPayload|Error}
     * @protected
     */
     this.payload = payload

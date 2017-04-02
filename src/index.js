@@ -4,7 +4,7 @@
 */
 export const VERSION = '2.0.0'
 
-import * as http from './http'
-import * as board from './board'
+// public interfaces
+import * as request from './request'
 
-export { http, board }
+export { request }

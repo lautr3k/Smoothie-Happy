@@ -1,7 +1,7 @@
 /**
 * Progression payload.
 */
-class Progress {
+class RequestProgressPayload {
   /**
   * @param {ProgressEvent} event Original progress event.
   */
@@ -37,5 +37,5 @@ class Progress {
 }
 
 // Exports
-export default Progress
-export { Progress }
+export default RequestProgressPayload
+export { RequestProgressPayload }
