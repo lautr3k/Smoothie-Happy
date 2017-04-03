@@ -51,12 +51,12 @@
 * - The size is also set to 0 on directories.
 * ```
 * return [
-*   {"name":"project1","path":"sd/project1","root":"sd","type":"directory","size":0},
-*   {"name":"firmware.cur","path":"sd/firmware.cur","root":"sd","type":"file","size":368144},
-*   {"name":"config","path":"sd/config","root":"sd","type":"file","size":29417},
-*   {"name":"file1.gcode","path":"sd/file1.gcode","root":"sd","type":"file","size":1914257},
-*   {"name":"file2.gcode","path":"sd/file2.gcode","root":"sd","type":"file","size":0},
-*   {"name":"file3.gcode","path":"sd/file3.gcode","root":"sd","type":"file","size":1062811}
+*   {"extension":"","name":"project1","path":"sd/project1","parent":"sd","type":"directory","size":0},
+*   {"extension":".cur","name":"firmware.cur","path":"sd/firmware.cur","parent":"sd","type":"file","size":368144},
+*   {"extension":"","name":"config","path":"sd/config","parent":"sd","type":"file","size":29417},
+*   {"extension":".gcode","name":"file1.gcode","path":"sd/file1.gcode","parent":"sd","type":"file","size":1914257},
+*   {"extension":".gcode","name":"file2.gcode","path":"sd/file2.gcode","parent":"sd","type":"file","size":0},
+*   {"extension":".gcode","name":"file3.gcode","path":"sd/file3.gcode","parent":"sd","type":"file","size":1062811}
 * ]
 * ```
 * ### on error
@@ -97,6 +97,8 @@ export function ls(raw, args) {
   let file  = null
   let isDir = false
 
+  let extension
+
   // for each lines (file)
   lines.forEach(line => {
     // remove trailing spaces
@@ -110,13 +112,20 @@ export function ls(raw, args) {
         // is directory ?
         isDir = info[2] == '/'
 
+        extension = ''
+
+        if (info[1].includes('.')) {
+          extension = '.' + info[1].split('.').pop()
+        }
+
         // set file info
         files.push({
           name: info[1],
           path: path + '/' + info[1],
-          root: path.length ? path : '/',
+          parent: path.length ? path : '/',
           type: isDir ? 'directory' : 'file',
-          size: isDir ? 0 : parseInt(info[2] || 0)
+          size: isDir ? 0 : parseInt(info[2] || 0),
+          extension: extension
         })
       }
     }
