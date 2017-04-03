@@ -3,6 +3,8 @@ import boardSettings from './settings'
 import BoardRequest from './request'
 import BoardCommand from './command'
 import { normalizePath } from './util'
+import boardTopics from './topics'
+import BoardInfo from './info'
 
 /**
 * Board class.
@@ -71,9 +73,9 @@ class Board {
   }
 
   /**
-  * Publish an event.
+  * Publish an event, see {@link src/board/topics/index.js} for the topics list.
   *
-  * @param {String} topic
+  * @param {String} topic See {@link src/board/topics/index.js} for possible values.
   * @param {Mixed}  [payload = null]
   */
   publish(topic, payload = null) {
@@ -160,8 +162,9 @@ class Board {
       }
 
       return this.sendCommand('version').then(event => {
-        this.info = event.payload.data
-        resolve(event.payload.data)
+        this.info = new BoardInfo(event.payload.data)
+        this.publish(boardTopics.INFO_UPDATE, this.info)
+        resolve(this.info)
       })
       .catch(reject)
     })
@@ -201,7 +204,7 @@ class Board {
           // update board file tree
           if (folder.path === '/') {
             this.fileTree = folder
-            this.publish('fileTree.update', folder)
+            this.publish(boardTopics.FILETREE_UPDATE, folder)
           }
 
           resolve(folder)

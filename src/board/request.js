@@ -21,13 +21,13 @@ class BoardRequest extends Request {
         let callback = settings.on[topic]
 
         settings.on[topic] = event => {
-          board.publish(topic, event)
+          board.publish('request.' + topic, event)
           callback(event)
         }
       }
       else {
         settings.on[topic] = event => {
-          board.publish(topic, event)
+          board.publish('request.' + topic, event)
         }
       }
     }
