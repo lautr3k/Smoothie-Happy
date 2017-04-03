@@ -1,3 +1,5 @@
+import { normalizePath } from '../util'
+
 // -----------------------------------------------------------------------------
 // List of commands (12/2016)
 // http://smoothieware.org/console-commands
@@ -51,12 +53,12 @@
 * - The size is also set to 0 on directories.
 * ```
 * return [
-*   {"extension":"","name":"project1","path":"sd/project1","parent":"sd","type":"directory","size":0},
-*   {"extension":".cur","name":"firmware.cur","path":"sd/firmware.cur","parent":"sd","type":"file","size":368144},
-*   {"extension":"","name":"config","path":"sd/config","parent":"sd","type":"file","size":29417},
-*   {"extension":".gcode","name":"file1.gcode","path":"sd/file1.gcode","parent":"sd","type":"file","size":1914257},
-*   {"extension":".gcode","name":"file2.gcode","path":"sd/file2.gcode","parent":"sd","type":"file","size":0},
-*   {"extension":".gcode","name":"file3.gcode","path":"sd/file3.gcode","parent":"sd","type":"file","size":1062811}
+*   {"extension":"","name":"project1","path":"/sd/project1","parent":"/sd","type":"directory","size":0},
+*   {"extension":".cur","name":"firmware.cur","path":"/sd/firmware.cur","parent":"/sd","type":"file","size":368144},
+*   {"extension":"","name":"config","path":"/sd/config","parent":"/sd","type":"file","size":29417},
+*   {"extension":".gcode","name":"file1.gcode","path":"/sd/file1.gcode","parent":"/sd","type":"file","size":1914257},
+*   {"extension":".gcode","name":"file2.gcode","path":"/sd/file2.gcode","parent":"/sd","type":"file","size":0},
+*   {"extension":".gcode","name":"file3.gcode","path":"/sd/file3.gcode","parent":"/sd","type":"file","size":1062811}
 * ]
 * ```
 * ### on error
@@ -74,8 +76,8 @@ export function ls(raw, args) {
 
   size && args.shift()
 
-  // extract path and remove trailing slash
-  let path = args[0] ? args[0].replace(/\/$/, '') : ''
+  // extract and normalize path
+  let path = normalizePath(args[0] || '')
 
   // raw response
   raw = raw.trim()
@@ -121,11 +123,11 @@ export function ls(raw, args) {
         // set file info
         files.push({
           name: info[1],
+          extension: extension,
           path: path + '/' + info[1],
           parent: path.length ? path : '/',
           type: isDir ? 'directory' : 'file',
-          size: isDir ? 0 : parseInt(info[2] || 0),
-          extension: extension
+          size: isDir ? 0 : parseInt(info[2] || 0)
         })
       }
     }
