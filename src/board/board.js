@@ -2,6 +2,7 @@ import uuid from 'uuid/v4'
 import boardSettings from './settings'
 import BoardRequest from './request'
 import BoardCommand from './command'
+import { normalizePath } from './util'
 
 /**
 * Board class.
@@ -60,6 +61,13 @@ class Board {
     * @protected
     */
     this.info = null
+
+    /**
+    * Flat files tree.
+    * @type {BoardFolder}
+    * @protected
+    */
+    this.fileTree = new BoardFolder('/')
   }
 
   /**
@@ -142,7 +150,7 @@ class Board {
   /**
   * Get the board informations.
   *
-  * @param  {Boolean} refresh
+  * @param  {Boolean} [refresh = false]
   * @return {Promise<Object|RequestEvent>}
   */
   getInfo(refresh = false) {
@@ -157,6 +165,115 @@ class Board {
       })
       .catch(reject)
     })
+  }
+
+  /**
+  * Get the files tree (recursive).
+  *
+  * @param  {String}  [path    = '/']
+  * @param  {Boolean} [refresh = false]
+  * @return {Promise<BoardFolder|RequestEvent>}
+  */
+  listFiles(path = '/', refresh = false) {
+    // execute all commands in a promise
+    return new Promise((resolve, reject) => {
+      // get first directory contents
+      return this.sendCommand('ls -s ' + path).then(event => {
+        // create main folder
+        let folder = new BoardFolder(path)
+
+        // add direct children
+        let children = folder.addChildren(event.payload.data)
+
+        // scan sub-directories
+        let promises = []
+
+        children.forEach(child => {
+          if (child instanceof BoardFolder) {
+            promises.push(this.sendCommand('ls -s ' + child.path).then(f => {
+              child.addChildren(f.payload.data)
+            }))
+          }
+        })
+
+        // wait for all promises done
+        return Promise.all(promises).then(results => {
+          // update board file tree
+          if (folder.path === '/') {
+            this.fileTree = folder
+            this.publish('fileTree.update', folder)
+          }
+
+          resolve(folder)
+        })
+      })
+      // rejected promise
+      .catch(reject)
+    })
+  }
+}
+
+class BoardFile {
+  constructor(file, parent) {
+    this.parent    = parent
+    this.size      = file.size
+    this.path      = file.path
+    this.name      = file.name
+    this.extension = file.extension
+  }
+}
+
+class BoardFolder {
+  constructor(path, parent = null) {
+    this.path     = normalizePath(path)
+    this.name     = this.path.split('/').pop()
+    this.parent   = parent
+    this.children = []
+    this.size     = 0
+  }
+
+  addFile(file) {
+    // update folder size
+    this.size += file.size
+
+    // update parent folder size
+    if (this.parent) {
+      this.parent.size += file.size
+    }
+
+    // create, add and return the new file
+    let boardFile = new BoardFile(file, this)
+
+    this.children.push(boardFile)
+
+    return boardFile
+  }
+
+  addFolder(folder) {
+    // create, add and return the new folder
+    let boardFolder = new BoardFolder(folder.path, this)
+
+    this.children.push(boardFolder)
+
+    return boardFolder
+  }
+
+  addChild(child) {
+    if (child.type === 'file') {
+      return this.addFile(child)
+    }
+
+    return this.addFolder(child)
+  }
+
+  addChildren(children) {
+    let results = []
+
+    children.forEach(child => {
+      results.push(this.addChild(child))
+    })
+
+    return results
   }
 }
 
