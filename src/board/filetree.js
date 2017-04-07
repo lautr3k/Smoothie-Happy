@@ -5,10 +5,34 @@ import { normalizePath, filename } from './util'
 */
 class BoardFile {
   constructor(file) {
-    this.parent    = file.parent
-    this.size      = file.size
-    this.path      = file.path
-    this.name      = file.name
+    /**
+    * Parent folder path `/sd/my_folder`.
+    * @type {String}
+    */
+    this.parent = file.parent
+
+    /**
+    * File size (bytes).
+    * @type {Integer}
+    */
+    this.size = file.size
+
+    /**
+    * File path `/sd/my_folder/my_file.ext`.
+    * @type {String}
+    */
+    this.path = file.path
+
+    /**
+    * File name with extension `my_file.ext`.
+    * @type {String}
+    */
+    this.name = file.name
+
+    /**
+    * File extension with starting dot `.gcode`.
+    * @type {String}
+    */
     this.extension = file.extension
   }
 }
@@ -18,10 +42,29 @@ class BoardFile {
 */
 class BoardFolder {
   constructor(folder) {
-    this.parent = folder.parent
-    this.size   = folder.size
-    this.path   = folder.path
-    this.name   = folder.name
+    /**
+    * Parent folder path `/sd`.
+    * @type {String}
+    */
+    this.parent = file.parent
+
+    /**
+    * Folder size (bytes).
+    * @type {Integer}
+    */
+    this.size = file.size
+
+    /**
+    * Folder path `/sd/my_folder`.
+    * @type {String}
+    */
+    this.path = file.path
+
+    /**
+    * Folder name `my_folder`.
+    * @type {String}
+    */
+    this.name = file.name
   }
 }
 
@@ -29,15 +72,41 @@ class BoardFolder {
 * Board file tree class.
 */
 class BoardFileTree {
+  /**
+  * Constructor...
+  */
   constructor() {
+    /**
+    * Flat file tree.
+    * @type {Map}
+    */
     this.tree = new Map()
+
+    /**
+    * File tree size (bytes).
+    * @type {Integer}
+    */
     this.size = 0
   }
 
+  /**
+  * Make and return a child object.
+  *
+  * @param  {Object} child Child object from `ls -s` command.
+  * @return {BoardFile|BoardFolder}
+  * @protected
+  */
   makeChild(child) {
     return child.type === 'file' ? new BoardFile(child) : new BoardFolder(child)
   }
 
+  /**
+  * Update tree size.
+  *
+  * @param  {BoardFile|BoardFolder} child
+  * @param  {Integer} size
+  * @protected
+  */
   updateSize(child, size) {
     this.size += size
 
@@ -49,6 +118,12 @@ class BoardFileTree {
     }
   }
 
+  /**
+  * Remove a child and all of his children.
+  *
+  * @param  {BoardFile|BoardFolder} child Child name or object to remove.
+  * @return {Integer|null} Number of child removed.
+  */
   remove(child) {
     let path = child.path || normalizePath(child)
     let file = this.tree.get(path)
@@ -74,6 +149,11 @@ class BoardFileTree {
     return removed
   }
 
+  /**
+  * Set a new child.
+  *
+  * @param {Object} child Child object from `ls -s` command.
+  */
   set(child) {
     let file = this.makeChild(child)
 
@@ -82,14 +162,32 @@ class BoardFileTree {
     this.updateSize(file, file.size)
   }
 
+  /**
+  * Return if child path exists.
+  *
+  * @param  {String} path
+  * @return {Boolean}
+  */
   has(path) {
     return this.tree.has(normalizePath(path))
   }
 
+  /**
+  * Return a child from path if exists.
+  *
+  * @param  {String} path
+  * @return {BoardFile|BoardFolder|null}
+  */
   get(path) {
     return this.tree.get(normalizePath(path))
   }
 
+  /**
+  * Return all children from path.
+  *
+  * @param  {String} path
+  * @return {Map}
+  */
   list(path) {
     let tree = new Map()
 
