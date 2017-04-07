@@ -209,4 +209,4 @@ class BoardFileTree {
 
 // Exports
 export default BoardFileTree
-export { BoardFileTree }
+export { BoardFileTree, BoardFolder, BoardFile }
