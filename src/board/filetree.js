@@ -4,6 +4,9 @@ import { normalizePath, filename } from './util'
 * Board file class.
 */
 class BoardFile {
+  /**
+  * @param {Object} file File object from `ls -s` command.
+  */
   constructor(file) {
     /**
     * Parent folder path `/sd/my_folder`.
@@ -41,6 +44,9 @@ class BoardFile {
 * Board folder class.
 */
 class BoardFolder {
+  /**
+  * @param {Object} folder Folder object from `ls -s` command.
+  */
   constructor(folder) {
     /**
     * Parent folder path `/sd`.
