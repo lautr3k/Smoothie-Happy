@@ -53,7 +53,7 @@ import { normalizePath } from '../util'
 * - The size is also set to 0 on directories.
 * ```
 * return [
-*   {"extension":"","name":"project1","path":"/sd/project1","parent":"/sd","type":"directory","size":0},
+*   {"extension":"","name":"project1","path":"/sd/project1","parent":"/sd","type":"folder","size":0},
 *   {"extension":".cur","name":"firmware.cur","path":"/sd/firmware.cur","parent":"/sd","type":"file","size":368144},
 *   {"extension":"","name":"config","path":"/sd/config","parent":"/sd","type":"file","size":29417},
 *   {"extension":".gcode","name":"file1.gcode","path":"/sd/file1.gcode","parent":"/sd","type":"file","size":1914257},
@@ -100,6 +100,7 @@ export function ls(raw, args) {
   let isDir = false
 
   let extension
+  let rootPath = path !== '/' ? path : ''
 
   // for each lines (file)
   lines.forEach(line => {
@@ -112,7 +113,7 @@ export function ls(raw, args) {
 
       if (info) {
         // is directory ?
-        isDir = info[2] == '/'
+        isDir = info[2] === '/'
 
         extension = ''
 
@@ -124,9 +125,9 @@ export function ls(raw, args) {
         files.push({
           name: info[1],
           extension: extension,
-          path: path + '/' + info[1],
-          parent: path.length ? path : '/',
-          type: isDir ? 'directory' : 'file',
+          parent: rootPath.length ? rootPath : '/',
+          path: rootPath + '/' + info[1],
+          type: isDir ? 'folder' : 'file',
           size: isDir ? 0 : parseInt(info[2] || 0)
         })
       }

@@ -2,9 +2,10 @@ import uuid from 'uuid/v4'
 import boardSettings from './settings'
 import BoardRequest from './request'
 import BoardCommand from './command'
-import { normalizePath } from './util'
 import boardTopics from './topics'
 import BoardInfo from './info'
+import BoardFileTree from './filetree'
+import { normalizePath } from './util'
 
 /**
 * Board class.
@@ -66,10 +67,10 @@ class Board {
 
     /**
     * Flat files tree.
-    * @type {BoardFolder}
+    * @type {BoardFileTree}
     * @protected
     */
-    this.fileTree = new BoardFolder('/')
+    this.fileTree = new BoardFileTree()
   }
 
   /**
@@ -79,7 +80,7 @@ class Board {
   * @param {Mixed}  [payload = null]
   */
   publish(topic, payload = null) {
-    console.log('publish:', { board: this, topic, payload })
+    // console.log('publish:', { board: this, topic, payload })
   }
 
   /**
@@ -173,110 +174,48 @@ class Board {
   /**
   * Get the files tree (recursive).
   *
-  * @param  {String}  [path    = '/']
+  * @param  {String} [path    = '/']
   * @param  {Boolean} [refresh = false]
-  * @return {Promise<BoardFolder|RequestEvent>}
+  * @param  {Boolean} [firstCall = true]
+  * @return {Promise<Map|RequestEvent>}
   */
-  listFiles(path = '/', refresh = false) {
-    // execute all commands in a promise
-    return new Promise((resolve, reject) => {
-      // get first directory contents
-      return this.sendCommand('ls -s ' + path).then(event => {
-        // create main folder
-        let folder = new BoardFolder(path)
+  listFiles(path = '/', refresh = false, firstCall = true) {
+    // from cache
+    path = normalizePath(path)
 
-        // add direct children
-        let children = folder.addChildren(event.payload.data)
+    let tree = path === '/' ? this.fileTree : this.fileTree.list(path)
 
-        // scan sub-directories
-        let promises = []
+    if (tree.size && ! refresh) {
+      return Promise.resolve(tree)
+    }
 
-        children.forEach(child => {
-          if (child instanceof BoardFolder) {
-            promises.push(this.sendCommand('ls -s ' + child.path).then(f => {
-              child.addChildren(f.payload.data)
-            }))
-          }
-        })
+    // try to get the directory contents
+    return this.sendCommand('ls -s ' + path).then(event => {
+      // recursion...
+      let promises = []
 
-        // wait for all promises done
-        return Promise.all(promises).then(results => {
-          // update board file tree
-          if (folder.path === '/') {
-            this.fileTree = folder
-            this.publish(boardTopics.FILETREE_UPDATE, folder)
-          }
+      // children collection (file or directory)
+      event.payload.data.forEach(child => {
+        // set new child
+        this.fileTree.set(child)
 
-          resolve(folder)
-        })
+        // get sub-directory contents
+        if (child.type === 'folder') {
+          promises.push(this.listFiles(child.path, true, false))
+        }
       })
-      // rejected promise
-      .catch(reject)
+
+      // wait for all promises done
+      return Promise.all(promises).then(results => {
+        let tree = this.fileTree.list(path)
+
+        if (firstCall) {
+          this.publish(boardTopics.FILETREE_UPDATE, tree)
+        }
+
+        return Promise.resolve(tree)
+      })
     })
-  }
-}
-
-class BoardFile {
-  constructor(file, parent) {
-    this.parent    = parent
-    this.size      = file.size
-    this.path      = file.path
-    this.name      = file.name
-    this.extension = file.extension
-  }
-}
-
-class BoardFolder {
-  constructor(path, parent = null) {
-    this.path     = normalizePath(path)
-    this.name     = this.path.split('/').pop()
-    this.parent   = parent
-    this.children = []
-    this.size     = 0
-  }
-
-  addFile(file) {
-    // update folder size
-    this.size += file.size
-
-    // update parent folder size
-    if (this.parent) {
-      this.parent.size += file.size
-    }
-
-    // create, add and return the new file
-    let boardFile = new BoardFile(file, this)
-
-    this.children.push(boardFile)
-
-    return boardFile
-  }
-
-  addFolder(folder) {
-    // create, add and return the new folder
-    let boardFolder = new BoardFolder(folder.path, this)
-
-    this.children.push(boardFolder)
-
-    return boardFolder
-  }
-
-  addChild(child) {
-    if (child.type === 'file') {
-      return this.addFile(child)
-    }
-
-    return this.addFolder(child)
-  }
-
-  addChildren(children) {
-    let results = []
-
-    children.forEach(child => {
-      results.push(this.addChild(child))
-    })
-
-    return results
   }
 }
 

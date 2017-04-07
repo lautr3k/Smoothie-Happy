@@ -10,3 +10,13 @@ export function normalizePath(path) {
   .replace(/^\/|\/$/, '')
   .toLowerCase()
 }
+
+/**
+* Return filename from path.
+*
+* @param  {String} path
+* @return {String}
+*/
+export function filename(path) {
+  return path.split('/').pop()
+}
