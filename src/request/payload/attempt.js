@@ -14,6 +14,13 @@ class RequestAttemptPayload {
     this.done = request.attempts
 
     /**
+    * Attempts number.
+    * @type {Integer}
+    * @protected
+    */
+    this.num = this.done + 1
+
+    /**
     * Maximum number of attempts.
     * @type {Integer}
     * @protected
