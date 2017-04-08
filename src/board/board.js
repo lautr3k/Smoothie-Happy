@@ -59,7 +59,7 @@ class Board {
     *   clock : "120MHz"
     * }
     * ```
-    * @type {Object|null}
+    * @type {BoardInfo|null}
     * @default null
     * @protected
     */
@@ -154,7 +154,7 @@ class Board {
   * Get the board informations.
   *
   * @param  {Boolean} [refresh = false]
-  * @return {Promise<Object|RequestEvent>}
+  * @return {Promise<BoardInfo|RequestEvent>}
   */
   getInfo(refresh = false) {
     return new Promise((resolve, reject) => {
@@ -171,13 +171,15 @@ class Board {
     })
   }
 
+  /** @typedef {Map<String, BoardFolder|BoardFile>} BoardFileList */
+
   /**
-  * Get the files tree (recursive).
+  * Return a flat file tree for the given path.
   *
-  * @param  {String} [path    = '/']
-  * @param  {Boolean} [refresh = false]
-  * @param  {Boolean} [firstCall = true]
-  * @return {Promise<Map|RequestEvent>}
+  * @param  {String}  [path    = '/']    Path to list file from.
+  * @param  {Boolean} [refresh = false]  Force refresh (no cache).
+  * @param  {Boolean} [firstCall = true] Used internaly for recursion.
+  * @return {Promise<BoardFileList|RequestEvent>}
   */
   listFiles(path = '/', refresh = false, firstCall = true) {
     // from cache
