@@ -10,6 +10,7 @@ class BoardCommand extends BoardRequest {
   * @param {Board}  board       Board instance.
   * @param {Board}  commandLine Command line, see {@link src/board/commands/index.js} for a list of implemented commands.
   * @param {Object} settings    See {@link src/board/settings.js~boardSettings}.request for defaults keys/values.
+  * @param {Object} [settings.parseResponse = true] See {@link src/board/settings.js~boardSettings}.request for defaults keys/values.
   */
   constructor(board, commandLine, settings = {}) {
     // Normalize and split the command line
@@ -21,11 +22,16 @@ class BoardCommand extends BoardRequest {
     // not yet implemented
     let response
 
+    // parse response by default
+    if (settings.parseResponse === undefined) {
+      settings.parseResponse = true
+    }
+
     if (! boardCommands[commandName]) {
-      response = response => { throw new Error('Sorry! The "' + commandName + '" command is not (yet) implemented.') }
+      response = r => { throw new Error('Sorry! The "' + commandName + '" command is not (yet) implemented.') }
     }
     else {
-      response = response => boardCommands[commandName](response, commandArgs)
+      response = r => settings.parseResponse ? boardCommands[commandName](r, commandArgs) : r
     }
 
     // call parent constructor
