@@ -1,6 +1,7 @@
 import uuid from 'uuid/v4'
 import boardSettings from './settings'
 import BoardRequest from './request'
+import requestEventTypes from '../request/event/types'
 import BoardCommand from './command'
 import boardTopics from './topics'
 import BoardInfo from './info'
@@ -247,11 +248,46 @@ class Board {
   * @return {BoardCommand}
   */
   createCommand(command, settings = {}) {
-    return new BoardCommand(this, command, settings)
+    // wrap request events
+    settings.on = settings.on || {}
+
+    for (let key in requestEventTypes) {
+      let topic    = requestEventTypes[key]
+      let callback = settings.on[topic]
+
+      settings.on[topic] = event => {
+        this.publish('command.' + topic, event)
+        callback && callback(event)
+      }
+    }
+
+    let boardCommand = new BoardCommand(this, command, settings)
+    this.publish(boardTopics.COMMAND_CREATE, boardCommand)
+    return boardCommand
   }
 
   /**
   * Send an command to the board.
+  *
+  * @param  {String} boardCommand
+  * @return {Promise<RequestEvent>}
+  */
+  _sendCommand(boardCommand) {
+    this.publish(boardTopics.COMMAND_SEND, boardCommand)
+
+    return boardCommand.send()
+    .then(event => {
+      this.publish(boardTopics.COMMAND_RESPONSE, event)
+      return Promise.resolve(event)
+    })
+    .catch(event => {
+      this.publish(boardTopics.COMMAND_ERROR, event)
+      return Promise.reject(event)
+    })
+  }
+
+  /**
+  * Create and send an command to the board.
   *
   * ```
   * var board = new sh.board.Board({ address: '192.168.1.102' });
@@ -271,7 +307,7 @@ class Board {
   * @return {Promise<RequestEvent>}
   */
   sendCommand(command, settings = {}) {
-    return this.createCommand(command, settings).send()
+    return this._sendCommand(this.createCommand(command, settings))
   }
 
   /**

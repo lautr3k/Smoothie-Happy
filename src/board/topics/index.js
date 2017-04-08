@@ -7,6 +7,28 @@ const boardTopics = {
   INFO_UPDATE    : 'info.update',     // payload: {BoardInfo}
   FILETREE_UPDATE: 'filetree.update', // payload: {BoardFileList}
 
+  COMMAND_CREATE  : 'command.create',   // payload: {BoardCommand}
+  COMMAND_SEND    : 'command.send',     // payload: {BoardCommand}
+  COMMAND_ERROR   : 'command.error',    // payload: {RequestEvent}
+  COMMAND_RESPONSE: 'command.response', // payload: {RequestEvent}
+
+  // COMMAND_XXX payload: {RequestEvent}
+  COMMAND_RETRY       : 'command.retry',       // on retry planned
+  COMMAND_RETRY_SEND  : 'command.retry.send',  // juste before retry
+  COMMAND_RETRY_LIMIT : 'command.retry.limit', // on too many attemps
+
+  COMMAND_DOWNLOAD_LOAD    : 'command.download.load',
+  COMMAND_DOWNLOAD_ABORT   : 'command.download.abort',
+  COMMAND_DOWNLOAD_ERROR   : 'command.download.error',
+  COMMAND_DOWNLOAD_TIMEOUT : 'command.download.timeout',
+  COMMAND_DOWNLOAD_PROGRESS: 'command.download.progress',
+
+  COMMAND_UPLOAD_LOAD    : 'command.upload.load',
+  COMMAND_UPLOAD_ABORT   : 'command.upload.abort',
+  COMMAND_UPLOAD_ERROR   : 'command.upload.error',
+  COMMAND_UPLOAD_TIMEOUT : 'command.upload.timeout',
+  COMMAND_UPLOAD_PROGRESS: 'command.upload.progress',
+
   // REQUEST_XXX payload: {RequestEvent}
   REQUEST_RETRY       : 'request.retry',       // on retry planned
   REQUEST_RETRY_SEND  : 'request.retry.send',  // juste before retry

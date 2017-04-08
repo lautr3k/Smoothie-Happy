@@ -1,5 +1,4 @@
 import Request from '../request'
-import requestEventTypes from '../request/event/types'
 
 /**
 * Board request.
@@ -11,19 +10,6 @@ class BoardRequest extends Request {
   * @param {Object} settings See {@link src/board/settings.js~boardSettings}.request for defaults keys/values.
   */
   constructor(board, settings = {}) {
-    // wrap request events
-    settings.on = settings.on || {}
-
-    for (let key in requestEventTypes) {
-      let topic    = requestEventTypes[key]
-      let callback = settings.on[topic]
-
-      settings.on[topic] = event => {
-        board.publish('request.' + topic, event)
-        callback && callback(event)
-      }
-    }
-
     // call parent constructor
     super(Object.assign({}, board.settings.request, settings, {
       url: 'http://' + board.address + '/' + settings.url
