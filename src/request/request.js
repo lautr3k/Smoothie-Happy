@@ -311,7 +311,7 @@ class Request {
       )
 
       // retry on timeout error if attempts limit is not reached
-      if (event.type.endsWith('timeout')) {
+      if (event.type.endsWith('timeout') || (event.type.endsWith('error') && event.payload.message.startsWith('Unknown network error'))) {
         if (this.attempts < this.settings.maxAttempts) {
           // call user callback
           triggerEvent(requestEventTypes.BEFORE_RETRY, event)
