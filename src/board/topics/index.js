@@ -5,7 +5,7 @@
 */
 const boardTopics = {
   INFO_UPDATE    : 'info.update',     // payload: {BoardInfo}
-  FILETREE_UPDATE: 'filetree.update', // payload: {BoardFolder}
+  FILETREE_UPDATE: 'filetree.update', // payload: {BoardFileList}
 
   // REQUEST_XXX payload: {RequestEvent}
   REQUEST_RETRY       : 'request.retry',       // on retry planned
