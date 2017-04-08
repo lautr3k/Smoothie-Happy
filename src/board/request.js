@@ -15,20 +15,12 @@ class BoardRequest extends Request {
     settings.on = settings.on || {}
 
     for (let key in requestEventTypes) {
-      let topic = requestEventTypes[key]
+      let topic    = requestEventTypes[key]
+      let callback = settings.on[topic]
 
-      if (settings.on[topic]) {
-        let callback = settings.on[topic]
-
-        settings.on[topic] = event => {
-          board.publish('request.' + topic, event)
-          callback(event)
-        }
-      }
-      else {
-        settings.on[topic] = event => {
-          board.publish('request.' + topic, event)
-        }
+      settings.on[topic] = event => {
+        board.publish('request.' + topic, event)
+        callback && callback(event)
       }
     }
 
