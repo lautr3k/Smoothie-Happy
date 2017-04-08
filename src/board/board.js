@@ -71,16 +71,140 @@ class Board {
     * @protected
     */
     this.fileTree = new BoardFileTree()
+
+    /**
+    * Topic subscriptions.
+    * @type {Map}
+    * @protected
+    */
+    this.subscriptions = new Map()
   }
 
   /**
-  * Publish an event, see {@link src/board/topics/index.js} for the topics list.
+  * @typedef  {Object} BoardMessage
+  * @property {Board}  board   Board instance.
+  * @property {String} topic   Topic name, see {@link src/board/topics/index.js} for the topics list.
+  * @property {Mixed}  payload Message payload.
+  */
+
+  /**
+  * Publish message to topic, see {@link src/board/topics/index.js} for the topics list.
   *
-  * @param {String} topic See {@link src/board/topics/index.js} for possible values.
-  * @param {Mixed}  [payload = null]
+  * @param  {String} topic See {@link src/board/topics/index.js} for possible values.
+  * @param  {Mixed}  [payload = null]
   */
   publish(topic, payload = null) {
-    // console.log('publish:', { board: this, topic, payload })
+    // fix topic case
+    topic = topic.trim().toLowerCase()
+
+    // if topic found
+    if (this.subscriptions.has(topic)) {
+      // message payload
+      let message = { board: this, topic, payload }
+
+      // call each registrered callback
+      this.subscriptions.get(topic).forEach(subscription => {
+        subscription.callback.call(subscription.context, message)
+      })
+    }
+  }
+
+  /**
+  * @typedef  {Object} BoardSubscription
+  * @property {String}        uuid     Unique identifier (uuid/v4).
+  * @property {Function}      callback A function that takes as single parameter an {@link BoardMessage} object.
+  * @property {Function|null} context  Callback context to apply on call.
+  */
+
+  /**
+  * Subscribe to topic, see {@link src/board/topics/index.js} for the topics list.
+  *
+  * @param  {String}      topic          Topic name, see {@link src/board/topics/index.js} for the topics list.
+  * @param  {Function}    callback       A function that takes as single parameter an {@link BoardMessage} object.
+  * @param  {Object|null} [context=null] Callback context to apply on call.
+  * @return {BoardSubscription}
+  */
+  subscribe(topic, callback, context = null) {
+    // fix topic case
+    topic = topic.trim().toLowerCase()
+
+    // if first subscription, create new topic
+    if (! this.subscriptions.has(topic)) {
+      this.subscriptions.set(topic, new Map())
+    }
+
+    // fix callback context
+    context = context || callback
+
+    // create new subscription
+    let subscription = { uuid: uuid(), callback, context }
+
+    // register new subscription
+    this.subscriptions.get(topic).set(subscription.uuid, subscription)
+
+    // return the subscription
+    return subscription
+  }
+
+  /**
+  * Unsubscribe from topic.
+  *
+  * @param  {BoardSubscription|String|Array} uuid Subscription, subscription uuid or callback function.
+  * @return {Integer} Number of callback removed.
+  */
+  unsubscribe(uuid) {
+    let removed = 0
+
+    // unsubscribe an array of uuid or function
+    if (Array.isArray(uuid)) {
+      uuid.forEach(id => {
+        removed += this.unsubscribe(id)
+      })
+
+      return removed
+    }
+
+    // unsubscribe from function
+    if (typeof uuid === 'function') {
+      for (let subscriptions of this.subscriptions.values()) {
+        subscriptions.forEach(subscription => {
+          if (subscription.callback === uuid) {
+            removed += this.unsubscribe(subscription.uuid)
+          }
+        })
+      }
+
+      return removed
+    }
+
+    // unsubscribe from uuid string
+    for (let topic of this.subscriptions.keys()) {
+      if (this.subscriptions.get(topic).has(uuid)) {
+        removed += this.subscriptions.get(topic).delete(uuid)
+
+        if (this.subscriptions.get(topic).size === 0) {
+          this.deleteTopic(topic)
+        }
+
+        return removed
+      }
+    }
+
+    return removed
+  }
+
+  /**
+  * Delete entire topic.
+  *
+  * @param  {String} topic Topic name, see {@link src/board/topics/index.js} for the topics list.
+  * @return {Boolean} False if not found.
+  */
+  deleteTopic(topic) {
+    if (this.subscriptions.get(topic)) {
+      return this.subscriptions.delete(topic)
+    }
+
+    return false
   }
 
   /**
