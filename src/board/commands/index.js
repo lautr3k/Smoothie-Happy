@@ -43,6 +43,8 @@ import { normalizePath } from '../util'
 // - thermistors
 // - upload
 // # version
+//
+// # M999
 // -----------------------------------------------------------------------------
 
 export { cat } from './cat'
@@ -58,3 +60,5 @@ export { reset } from './reset'
 export { rm } from './rm'
 export { set_temp } from './set_temp'
 export { version } from './version'
+
+export { M999 } from './M999'
