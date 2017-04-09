@@ -24,7 +24,7 @@ import { normalizePath } from '../util'
 // # ls
 // - md5sum
 // - mem
-// - mv
+// # mv
 // - mkdir
 // - net
 // # ok
@@ -46,5 +46,6 @@ import { normalizePath } from '../util'
 // -----------------------------------------------------------------------------
 
 export { ls } from './ls'
+export { mv } from './mv'
 export { ok } from './ok'
 export { version } from './version'
