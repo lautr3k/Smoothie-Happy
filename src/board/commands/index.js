@@ -36,7 +36,7 @@ import { normalizePath } from '../util'
 // - resume
 // # rm
 // - save
-// - set_temp
+// # set_temp
 // - suspend
 // - switch
 // - test
@@ -56,4 +56,5 @@ export { ok } from './ok'
 export { pwd } from './pwd'
 export { reset } from './reset'
 export { rm } from './rm'
+export { set_temp } from './set_temp'
 export { version } from './version'
