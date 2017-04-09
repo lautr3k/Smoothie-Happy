@@ -27,7 +27,7 @@ class BoardCommand extends BoardRequest {
       settings.parseResponse = true
     }
 
-    if (! boardCommands[commandName]) {
+    if (! boardCommands[commandName] && settings.parseResponse) {
       response = r => { throw new Error('Sorry! The "' + commandName + '" command is not (yet) implemented.') }
     }
     else {
