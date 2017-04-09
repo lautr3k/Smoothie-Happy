@@ -34,7 +34,7 @@ import { normalizePath } from '../util'
 // - remount
 // - reset
 // - resume
-// - rm
+// # rm
 // - save
 // - set_temp
 // - suspend
@@ -48,4 +48,5 @@ import { normalizePath } from '../util'
 export { ls } from './ls'
 export { mv } from './mv'
 export { ok } from './ok'
+export { rm } from './rm'
 export { version } from './version'
