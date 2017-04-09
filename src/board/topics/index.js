@@ -7,6 +7,9 @@ const boardTopics = {
   INFO_UPDATE    : 'info.update',     // payload: {BoardInfo}
   FILETREE_UPDATE: 'filetree.update', // payload: {BoardFileList}
 
+  STATE_HALT : 'state.halt',  // payload: {null}
+  STATE_CLEAR: 'state.clear', // payload: {null}
+
   COMMAND_QUEUE_ADD   : 'command.queue.add'   , // payload: {BoardCommand}
   COMMAND_QUEUE_SEND  : 'command.queue.send'  , // payload: {BoardCommand}
   COMMAND_QUEUE_EMPTY : 'command.queue.empty' , // payload: {null}

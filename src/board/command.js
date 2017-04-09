@@ -1,5 +1,6 @@
 import BoardRequest from './request'
 import * as boardCommands from './commands'
+import boardTopics from './topics'
 
 /**
 * Board request.
@@ -28,10 +29,33 @@ class BoardCommand extends BoardRequest {
     }
 
     if (! boardCommands[commandName] && settings.parseResponse) {
-      response = r => { throw new Error('Sorry! The "' + commandName + '" command is not (yet) implemented.') }
+      response = r => {
+        throw new Error('Sorry! The "' + commandName + '" command is not (yet) implemented.')
+      }
     }
     else {
-      response = r => settings.parseResponse ? boardCommands[commandName](r, commandArgs) : r
+      response = r => {
+        let test = r.trim()
+
+        if (test.startsWith('error:Unsupported command')) {
+          throw new Error('Unsupported command "' + commandName + '".')
+        }
+
+        if (test === '!!') {
+          if (! board.halted) {
+            board.halted = true
+            board.publish(boardTopics.STATE_HALT)
+          }
+
+          throw new Error('System halted !')
+        }
+
+        if (commandName === 'M999') {
+          board.publish(boardTopics.STATE_CLEAR, test !== 'ok')
+        }
+
+        return settings.parseResponse ? boardCommands[commandName](r, commandArgs) : r
+      }
     }
 
     // call parent constructor

@@ -107,6 +107,13 @@ class Board {
     * @protected
     */
     this.pendingCommand = null
+
+    /**
+    * Is system halted ?
+    * @type {Boolean}
+    * @protected
+    */
+    this.halted = false
   }
 
   /**
@@ -558,6 +565,18 @@ class Board {
 
         return Promise.resolve(tree)
       })
+    })
+  }
+
+  /**
+  * Clear state (M999).
+  *
+  * @return {Promise<RequestEvent>}
+  */
+  clearState() {
+    return this.sendCommand('M999').then(event => {
+      this.halted = false
+      return Promise.resolve(event)
     })
   }
 }
