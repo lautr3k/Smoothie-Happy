@@ -1,5 +1,6 @@
 import { get_temp } from './get_temp'
 import { get_pos } from './get_pos'
+import { get_wcs } from './get_wcs'
 import { get_ik } from './get_ik'
 import { get_fk } from './get_fk'
 
@@ -20,7 +21,7 @@ import { get_fk } from './get_fk'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Object}
+* @return {Mixed}
 * @throws {Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#741
 */
@@ -44,6 +45,9 @@ export function get(raw, args) {
       break
     case 'pos':
       func = get_pos
+      break
+    case 'wcs':
+      func = get_wcs
       break
     case 'ik':
       func = get_ik
