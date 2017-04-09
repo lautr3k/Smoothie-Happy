@@ -18,7 +18,7 @@ import { normalizePath } from '../util'
 // - config-set
 // - dfu
 // - fire
-// - get
+// # get
 // # help
 // - load
 // # ls
@@ -47,6 +47,7 @@ import { normalizePath } from '../util'
 
 export { cat } from './cat'
 export { cd } from './cd'
+export { get } from './get'
 export { help } from './help'
 export { ls } from './ls'
 export { mem } from './mem'
