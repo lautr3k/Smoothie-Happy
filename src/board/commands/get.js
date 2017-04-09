@@ -1,5 +1,7 @@
 import { get_temp } from './get_temp'
 import { get_pos } from './get_pos'
+import { get_ik } from './get_ik'
+import { get_fk } from './get_fk'
 
 /**
 * Get command `temp|pos|wcs|state|status|fk|ik`.
@@ -43,7 +45,13 @@ export function get(raw, args) {
     case 'pos':
       func = get_pos
       break
-      default:
+    case 'ik':
+      func = get_ik
+      break
+    case 'fk':
+      func = get_fk
+      break
+    default:
      throw new Error('Sorry! The "get ' + option + '" command is not (yet) implemented.')
   }
 
