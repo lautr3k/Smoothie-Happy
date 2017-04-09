@@ -23,7 +23,7 @@ import { normalizePath } from '../util'
 // - load
 // # ls
 // - md5sum
-// - mem
+// # mem
 // # mv
 // - mkdir
 // - net
@@ -49,6 +49,7 @@ export { cat } from './cat'
 export { cd } from './cd'
 export { help } from './help'
 export { ls } from './ls'
+export { mem } from './mem'
 export { mv } from './mv'
 export { ok } from './ok'
 export { pwd } from './pwd'
