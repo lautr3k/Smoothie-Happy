@@ -5,7 +5,10 @@ import { normalizePath } from '../util'
 *
 * ### on success
 * ```
-* return "ok"
+* return {
+*   source: '/sd/source.gcode',
+*   target: '/sd/target.gcode'
+* }
 * ```
 * ### on error
 * ```
@@ -29,5 +32,5 @@ export function mv(raw, args) {
     throw new Error('Could not move "' + source + '" to "' + target + '".')
   }
 
-  return 'ok'
+  return { source, target }
 }

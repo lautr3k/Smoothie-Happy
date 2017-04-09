@@ -5,7 +5,7 @@ import { normalizePath } from '../util'
 *
 * ### on success
 * ```
-* return "ok"
+* return "/sd/removed_file.gcode"
 * ```
 * ### on error
 * ```
@@ -28,5 +28,5 @@ export function rm(raw, args) {
     throw new Error('Could not remove "' + source + '".')
   }
 
-  return 'ok'
+  return source
 }
