@@ -7,6 +7,13 @@ const boardTopics = {
   INFO_UPDATE    : 'info.update',     // payload: {BoardInfo}
   FILETREE_UPDATE: 'filetree.update', // payload: {BoardFileList}
 
+  COMMAND_QUEUE_ADD   : 'command.queue.add'   , // payload: {BoardCommand}
+  COMMAND_QUEUE_SEND  : 'command.queue.send'  , // payload: {BoardCommand}
+  COMMAND_QUEUE_EMPTY : 'command.queue.empty' , // payload: {null}
+  COMMAND_QUEUE_PAUSE : 'command.queue.pause' , // payload: {Board.commandQueue}
+  COMMAND_QUEUE_RESUME: 'command.queue.resume', // payload: {Board.commandQueue}
+  COMMAND_QUEUE_CLEAR : 'command.queue.clear' , // payload: {Board.commandQueue}
+
   COMMAND_CREATE  : 'command.create',   // payload: {BoardCommand}
   COMMAND_SEND    : 'command.send',     // payload: {BoardCommand}
   COMMAND_ERROR   : 'command.error',    // payload: {RequestEvent}

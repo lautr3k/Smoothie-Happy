@@ -79,6 +79,34 @@ class Board {
     * @protected
     */
     this.subscriptions = new Map()
+
+    /**
+    * Command queue.
+    * @type {Array}
+    * @protected
+    */
+    this.commandQueue = []
+
+    /**
+    * Command queue locked ?.
+    * @type {Boolean}
+    * @protected
+    */
+    this.commandQueueLocked = false
+
+    /**
+    * Command queue in pause ?.
+    * @type {Boolean}
+    * @protected
+    */
+    this.commandQueuePaused = false
+
+    /**
+    * Pending command (from command queue).
+    * @type {BoardCommand|null}
+    * @protected
+    */
+    this.pendingCommand = null
   }
 
   /**
@@ -93,6 +121,9 @@ class Board {
   *
   * @param  {String} topic See {@link src/board/topics/index.js} for possible values.
   * @param  {Mixed}  [payload = null]
+  * @see {@link Board#subscribe}
+  * @see {@link Board#unsubscribe}
+  * @see {@link Board#deleteTopic}
   */
   publish(topic, payload = null) {
     // fix topic case
@@ -124,6 +155,9 @@ class Board {
   * @param  {Function}    callback       A function that takes as single parameter an {@link BoardMessage} object.
   * @param  {Object|null} [context=null] Callback context to apply on call.
   * @return {BoardSubscription}
+  * @see {@link Board#publish}
+  * @see {@link Board#unsubscribe}
+  * @see {@link Board#deleteTopic}
   */
   subscribe(topic, callback, context = null) {
     // fix topic case
@@ -152,6 +186,9 @@ class Board {
   *
   * @param  {BoardSubscription|String|Array} uuid Subscription, subscription uuid or callback function.
   * @return {Integer} Number of callback removed.
+  * @see {@link Board#publish}
+  * @see {@link Board#subscribe}
+  * @see {@link Board#deleteTopic}
   */
   unsubscribe(uuid) {
     let removed = 0
@@ -199,6 +236,9 @@ class Board {
   *
   * @param  {String} topic Topic name, see {@link src/board/topics/index.js} for the topics list.
   * @return {Boolean} False if not found.
+  * @see {@link Board#publish}
+  * @see {@link Board#subscribe}
+  * @see {@link Board#unsubscribe}
   */
   deleteTopic(topic) {
     if (this.subscriptions.get(topic)) {
@@ -222,7 +262,7 @@ class Board {
   * Send an request to the board (GET by default).
   *
   * ```
-  * var board = new sh.board.Board({ address: '192.168.1.102' });
+  * var board = new Board({ address: '192.168.1.102' });
   *
   * board.sendRequest({ url: 'sd/config' })
   * .then(function(event) {
@@ -290,7 +330,7 @@ class Board {
   * Create and send an command to the board.
   *
   * ```
-  * var board = new sh.board.Board({ address: '192.168.1.102' });
+  * var board = new Board({ address: '192.168.1.102' });
   *
   * board.sendCommand('ls -s sd/')
   * .then(function(event) {
@@ -305,9 +345,150 @@ class Board {
   * @param  {String} command         Command line.
   * @param  {Object} [settings = {}] Request settings (see {@link BoardCommand} for more details).
   * @return {Promise<RequestEvent>}
+  * @see {@link Board#addCommand}
+  * @see {@link Board#pushCommand}
   */
   sendCommand(command, settings = {}) {
     return this._sendCommand(this.createCommand(command, settings))
+  }
+
+  /**
+  * Create and add the command in command queue.
+  *
+  * @param  {String} command         Command line.
+  * @param  {Object} [settings = {}] Request settings (see {@link BoardCommand} for more details).
+  * @return {BoardCommand}
+  * @see {@link Board#sendCommand}
+  * @see {@link Board#pushCommand}
+  */
+  addCommand(command, settings = {}) {
+    let boardCommand = this.createCommand(command, settings)
+    this.publish(boardTopics.COMMAND_QUEUE_ADD, boardCommand)
+    this.commandQueue.push(boardCommand)
+    return boardCommand
+  }
+
+  /**
+  * Create and add the command in command queue,
+  * then process the command queue if not in pause or locked.
+  *
+  * @param  {String} command         Command line.
+  * @param  {Object} [settings = {}] Request settings (see {@link BoardCommand} for more details).
+  * @return {BoardCommand}
+  * @see {@link Board#sendCommand}
+  * @see {@link Board#addCommand}
+  */
+  pushCommand(command, settings = {}) {
+    let boardCommand = this.addCommand(command, settings)
+    this.processCommandQueue()
+    return boardCommand
+  }
+
+  /**
+  * Process command queue.
+  * @see {@link Board#pauseCommandQueue}
+  * @see {@link Board#stopCommandQueue}
+  * @see {@link Board#resumeCommandQueue}
+  * @see {@link Board#clearCommandQueue}
+  */
+  processCommandQueue() {
+    // command queue locked or empty ?
+    if (this.commandQueueLocked
+    || this.commandQueuePaused
+    || ! this.commandQueue.length) {
+      return
+    }
+
+    // lock the command queue
+    this.commandQueueLocked = true
+
+    // get the older command
+    this.pendingCommand = this.commandQueue.shift()
+
+    // end of queue
+    if (! this.pendingCommand) {
+      this.publish(boardTopics.COMMAND_QUEUE_EMPTY)
+      return
+    }
+
+    this.publish(boardTopics.COMMAND_QUEUE_SEND, this.pendingCommand)
+
+    this._sendCommand(this.pendingCommand)
+    .then(event => event)
+    .catch(event => event)
+    .then(event => {
+      // reset pending command
+      this.pendingCommand = null
+
+      // unlock the command queue
+      this.commandQueueLocked = false
+
+      // process next command in queue
+      this.processCommandQueue()
+    })
+  }
+
+  /**
+  * Pause command queue but let the pending command terminate.
+  * @see {@link Board#processCommandQueue}
+  * @see {@link Board#stopCommandQueue}
+  * @see {@link Board#resumeCommandQueue}
+  * @see {@link Board#clearCommandQueue}
+  */
+  pauseCommandQueue() {
+    this.commandQueuePaused = true
+    this.publish(boardTopics.COMMAND_QUEUE_PAUSE, this.commandQueue)
+  }
+
+  /**
+  * Abort the pending command.
+  */
+  abortPendingCommand() {
+    if (this.pendingCommand) {
+      this.pendingCommand.abort()
+      this.pendingCommand = null
+    }
+  }
+
+  /**
+  * Pause command queue and abort the pending command.
+  * @see {@link Board#processCommandQueue}
+  * @see {@link Board#pauseCommandQueue}
+  * @see {@link Board#resumeCommandQueue}
+  * @see {@link Board#clearCommandQueue}
+  */
+  stopCommandQueue() {
+    this.abortPendingCommand()
+    this.pauseCommandQueue()
+  }
+
+  /**
+  * Resume command queue.
+  * @see {@link Board#processCommandQueue}
+  * @see {@link Board#pauseCommandQueue}
+  * @see {@link Board#stopCommandQueue}
+  * @see {@link Board#clearCommandQueue}
+  */
+  resumeCommandQueue() {
+    this.commandQueuePaused = false
+    this.publish(boardTopics.COMMAND_QUEUE_RESUME, this.commandQueue)
+    this.processCommandQueue()
+  }
+
+  /**
+  * Clear command queue and abort the pending command.
+  * @see {@link Board#processCommandQueue}
+  * @see {@link Board#pauseCommandQueue}
+  * @see {@link Board#stopCommandQueue}
+  * @see {@link Board#resumeCommandQueue}
+  */
+  clearCommandQueue() {
+    this.abortPendingCommand()
+    this.publish(boardTopics.COMMAND_QUEUE_CLEAR, this.commandQueue)
+
+    this.commandQueueLocked = false
+    this.commandQueuePaused = false
+    this.commandQueue       = []
   }
 
   /**
