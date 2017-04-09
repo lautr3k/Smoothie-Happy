@@ -11,7 +11,7 @@ import { normalizePath } from '../util'
 // - abort
 // - break
 // - calc_thermistor
-// - cat
+// # cat
 // - cd
 // - config-load
 // - config-get
@@ -45,6 +45,7 @@ import { normalizePath } from '../util'
 // # version
 // -----------------------------------------------------------------------------
 
+export { cat } from './cat'
 export { ls } from './ls'
 export { mv } from './mv'
 export { ok } from './ok'
