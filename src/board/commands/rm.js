@@ -5,7 +5,7 @@ import { normalizePath } from '../util'
 *
 * ### on success
 * ```
-* return "/sd/file.txt"
+* return "ok"
 * ```
 * ### on error
 * ```
@@ -28,5 +28,5 @@ export function rm(raw, args) {
     throw new Error('Could not remove "' + source + '".')
   }
 
-  return source
+  return 'ok'
 }
