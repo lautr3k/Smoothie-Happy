@@ -24,6 +24,7 @@ import { normalizePath } from '../util'
 * @param  {String[]} args Command arguments.
 * @return {Array}
 * @throws {Error}
+* @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L284
 */
 export function ls(raw, args) {
   // size flag
