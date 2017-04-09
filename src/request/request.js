@@ -140,6 +140,13 @@ class Request {
     * @protected
     */
     this.xhr = null
+
+    /**
+    * Aborted flag.
+    * @type {Boolean}
+    * @protected
+    */
+    this.aborted = false
   }
 
   /**
@@ -214,6 +221,7 @@ class Request {
       }
 
       let onAbort = (type, event) => {
+        this.aborted = true
         _reject(type, event, 'Connection aborted.')
       }
 
@@ -295,6 +303,11 @@ class Request {
 
       // send the request
       this.xhr.send(settings.data)
+
+      // dirty hack ...
+      if (this.aborted) {
+        this.xhr.abort()
+      }
     })
   }
 
@@ -346,6 +359,7 @@ class Request {
   * Abort the this.
   */
   abort() {
+    this.aborted = true
     this.xhr && this.xhr.abort()
   }
 }
