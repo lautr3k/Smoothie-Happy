@@ -19,7 +19,7 @@ import { normalizePath } from '../util'
 // - dfu
 // - fire
 // - get
-// - help
+// # help
 // - load
 // # ls
 // - md5sum
@@ -30,9 +30,9 @@ import { normalizePath } from '../util'
 // # ok
 // - play
 // - progress
-// - pwd
+// # pwd
 // - remount
-// - reset
+// # reset
 // - resume
 // # rm
 // - save
@@ -47,8 +47,11 @@ import { normalizePath } from '../util'
 
 export { cat } from './cat'
 export { cd } from './cd'
+export { help } from './help'
 export { ls } from './ls'
 export { mv } from './mv'
 export { ok } from './ok'
+export { pwd } from './pwd'
+export { reset } from './reset'
 export { rm } from './rm'
 export { version } from './version'
