@@ -26,7 +26,7 @@ import { normalizePath } from '../util'
 // # mem
 // # mv
 // - mkdir
-// - net
+// # net
 // # ok
 // - play
 // - progress
@@ -54,6 +54,7 @@ export { cmd_help } from './help'
 export { cmd_ls } from './ls'
 export { cmd_mem } from './mem'
 export { cmd_mv } from './mv'
+export { cmd_net } from './net'
 export { cmd_ok } from './ok'
 export { cmd_pwd } from './pwd'
 export { cmd_reset } from './reset'
