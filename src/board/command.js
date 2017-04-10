@@ -20,7 +20,7 @@ class BoardCommand extends BoardRequest {
     let commandArgs = commandLine.split(' ')
     let commandName = commandArgs.shift()
 
-    // not yet implemented
+    // response...
     let response
 
     // parse response by default
@@ -28,7 +28,11 @@ class BoardCommand extends BoardRequest {
       settings.parseResponse = true
     }
 
-    if (! boardCommands[commandName] && settings.parseResponse) {
+    // response parser
+    let responseParser = boardCommands[commandName] || boardCommands['_' + commandName]
+
+    // not yet implemented
+    if (! responseParser && settings.parseResponse) {
       response = r => {
         throw new Error('Sorry! The "' + commandName + '" command is not (yet) implemented.')
       }
@@ -54,7 +58,7 @@ class BoardCommand extends BoardRequest {
           board.publish(boardTopics.STATE_CLEAR, test !== 'ok')
         }
 
-        return settings.parseResponse ? boardCommands[commandName](r, commandArgs) : r
+        return settings.parseResponse ? responseParser(r, commandArgs) : r
       }
     }
 
