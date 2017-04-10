@@ -20,7 +20,7 @@ import { normalizePath } from '../util'
 * @throws {Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L339
 */
-export function mv(raw, args) {
+export function cmd_mv(raw, args) {
   // raw response
   raw = raw.trim()
 

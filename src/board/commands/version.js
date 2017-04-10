@@ -20,7 +20,7 @@
 * @return {Object}
 * @throws {Error}
 */
-export function version(raw, args) {
+export function cmd_version(raw, args) {
   // version pattern
   let pattern = /Build version: (.*), Build date: (.*), MCU: (.*), System Clock: (.*)/
 

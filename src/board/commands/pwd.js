@@ -13,6 +13,6 @@ import { normalizePath } from '../util'
 * @throws {Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L373
 */
-export function pwd(raw, args) {
+export function cmd_pwd(raw, args) {
   return raw.trim()
 }

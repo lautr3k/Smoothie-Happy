@@ -27,7 +27,7 @@ import { get_fk } from './get_fk'
 * @throws {Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#741
 */
-export function get(raw, args) {
+export function cmd_get(raw, args) {
   // raw response
   raw = raw.trim()
 

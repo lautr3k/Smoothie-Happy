@@ -13,6 +13,6 @@ import { normalizePath } from '../util'
 * @throws {Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L647
 */
-export function reset(raw, args) {
+export function cmd_reset(raw, args) {
   return raw.trim()
 }

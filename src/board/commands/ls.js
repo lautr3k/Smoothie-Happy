@@ -26,7 +26,7 @@ import { normalizePath } from '../util'
 * @throws {Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L284
 */
-export function ls(raw, args) {
+export function cmd_ls(raw, args) {
   // size flag
   let size = args[0] === '-s'
 

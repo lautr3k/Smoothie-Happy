@@ -10,6 +10,6 @@
 * @return {Boolean}
 * @throws {Error}
 */
-export function M999(raw, args) {
+export function cmd_M999(raw, args) {
   return raw.trim() !== 'ok'
 }

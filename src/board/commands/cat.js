@@ -17,7 +17,7 @@ import { normalizePath } from '../util'
 * @throws {Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L331
 */
-export function cat(raw, args) {
+export function cmd_cat(raw, args) {
   let source = normalizePath(args[0] || '')
 
   if (raw.trim().startsWith('File not found')) {

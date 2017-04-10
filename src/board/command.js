@@ -29,7 +29,7 @@ class BoardCommand extends BoardRequest {
     }
 
     // response parser
-    let responseParser = boardCommands[commandName] || boardCommands['_' + commandName]
+    let responseParser = boardCommands['cmd_' + commandName]
 
     // not yet implemented
     if (! responseParser && settings.parseResponse) {

@@ -17,7 +17,7 @@ import { normalizePath } from '../util'
 * @throws {Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L358
 */
-export function cd(raw, args) {
+export function cmd_cd(raw, args) {
   let source = normalizePath(args[0] || '')
 
   if (raw.trim().startsWith('Could not open directory')) {

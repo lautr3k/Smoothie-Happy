@@ -20,7 +20,7 @@
 * @throws {Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#857
 */
-export function set_temp(raw, args) {
+export function cmd_set_temp(raw, args) {
   // raw response
   raw = raw.trim()
 
