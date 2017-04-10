@@ -7,7 +7,10 @@ import { normalizePath } from '../util'
 *
 * ### on success
 * ```
-* return "ok"
+* return {
+*   "device": "fan",
+*   "value" : "on"
+* }
 * ```
 * ### on error
 * ```
