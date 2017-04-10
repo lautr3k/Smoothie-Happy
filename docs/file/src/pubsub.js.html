@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/pubsub.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/lautr3k/smoothie-happy" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pubsub.js~PubSub.html">PubSub</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pubsub.js~PubSubEvent.html">PubSubEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pubsub.js~Subscription.html">Subscription</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-VERSION">VERSION</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">board</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/board/board.js~Board.html">Board</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/board/command.js~BoardCommand.html">BoardCommand</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/board/command.js~CommandPayload.html">CommandPayload</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">board/commands</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ok">ok</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-version">version</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">board/events</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COMMAND">COMMAND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COMMAND_CREATE">COMMAND_CREATE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COMMAND_ERROR">COMMAND_ERROR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COMMAND_RETRY">COMMAND_RETRY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COMMAND_SEND">COMMAND_SEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COMMAND_SENT">COMMAND_SENT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RESPONSE">RESPONSE</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">http</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/http/progress.js~Progress.html">Progress</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/http/request.js~Request.html">Request</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/http/response.js~Response.html">Response</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-get">get</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-request">request</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">http/events</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/http/events/progress.js~ProgressEvent.html">ProgressEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/http/events/request.js~RequestEvent.html">RequestEvent</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">http/events/types</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ABORT">ABORT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ERROR">ERROR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOAD">LOAD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PROGRESS">PROGRESS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TIMEOUT">TIMEOUT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UPLOAD_ABORT">UPLOAD_ABORT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UPLOAD_ERROR">UPLOAD_ERROR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UPLOAD_LOAD">UPLOAD_LOAD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UPLOAD_PROGRESS">UPLOAD_PROGRESS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UPLOAD_TIMEOUT">UPLOAD_TIMEOUT</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/pubsub.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import uuid from &apos;uuid/v4&apos;
+
+// Cross-tab communication
+let CROSS_TAB_COMMUNICATION_ENABLED   = false
+let CROSS_TAB_COMMUNICATION_STORE_KEY = &apos;__PubSubCrossTabCommunication__&apos;
+
+// On message received from tab
+function onCrossTabMessage(event) {
+  if (event.newValue &amp;&amp; event.key === CROSS_TAB_COMMUNICATION_STORE_KEY) {
+    let { topic, data, async, crossTab } = JSON.parse(event.newValue)
+    publish(topic, data, async, true)
+  }
+}
+
+// Topics subscriptions
+const SUBSCRIPTIONS = new Map()
+
+// Sync. call
+function syncCall(payload) {
+  payload.subscription.callback.call(payload.subscription.context, payload)
+}
+
+// Async. call
+function asyncCall(payload) {
+  setTimeout(() =&gt; syncCall(payload), 0)
+}
+
+// Call ...
+function call(subscription, event) {
+  return new Promise(resolve =&gt; {
+    let payload = { subscription, event }
+    event.async ? asyncCall(payload) : syncCall(payload)
+    resolve(payload)
+  })
+}
+
+// Return all sub path for a topic
+function subpath(topic) {
+  let topics   = []
+  let paths    = topic.split(&apos;/&apos;)
+
+  while (paths.length &gt; 1) {
+    paths.pop()
+    topics.push(paths.join(&apos;/&apos;) + &apos;/&apos;)
+  }
+
+  return topics
+}
+
+// Publish to topic
+function publish(topic, data, async = true, crossTab = false) {
+  return new Promise((resolve, reject) =&gt; {
+    let event = new PubSubEvent(topic, data, async, crossTab)
+
+    // relay topic to other tabs
+    if (CROSS_TAB_COMMUNICATION_ENABLED &amp;&amp; ! event.crossTab) {
+      localStorage.setItem(CROSS_TAB_COMMUNICATION_STORE_KEY, JSON.stringify(event))
+      localStorage.removeItem(CROSS_TAB_COMMUNICATION_STORE_KEY)
+    }
+
+    let promises = []
+
+    if (SUBSCRIPTIONS.has(topic)) {
+      SUBSCRIPTIONS.get(topic).forEach(subscription =&gt; {
+        promises.push(call(subscription, event))
+      })
+    }
+
+    return Promise.all(promises).then(results =&gt; {
+      return resolve(results)
+    })
+  })
+}
+
+function publishAll(topic, data, async) {
+  return new Promise((resolve, reject) =&gt; {
+    let promises = []
+
+    SUBSCRIPTIONS.forEach((value, key) =&gt; {
+      if (topic !== key &amp;&amp; key.startsWith(topic)) {
+        promises.push(PubSub.publish(key, data, async))
+      }
+    })
+
+    return Promise.all(promises).then(subscriptions =&gt; {
+      return resolve([].concat.apply([], subscriptions))
+    })
+  })
+}
+
+/**
+* Subscription wrapper.
+*/
+class Subscription {
+  /**
+  * @param {String}  topic    Topic name.
+  * @param {Mixed}   data     Mixed data.
+  * @param {Boolean} async    Is async event.
+  * @param {Boolean} crossTab Is from another tab.
+  */
+  constructor(callback, context) {
+    /**
+    * Unique identifier (uuid/v4)
+    * @type {String}
+    * @protected
+    */
+    this.uuid = uuid()
+
+    /**
+    * Callback function.
+    * @type {Function}
+    * @protected
+    */
+    this.callback = callback
+
+    /**
+    * Callback function context.
+    * @type {Object}
+    * @protected
+    */
+    this.context = context || callback
+  }
+}
+
+/**
+* PubSub event class.
+*/
+class PubSubEvent {
+  /**
+  * @param {String}  topic    Topic name.
+  * @param {Mixed}   data     Mixed data.
+  * @param {Boolean} async    Is async event.
+  * @param {Boolean} crossTab Is from another tab.
+  */
+  constructor(topic, data, async, crossTab) {
+    /**
+    * Unique identifier (uuid/v4)
+    * @type {String}
+    * @protected
+    */
+    this.uuid = uuid()
+
+    /**
+    * Topic name.
+    * @type {String}
+    * @protected
+    */
+    this.topic = topic
+
+    /**
+    * Mixed data.
+    * @type {Mixed}
+    * @protected
+    */
+    this.data = data
+
+    /**
+    * Is async event.
+    * @type {Boolean}
+    * @protected
+    */
+    this.async = async
+
+    /**
+    * Is from another tab.
+    * @type {Boolean}
+    * @protected
+    */
+    this.crossTab = crossTab
+  }
+}
+
+/**
+* PubSub class.
+*/
+class PubSub {
+  /**
+  * Enable/Disable cross-tab communication.
+  *
+  * @param {Boolean} enable True for enable, False for disable, Null to get the current value.
+  * @return {Boolean} Return True if enabled.
+  */
+  static crossTabCommunication(enable = null) {
+    if (enable !== null) {
+      if (! CROSS_TAB_COMMUNICATION_ENABLED &amp;&amp; enable) {
+        window.addEventListener(&apos;storage&apos;, onCrossTabMessage, false)
+        CROSS_TAB_COMMUNICATION_ENABLED = true
+      }
+      else if (CROSS_TAB_COMMUNICATION_ENABLED &amp;&amp; ! enable) {
+        window.removeEventListener(&apos;storage&apos;, onCrossTabMessage, false)
+        CROSS_TAB_COMMUNICATION_ENABLED = false
+      }
+    }
+
+    return CROSS_TAB_COMMUNICATION_ENABLED
+  }
+
+  /**
+  * Subscribe to topic.
+  *
+  * @param  {String}      topic          Topic name.
+  * @param  {Function}    callback       Function to call on topic message.
+  * @param  {Object|null} [context=null] Callback context to apply on call.
+  * @return {String} Unique identifier (uuid/v4).
+  */
+  static subscribe(topic, callback, context = null) {
+    // first subscription
+    if (! SUBSCRIPTIONS.has(topic)) {
+      // create new topic
+      SUBSCRIPTIONS.set(topic, new Map())
+    }
+
+    // create new subscription
+    let subscription = new Subscription(callback, context)
+
+    // register new subscription
+    SUBSCRIPTIONS.get(topic).set(subscription.uuid, subscription)
+
+    // return the subscription uuid
+    return subscription.uuid
+  }
+
+  /**
+  * Publish on topic.
+  *
+  * @param {String} topic        Topic name.
+  * @param {Mixed}  [data=null]  Topic data.
+  * @param {Mixed}  [async=true] Async publication.
+  * @return {Promise}
+  */
+  static publish(topic, data = null, async = true) {
+    if (topic[topic.length - 1] === &apos;/&apos;) {
+      return publishAll(topic, data, async)
+    }
+
+    let topics   = subpath(topic)
+    let promises = [publish(topic, data, async)]
+
+    topics.forEach(topic =&gt; {
+      promises.push(publish(topic, data, async))
+    })
+
+    return Promise.all(promises).then(s =&gt; {
+      return Promise.resolve([].concat.apply([], s))
+    })
+  }
+
+  /**
+  * Unsubscribe from topic.
+  *
+  * @param  {String|Array} uuid Subscription uuid or function.
+  * @return {Integer} Number of callback removed.
+  */
+  static unsubscribe(uuid) {
+    let removed = 0
+
+    // unsubscribe an array of uuid or function
+    if (Array.isArray(uuid)) {
+      uuid.forEach(id =&gt; {
+        removed += this.unsubscribe(id)
+      })
+
+      return removed
+    }
+
+    // unsubscribe from function
+    if (typeof uuid === &apos;function&apos;) {
+      for (let subscriptions of SUBSCRIPTIONS.values()) {
+        subscriptions.forEach(subscription =&gt; {
+          if (subscription.callback === uuid) {
+            removed += this.unsubscribe(subscription.uuid)
+          }
+        })
+      }
+
+      return removed
+    }
+
+    // unsubscribe from uuid string
+    for (let topic of SUBSCRIPTIONS.keys()) {
+      if (SUBSCRIPTIONS.get(topic).has(uuid)) {
+        removed += SUBSCRIPTIONS.get(topic).delete(uuid)
+
+        if (SUBSCRIPTIONS.get(topic).size === 0) {
+          this.deleteTopic(topic)
+        }
+
+        return removed
+      }
+    }
+
+    return removed
+  }
+
+  /**
+  * Delete entire topic.
+  *
+  * @param  {String} topic Topic name.
+  * @return {Boolean} False if not found.
+  */
+  static deleteTopic(topic) {
+    if (SUBSCRIPTIONS.get(topic)) {
+      return SUBSCRIPTIONS.delete(topic)
+    }
+
+    return false
+  }
+}
+
+// Exports
+export default PubSub
+export { PubSub, PubSubEvent, Subscription }
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

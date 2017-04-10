@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/board/pubsub.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/lautr3k/smoothie-happy" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-VERSION">VERSION</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">board</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/board/board.js~Board.html">Board</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/board/pubsub.js~PubSub.html">PubSub</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">http</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/http/progress.js~Progress.html">Progress</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/http/request.js~Request.html">Request</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/http/response.js~Response.html">Response</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-get">get</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-request">request</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">http/events</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/http/events/progress.js~ProgressEvent.html">ProgressEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/http/events/request.js~RequestEvent.html">RequestEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ABORT">ABORT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ERROR">ERROR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOAD">LOAD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PROGRESS">PROGRESS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TIMEOUT">TIMEOUT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UPLOAD_ABORT">UPLOAD_ABORT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UPLOAD_ERROR">UPLOAD_ERROR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UPLOAD_LOAD">UPLOAD_LOAD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UPLOAD_PROGRESS">UPLOAD_PROGRESS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UPLOAD_TIMEOUT">UPLOAD_TIMEOUT</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/board/pubsub.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import uuid from &apos;uuid/v4&apos;
+
+// Topics collection
+const SUBSCRIPTIONS = new Map()
+
+// Publish on topic.
+function publish(topic, data = null) {
+  let published = 0
+
+  // direct subscription for this topic
+  if (SUBSCRIPTIONS.has(topic)) {
+    // for each subscription
+    SUBSCRIPTIONS.get(topic).forEach(subscription =&gt; {
+      subscription.callback.call(subscription.context, data, subscription.uuid)
+      published++
+    })
+  }
+
+  return published
+}
+
+/**
+* PubSub class.
+*/
+class PubSub {
+  /**
+  * Subscribe to topic.
+  *
+  * @param  {String}      topic          Topic name.
+  * @param  {Function}    callback       Function to call on topic message.
+  * @param  {Object|null} [context=null] Callback context to apply on call.
+  * @return {String} Unique identifier (uuid/v4)
+  */
+  static subscribe(topic, callback, context = null) {
+    // first subscription
+    if (! SUBSCRIPTIONS.has(topic)) {
+      // create new topic
+      SUBSCRIPTIONS.set(topic, new Map())
+    }
+
+    // create callback wrapper
+    let callbackWrapper = { uuid: uuid(), callback, context }
+
+    // register topic callback
+    SUBSCRIPTIONS.get(topic).set(callbackWrapper.uuid, callbackWrapper)
+
+    // return the callback uuid
+    return callbackWrapper.uuid
+  }
+
+  /**
+  * Delete entire topic.
+  *
+  * @param  {String} topic Topic name.
+  * @return {Boolean} False if not found
+  */
+  static deleteTopic(topic) {
+    if (SUBSCRIPTIONS.get(topic)) {
+      return SUBSCRIPTIONS.delete(topic)
+    }
+
+    return false
+  }
+
+  /**
+  * Unsubscribe from specific topic.
+  *
+  * @param  {String} uuid Subscription uuid.
+  * @return {Boolean} False if not found
+  */
+  static unsubscribe(uuid) {
+    // for each subscription
+    for (let topic of SUBSCRIPTIONS.keys()) {
+      if (SUBSCRIPTIONS.get(topic).has(uuid)) {
+        let result = SUBSCRIPTIONS.get(topic).delete(uuid)
+
+        if (SUBSCRIPTIONS.get(topic).size === 0) {
+          this.deleteTopic(topic)
+        }
+
+        return result
+      }
+    }
+
+    return false
+  }
+
+  /**
+  * Publish on topic.
+  *
+  * @param {String} topic        Topic name.
+  * @param {Mixed}  [data=null]  Topic data.
+  * @return {Integer} Number of publications.
+  */
+  static publish(topic, data = null) {
+    // restrict call on catch all
+    if (topic[topic.length-1] === &apos;/&apos;) {
+      throw new Error(&apos;You can not publish on catch all topics.&apos;)
+    }
+
+    let published = 0
+
+    // direct subscription for this topic
+    if ((published = publish(topic, data))) {
+      // search for catch all
+      let topics = []
+      let paths  = topic.split(&apos;/&apos;)
+
+      while (paths.length &gt; 1) {
+        paths.pop()
+        topics.push(paths.join(&apos;/&apos;) + &apos;/&apos;)
+      }
+
+      topics.forEach(name =&gt; {
+        published += publish(name, { topic: topic.replace(name, &apos;&apos;), data })
+      })
+    }
+
+    return published
+  }
+}
+
+// Exports
+export default PubSub
+export { PubSub }
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
