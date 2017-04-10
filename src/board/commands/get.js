@@ -1,6 +1,7 @@
 import { get_temp } from './get_temp'
 import { get_pos } from './get_pos'
 import { get_wcs } from './get_wcs'
+import { get_state } from './get_state'
 import { get_ik } from './get_ik'
 import { get_fk } from './get_fk'
 
@@ -48,6 +49,9 @@ export function get(raw, args) {
       break
     case 'wcs':
       func = get_wcs
+      break
+    case 'state':
+      func = get_state
       break
     case 'ik':
       func = get_ik
