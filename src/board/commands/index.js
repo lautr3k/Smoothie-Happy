@@ -38,7 +38,7 @@ import { normalizePath } from '../util'
 // - save
 // # set_temp
 // - suspend
-// - switch
+// # switch
 // - test
 // - thermistors
 // - upload
@@ -59,6 +59,7 @@ export { cmd_pwd } from './pwd'
 export { cmd_reset } from './reset'
 export { cmd_rm } from './rm'
 export { cmd_set_temp } from './set_temp'
+export { cmd_switch } from './switch'
 export { cmd_version } from './version'
 
 export { cmd_M999 } from './M999'
