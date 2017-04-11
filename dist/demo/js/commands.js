@@ -2,7 +2,7 @@ var commands = {
   'raw'            : { placeholder: 'Type your command here...' },
   'abort'          : {},
   'break'          : {},
-  'calc_thermistor': {},
+  'calc_thermistor': { placeholder: '[-s0] T1,R1,T2,R2,T3,R3' },
   'cat'            : { placeholder: '/sd/config' },
   'cd'             : { placeholder: '/sd' },
   'config-load'    : {},
