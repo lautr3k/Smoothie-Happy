@@ -10,7 +10,7 @@ import { normalizePath } from '../util'
 // -----------------------------------------------------------------------------
 // - abort
 // - break
-// - calc_thermistor
+// # calc_thermistor
 // # cat
 // # cd
 // - config-load
@@ -47,6 +47,7 @@ import { normalizePath } from '../util'
 // # M999
 // -----------------------------------------------------------------------------
 
+export { cmd_calc_thermistor } from './calc_thermistor'
 export { cmd_cat } from './cat'
 export { cmd_cd } from './cd'
 export { cmd_get } from './get'
