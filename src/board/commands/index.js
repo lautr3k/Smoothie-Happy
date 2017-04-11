@@ -31,7 +31,7 @@ import { normalizePath } from '../util'
 // - play
 // - progress
 // # pwd
-// - remount
+// # remount
 // # reset
 // - resume
 // # rm
@@ -57,6 +57,7 @@ export { cmd_mv } from './mv'
 export { cmd_net } from './net'
 export { cmd_ok } from './ok'
 export { cmd_pwd } from './pwd'
+export { cmd_remount } from './remount'
 export { cmd_reset } from './reset'
 export { cmd_rm } from './rm'
 export { cmd_set_temp } from './set_temp'
