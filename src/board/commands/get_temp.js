@@ -65,7 +65,7 @@ export function get_temp(raw, args) {
   let matches = raw.match(/([a-z]+) temp: (inf|[0-9\.]+)\/(inf|[0-9\.]+) @([0-9]+)/)
 
   if (! matches) {
-    throw new Error('Unknown response string.');
+    throw new Error('Unknown response string.')
   }
 
   return {
@@ -81,7 +81,7 @@ function parseTempString(temp) {
   let matches = temp.match(/(T|B) \(([0-9]+)\) temp: (inf|[0-9\.]+)\/(inf|[0-9\.]+) @([0-9]+)/)
 
   if (! matches) {
-    throw new Error('Unknown response string.');
+    throw new Error('Unknown response string.')
   }
 
   return {

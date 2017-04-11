@@ -69,7 +69,7 @@ export function cmd_ls(raw, args) {
       info = line.trim().match(/^([a-z0-9_\-\.]+) ?(\/| [0-9]+)?$/, 'gi')
 
       if (! info) {
-        throw new Error('Unknown response string.');
+        throw new Error('Unknown response string.')
       }
 
       // is directory ?

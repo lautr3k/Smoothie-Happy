@@ -31,10 +31,10 @@ export function cmd_calc_thermistor(raw, args) {
     throw new Error('Usage: calc_thermistor [-s0] T1,R1,T2,R2,T3,R3.')
   }
 
-  let matches = raw.match(/Steinhart Hart coefficients: *I(.*)J(.*)K(.*)/);
+  let matches = raw.match(/Steinhart Hart coefficients: *I(.*)J(.*)K(.*)/)
 
   if (! matches) {
-    throw new Error('Unknown response string.');
+    throw new Error('Unknown response string.')
   }
 
   matches.shift()
@@ -42,7 +42,7 @@ export function cmd_calc_thermistor(raw, args) {
   matches = matches.map(match => parseFloat(match.trim()))
 
   if (matches.includes(NaN)) {
-    throw new Error('Invalid input values.');
+    throw new Error('Invalid input values.')
   }
 
   let saved  = args[0].startsWith('-s')

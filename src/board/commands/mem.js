@@ -63,7 +63,7 @@ export function cmd_mem(raw, args) {
   }
 
   let setValue = line => {
-    let [key, value] = line.split(': ');
+    let [key, value] = line.split(': ')
 
     let bytes = parseInt(value.trim().replace(/ bytes$/, ''))
 

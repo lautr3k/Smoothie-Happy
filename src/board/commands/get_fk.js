@@ -32,7 +32,7 @@ export function get_fk(raw, args) {
   let matches = raw.match(/cartesian= X ([0-9\.]+), Y ([0-9\.]+), Z ([0-9\.]+)/)
 
   if (! matches) {
-    throw new Error('Unknown response string.');
+    throw new Error('Unknown response string.')
   }
 
   return {
