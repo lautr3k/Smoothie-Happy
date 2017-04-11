@@ -13,9 +13,9 @@
 * ```
 * ### on error
 * ```
-* return "Usage: calc_thermistor [-s0] T1,R1,T2,R2,T3,R3."
-* return "Unknown response string."
-* return "Invalid input values."
+* throw 'Usage: calc_thermistor [-s0] T1,R1,T2,R2,T3,R3.'
+* throw 'Unknown response string.'
+* throw 'Invalid input values.'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.

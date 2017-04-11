@@ -19,6 +19,7 @@ import { normalizePath } from '../util'
 * ### on error
 * ```
 * throw 'Could not open "xxx" directory.'
+* throw 'Unknown response string.'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
@@ -67,26 +68,28 @@ export function cmd_ls(raw, args) {
       // extract file/directory info (name/size)
       info = line.trim().match(/^([a-z0-9_\-\.]+) ?(\/| [0-9]+)?$/, 'gi')
 
-      if (info) {
-        // is directory ?
-        isDir = info[2] === '/'
-
-        extension = ''
-
-        if (info[1].includes('.')) {
-          extension = '.' + info[1].split('.').pop()
-        }
-
-        // set file info
-        files.push({
-          name: info[1],
-          extension: extension,
-          parent: rootPath.length ? rootPath : '/',
-          path: rootPath + '/' + info[1],
-          type: isDir ? 'folder' : 'file',
-          size: isDir ? 0 : parseInt(info[2] || 0)
-        })
+      if (! info) {
+        throw new Error('Unknown response string.');
       }
+
+      // is directory ?
+      isDir = info[2] === '/'
+
+      extension = ''
+
+      if (info[1].includes('.')) {
+        extension = '.' + info[1].split('.').pop()
+      }
+
+      // set file info
+      files.push({
+        name: info[1],
+        extension: extension,
+        parent: rootPath.length ? rootPath : '/',
+        path: rootPath + '/' + info[1],
+        type: isDir ? 'folder' : 'file',
+        size: isDir ? 0 : parseInt(info[2] || 0)
+      })
     }
   })
 

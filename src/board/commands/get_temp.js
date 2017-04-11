@@ -33,6 +33,7 @@
 * ### on error
 * ```
 * throw 'No heaters found.'
+* throw 'Unknown response string.'
 * throw '"xxx" is not a known temperature device.'
 * ```
 * @param  {String}   raw  Raw command response string.
@@ -63,6 +64,10 @@ export function get_temp(raw, args) {
   // "bed temp: inf/0.000000 @0"
   let matches = raw.match(/([a-z]+) temp: (inf|[0-9\.]+)\/(inf|[0-9\.]+) @([0-9]+)/)
 
+  if (! matches) {
+    throw new Error('Unknown response string.');
+  }
+
   return {
     device : matches[1],
     current: parseFloat(matches[2]),
@@ -74,6 +79,10 @@ export function get_temp(raw, args) {
 function parseTempString(temp) {
   // T (57988) temp: inf/0.000000 @0
   let matches = temp.match(/(T|B) \(([0-9]+)\) temp: (inf|[0-9\.]+)\/(inf|[0-9\.]+) @([0-9]+)/)
+
+  if (! matches) {
+    throw new Error('Unknown response string.');
+  }
 
   return {
     designator: matches[1],

@@ -13,6 +13,7 @@
 * ### on error
 * ```
 * throw 'Usage: get ik [-m] x[,y,z].'
+* throw 'Unknown response string.'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
@@ -29,6 +30,10 @@ export function get_ik(raw, args) {
   }
 
   let matches = raw.match(/actuator= X ([0-9\.]+), Y ([0-9\.]+), Z ([0-9\.]+)/)
+
+  if (! matches) {
+    throw new Error('Unknown response string.');
+  }
 
   return {
     move,
