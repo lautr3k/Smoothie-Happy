@@ -22,7 +22,7 @@ import { normalizePath } from '../util'
 // # help
 // - load
 // # ls
-// - md5sum
+// # md5sum
 // # mem
 // # mv
 // - mkdir
@@ -53,6 +53,7 @@ export { cmd_cd } from './cd'
 export { cmd_get } from './get'
 export { cmd_help } from './help'
 export { cmd_ls } from './ls'
+export { cmd_md5sum } from './md5sum'
 export { cmd_mem } from './mem'
 export { cmd_mv } from './mv'
 export { cmd_net } from './net'
