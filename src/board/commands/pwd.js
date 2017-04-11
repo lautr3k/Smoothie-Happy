@@ -1,5 +1,3 @@
-import { normalizePath } from '../util'
-
 /**
 * Get current working directory.
 *

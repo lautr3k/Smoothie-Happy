@@ -1,5 +1,3 @@
-import { normalizePath } from '../util'
-
 /**
 * Get command help list.
 *
