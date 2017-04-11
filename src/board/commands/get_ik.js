@@ -3,7 +3,12 @@
 *
 * ### on success
 * ```
-* return '...'
+* return {
+*   "move": false,
+*   "x"   : 10,
+*   "y"   : 10,
+*   "z"   : 10
+* }
 * ```
 * ### on error
 * ```
