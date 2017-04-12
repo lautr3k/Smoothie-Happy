@@ -502,7 +502,7 @@ class Board {
   * Get the board informations.
   *
   * @param  {Boolean} [refresh = false]
-  * @return {Promise<BoardInfo|RequestEvent>}
+  * @return {Promise<BoardInfo|RequestEvent|Error>}
   */
   getInfo(refresh = false) {
     return new Promise((resolve, reject) => {
@@ -511,6 +511,10 @@ class Board {
       }
 
       return this.sendCommand('version').then(event => {
+        if (event.payload.data instanceof Error) {
+          reject(event.payload.data)
+        }
+
         this.info = new BoardInfo(event.payload.data)
         this.publish(boardTopics.INFO_UPDATE, this.info)
         resolve(this.info)
@@ -527,7 +531,7 @@ class Board {
   * @param  {String}  [path    = '/']    Path to list file from.
   * @param  {Boolean} [refresh = false]  Force refresh (no cache).
   * @param  {Boolean} [firstCall = true] Used internaly for recursion.
-  * @return {Promise<BoardFileList|RequestEvent>}
+  * @return {Promise<BoardFileList|RequestEvent|Error>}
   */
   listFiles(path = '/', refresh = false, firstCall = true) {
     // from cache
@@ -543,6 +547,10 @@ class Board {
     return this.sendCommand('ls -s ' + path).then(event => {
       // recursion...
       let promises = []
+
+      if (event.payload.data instanceof Error) {
+        return Promise.reject(event.payload.data)
+      }
 
       // children collection (file or directory)
       event.payload.data.forEach(child => {
