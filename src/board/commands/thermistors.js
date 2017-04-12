@@ -41,15 +41,13 @@ export function cmd_thermistors(raw, args) {
   lines.shift() // remove "S/H table"
 
   lines.forEach(line => {
-    line    = line.trim()
+    line = line.trim()
 
     if (line.startsWith('Beta table')) {
       pointer = result.beta
     }
     else {
       matches = line.match(/^([0-9]+) - (.*)/)
-
-      console.log(line);
 
       if (! matches) {
         throw new Error('Unknown response string.')
