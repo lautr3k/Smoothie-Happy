@@ -37,7 +37,7 @@ import { normalizePath } from '../util'
 // # rm
 // - save
 // # set_temp
-// - suspend
+// # suspend
 // # switch
 // - test
 // # thermistors
@@ -66,6 +66,7 @@ export { cmd_remount } from './remount'
 export { cmd_reset } from './reset'
 export { cmd_rm } from './rm'
 export { cmd_set_temp } from './set_temp'
+export { cmd_suspend } from './suspend'
 export { cmd_switch } from './switch'
 export { cmd_thermistors } from './thermistors'
 export { cmd_version } from './version'
