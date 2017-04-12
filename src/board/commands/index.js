@@ -28,7 +28,7 @@ import { normalizePath } from '../util'
 // - mkdir
 // # net
 // # ok
-// - play
+// # play
 // - progress
 // # pwd
 // # remount
@@ -58,6 +58,7 @@ export { cmd_mem } from './mem'
 export { cmd_mv } from './mv'
 export { cmd_net } from './net'
 export { cmd_ok } from './ok'
+export { cmd_play } from './play'
 export { cmd_pwd } from './pwd'
 export { cmd_remount } from './remount'
 export { cmd_reset } from './reset'
