@@ -58,7 +58,9 @@ class BoardCommand extends BoardRequest {
           board.publish(boardTopics.STATE_CLEAR, test !== 'ok')
         }
 
-        return settings.parseResponse ? responseParser(r, commandArgs) : r
+        let args = [].concat(commandArgs) // make a copy
+
+        return settings.parseResponse ? responseParser(r, args) : r
       }
     }
 
