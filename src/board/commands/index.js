@@ -8,7 +8,7 @@ import { normalizePath } from '../util'
 // # DONE
 // - TODO
 // -----------------------------------------------------------------------------
-// - abort
+// # abort
 // - break
 // # calc_thermistor
 // # cat
@@ -47,6 +47,7 @@ import { normalizePath } from '../util'
 // # M999
 // -----------------------------------------------------------------------------
 
+export { cmd_abort } from './abort'
 export { cmd_calc_thermistor } from './calc_thermistor'
 export { cmd_cat } from './cat'
 export { cmd_cd } from './cd'
