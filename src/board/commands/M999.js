@@ -7,8 +7,7 @@
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Boolean}
-* @throws {Error}
+* @return {Boolean|Error}
 */
 export function cmd_M999(raw, args) {
   return raw.trim() !== 'ok'

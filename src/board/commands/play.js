@@ -12,14 +12,13 @@ import { normalizePath } from '../util'
 * ```
 * ### on error
 * ```
-* throw 'File "xxx" not found.'
-* throw 'Currently printing, abort print first.'
-* throw 'Unknown response string.'
+* return Error: 'File "xxx" not found.'
+* return Error: 'Currently printing, abort print first.'
+* return Error: 'Unknown response string.'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Object}
-* @throws {Error}
+* @return {Object|Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L266
 * @see https://github.com/Smoothieware/Smoothieware/blob/1f73659f0b0cb6142e395c3d4d7dcbaadbac870a/src/modules/utils/player/Player.cpp#L267
 */
@@ -31,15 +30,15 @@ export function cmd_play(raw, args) {
   let file = normalizePath(args[0] || '')
 
   if (raw.startsWith('File not found')) {
-    throw new Error('File "' + file + '" not found.')
+    return new Error('File "' + file + '" not found.')
   }
 
   if (raw.startsWith('Currently printing')) {
-    throw new Error('Currently printing, abort print first.')
+    return new Error('Currently printing, abort print first.')
   }
 
   if (! raw.startsWith('Playing')) {
-    throw new Error('Unknown response string.')
+    return new Error('Unknown response string.')
   }
 
   let lines = raw.split('\n')

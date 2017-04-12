@@ -12,12 +12,11 @@ import { normalizePath } from '../util'
 * ```
 * ### on error
 * ```
-* throw 'File "xxx" not found.'
+* return Error: 'File "xxx" not found.'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {String}
-* @throws {Error}
+* @return {String|Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L358
 */
 export function cmd_md5sum(raw, args) {
@@ -26,7 +25,7 @@ export function cmd_md5sum(raw, args) {
   let source = normalizePath(args[0] || '')
 
   if (raw.startsWith('File not found')) {
-    throw new Error('File "' + source + '" not found.')
+    return new Error('File "' + source + '" not found.')
   }
 
   var parts = raw.split(' ')

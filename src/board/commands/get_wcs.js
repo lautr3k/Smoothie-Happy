@@ -21,14 +21,9 @@
 *   "G92"    : { "x": 0, "y": 0, "z": 0 }
 *}
 * ```
-* ### on error
-* ```
-* throw '...'
-* ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Object}
-* @throws {Error}
+* @return {Object|Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#828
 */
 export function get_wcs(raw, args) {

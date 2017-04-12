@@ -18,13 +18,12 @@ import { get_fk } from './get_fk'
 * ```
 * ### on error
 * ```
-* throw 'Unknown option "xxx".'
-* throw 'Sorry! The "get xxx" command is not (yet) implemented.'
+* return Error: 'Unknown option "xxx".'
+* return Error: 'Sorry! The "get xxx" command is not (yet) implemented.'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Mixed}
-* @throws {Error}
+* @return {Mixed|Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#741
 */
 export function cmd_get(raw, args) {
@@ -36,7 +35,7 @@ export function cmd_get(raw, args) {
 
   // file not found
   if (raw.startsWith('error:unknown option')) {
-    throw new Error('Unknown option "' + option + '".')
+    return new Error('Unknown option "' + option + '".')
   }
 
   let func
@@ -64,7 +63,7 @@ export function cmd_get(raw, args) {
       func = get_fk
       break
     default:
-     throw new Error('Sorry! The "get ' + option + '" command is not (yet) implemented.')
+     return new Error('Sorry! The "get ' + option + '" command is not (yet) implemented.')
   }
 
   return func(raw, args)

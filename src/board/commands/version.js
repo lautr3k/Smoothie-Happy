@@ -13,12 +13,11 @@
 * ```
 * ### on error
 * ```
-* throw "Unknown version string"
+* return Error: 'Unknown response string'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Object}
-* @throws {Error}
+* @return {Object|Error}
 */
 export function cmd_version(raw, args) {
   // version pattern
@@ -42,5 +41,5 @@ export function cmd_version(raw, args) {
   }
 
   // reject
-  throw new Error('Unknown version string')
+  return new Error('Unknown response string')
 }

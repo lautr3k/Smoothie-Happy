@@ -66,11 +66,17 @@ function onSend(event) {
 function onResponse(event) {
   console.info('onResponse:', event);
 
-  var payload  = event.payload
+  var payload = event.payload;
+  var data    = payload.payload.data;
+
+  if (data instanceof Error) {
+    return error('warning', event);
+  }
+
   var cmd      = payload.request
   var $command = $('#' + cmd.uuid);
   var $body    = $command.find('.panel-body');
-  var html     = $(jsonResponse(payload.payload.data));
+  var html     = $(jsonResponse(data));
 
   $body.html(html);
   scrollToBottom();
@@ -86,9 +92,15 @@ function error(type, event) {
   var $error   = $('<li/>').addClass('list-group-item list-group-item-' + type);
   var $icon    = $('<i class="fa fa-fw fa-exclamation-triangle"></i>');
 
+  var message = payload.payload.message
+
+  if (payload.payload.data instanceof Error) {
+    message = payload.payload.data.message
+  }
+
   $command.find('.retry').hide();
   $command.find('.loading').hide();
-  $error.append($icon, ' ', payload.payload.message);
+  $error.append($icon, ' ', message);
   $errors.append($error);
   updateCommandQueue(event.board);
 }

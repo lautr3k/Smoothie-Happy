@@ -12,12 +12,11 @@
 * ```
 * ### on error
 * ```
-* throw '"xxx" is not a known temperature device.'
+* return Error: '"xxx" is not a known temperature device.'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Object}
-* @throws {Error}
+* @return {Object|Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#857
 */
 export function cmd_set_temp(raw, args) {
@@ -29,7 +28,7 @@ export function cmd_set_temp(raw, args) {
 
   // error
   if (raw.endsWith('is not a known temperature device')) {
-    throw new Error('"' + device + '" is not a known temperature device.')
+    return new Error('"' + device + '" is not a known temperature device.')
   }
 
   // new temperature

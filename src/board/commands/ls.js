@@ -18,13 +18,12 @@ import { normalizePath } from '../util'
 * ```
 * ### on error
 * ```
-* throw 'Could not open "xxx" directory.'
-* throw 'Unknown response string.'
+* return Error: 'Could not open "xxx" directory.'
+* return Error: 'Unknown response string.'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Array}
-* @throws {Error}
+* @return {Array|Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L284
 */
 export function cmd_ls(raw, args) {
@@ -41,7 +40,7 @@ export function cmd_ls(raw, args) {
 
   // file not found
   if (raw.startsWith('Could not open directory')) {
-    throw new Error('Could not open "' + path + '" directory.')
+    return new Error('Could not open "' + path + '" directory.')
   }
 
   // excluded files
@@ -69,7 +68,7 @@ export function cmd_ls(raw, args) {
       info = line.trim().match(/^([a-z0-9_\-\.]+) ?(\/| [0-9]+)?$/, 'gi')
 
       if (! info) {
-        throw new Error('Unknown response string.')
+        return new Error('Unknown response string.')
       }
 
       // is directory ?

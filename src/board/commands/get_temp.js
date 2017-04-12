@@ -32,26 +32,25 @@
 * ```
 * ### on error
 * ```
-* throw 'No heaters found.'
-* throw 'Unknown response string.'
-* throw '"xxx" is not a known temperature device.'
+* return Error: 'No heaters found.'
+* return Error: 'Unknown response string.'
+* return Error: '"xxx" is not a known temperature device.'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Object}
-* @throws {Error}
+* @return {Object|Error}
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#745
 */
 export function get_temp(raw, args) {
   if (raw.startsWith('no heaters found')) {
-    throw new Error('No heaters found.')
+    return new Error('No heaters found.')
   }
 
   // device [bed|hotend]
   let device = (args[0] || 'all').toLowerCase()
 
   if (raw.endsWith('is not a known temperature device')) {
-    throw new Error('"' + device + '" is not a known temperature device.')
+    return new Error('"' + device + '" is not a known temperature device.')
   }
 
   let result
@@ -65,7 +64,7 @@ export function get_temp(raw, args) {
   let matches = raw.match(/([a-z]+) temp: (inf|[0-9\.]+)\/(inf|[0-9\.]+) @([0-9]+)/)
 
   if (! matches) {
-    throw new Error('Unknown response string.')
+    return new Error('Unknown response string.')
   }
 
   return {
@@ -81,7 +80,7 @@ function parseTempString(temp) {
   let matches = temp.match(/(T|B) \(([0-9]+)\) temp: (inf|[0-9\.]+)\/(inf|[0-9\.]+) @([0-9]+)/)
 
   if (! matches) {
-    throw new Error('Unknown response string.')
+    return new Error('Unknown response string.')
   }
 
   return {

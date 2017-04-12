@@ -13,14 +13,13 @@
 * ```
 * ### on error
 * ```
-* throw 'Usage: calc_thermistor [-s0] T1,R1,T2,R2,T3,R3.'
-* throw 'Unknown response string.'
-* throw 'Invalid input values.'
+* return Error: 'Usage: calc_thermistor [-s0] T1,R1,T2,R2,T3,R3.'
+* return Error: 'Unknown response string.'
+* return Error: 'Invalid input values.'
 * ```
 * @param  {String}   raw  Raw command response string.
 * @param  {String[]} args Command arguments.
-* @return {Object}
-* @throws {Error}
+* @return {Object|Error}
 * @see http://smoothieware.org/steinharthart
 * @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#878
 */
@@ -28,13 +27,13 @@ export function cmd_calc_thermistor(raw, args) {
   raw = raw.trim()
 
   if (raw.startsWith('Usage: calc_thermistor')) {
-    throw new Error('Usage: calc_thermistor [-s0] T1,R1,T2,R2,T3,R3.')
+    return new Error('Usage: calc_thermistor [-s0] T1,R1,T2,R2,T3,R3.')
   }
 
   let matches = raw.match(/Steinhart Hart coefficients: *I(.*)J(.*)K(.*)/)
 
   if (! matches) {
-    throw new Error('Unknown response string.')
+    return new Error('Unknown response string.')
   }
 
   matches.shift()
@@ -42,7 +41,7 @@ export function cmd_calc_thermistor(raw, args) {
   matches = matches.map(match => parseFloat(match.trim()))
 
   if (matches.includes(NaN)) {
-    throw new Error('Invalid input values.')
+    return new Error('Invalid input values.')
   }
 
   let saved  = args[0].startsWith('-s')
