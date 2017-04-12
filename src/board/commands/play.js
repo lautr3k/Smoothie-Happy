@@ -13,7 +13,7 @@ import { normalizePath } from '../util'
 * ### on error
 * ```
 * throw 'File "xxx" not found.'
-* throw 'Currently printing "xxx", abort print first.'
+* throw 'Currently printing, abort print first.'
 * throw 'Unknown response string.'
 * ```
 * @param  {String}   raw  Raw command response string.
@@ -35,7 +35,7 @@ export function cmd_play(raw, args) {
   }
 
   if (raw.startsWith('Currently printing')) {
-    throw new Error('Currently printing "' + file + '", abort print first.')
+    throw new Error('Currently printing, abort print first.')
   }
 
   if (! raw.startsWith('Playing')) {
