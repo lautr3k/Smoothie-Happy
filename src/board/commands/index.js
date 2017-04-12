@@ -29,7 +29,7 @@ import { normalizePath } from '../util'
 // # net
 // # ok
 // # play
-// - progress
+// # progress
 // # pwd
 // # remount
 // # reset
@@ -59,6 +59,7 @@ export { cmd_mv } from './mv'
 export { cmd_net } from './net'
 export { cmd_ok } from './ok'
 export { cmd_play } from './play'
+export { cmd_progress } from './progress'
 export { cmd_pwd } from './pwd'
 export { cmd_remount } from './remount'
 export { cmd_reset } from './reset'
