@@ -102,6 +102,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "smoothie-happy/src/board/commands/break.js~cmd_break",
+    "function/index.html#static-function-cmd_break",
+    "<span>cmd_break</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/break.js</span>",
+    "function"
+  ],
+  [
     "smoothie-happy/src/board/commands/calc_thermistor.js~cmd_calc_thermistor",
     "function/index.html#static-function-cmd_calc_thermistor",
     "<span>cmd_calc_thermistor</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/calc_thermistor.js</span>",
@@ -120,6 +126,36 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "smoothie-happy/src/board/commands/config_get.js~cmd_config_get",
+    "function/index.html#static-function-cmd_config_get",
+    "<span>cmd_config_get</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/config_get.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/config_load.js~cmd_config_load",
+    "function/index.html#static-function-cmd_config_load",
+    "<span>cmd_config_load</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/config_load.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/config_set.js~cmd_config_set",
+    "function/index.html#static-function-cmd_config_set",
+    "<span>cmd_config_set</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/config_set.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/dfu.js~cmd_dfu",
+    "function/index.html#static-function-cmd_dfu",
+    "<span>cmd_dfu</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/dfu.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/fire.js~cmd_fire",
+    "function/index.html#static-function-cmd_fire",
+    "<span>cmd_fire</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/fire.js</span>",
+    "function"
+  ],
+  [
     "smoothie-happy/src/board/commands/get.js~cmd_get",
     "function/index.html#static-function-cmd_get",
     "<span>cmd_get</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/get.js</span>",
@@ -129,6 +165,12 @@ window.esdocSearchIndex = [
     "smoothie-happy/src/board/commands/help.js~cmd_help",
     "function/index.html#static-function-cmd_help",
     "<span>cmd_help</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/help.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/load.js~cmd_load",
+    "function/index.html#static-function-cmd_load",
+    "<span>cmd_load</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/load.js</span>",
     "function"
   ],
   [
@@ -147,6 +189,12 @@ window.esdocSearchIndex = [
     "smoothie-happy/src/board/commands/mem.js~cmd_mem",
     "function/index.html#static-function-cmd_mem",
     "<span>cmd_mem</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/mem.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/mkdir.js~cmd_mkdir",
+    "function/index.html#static-function-cmd_mkdir",
+    "<span>cmd_mkdir</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/mkdir.js</span>",
     "function"
   ],
   [
@@ -210,6 +258,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "smoothie-happy/src/board/commands/save.js~cmd_save",
+    "function/index.html#static-function-cmd_save",
+    "<span>cmd_save</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/save.js</span>",
+    "function"
+  ],
+  [
     "smoothie-happy/src/board/commands/set_temp.js~cmd_set_temp",
     "function/index.html#static-function-cmd_set_temp",
     "<span>cmd_set_temp</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/set_temp.js</span>",
@@ -225,6 +279,12 @@ window.esdocSearchIndex = [
     "smoothie-happy/src/board/commands/switch.js~cmd_switch",
     "function/index.html#static-function-cmd_switch",
     "<span>cmd_switch</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/switch.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/test.js~cmd_test",
+    "function/index.html#static-function-cmd_test",
+    "<span>cmd_test</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/test.js</span>",
     "function"
   ],
   [
@@ -304,6 +364,30 @@ window.esdocSearchIndex = [
     "variable/index.html#static-variable-requestSettings",
     "<span>requestSettings</span> <span class=\"search-result-import-path\">smoothie-happy/src/request/settings.js</span>",
     "variable"
+  ],
+  [
+    "smoothie-happy/src/board/commands/test_circle.js~test_circle",
+    "function/index.html#static-function-test_circle",
+    "<span>test_circle</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/test_circle.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/test_jog.js~test_jog",
+    "function/index.html#static-function-test_jog",
+    "<span>test_jog</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/test_jog.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/test_raw.js~test_raw",
+    "function/index.html#static-function-test_raw",
+    "<span>test_raw</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/test_raw.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/test_square.js~test_square",
+    "function/index.html#static-function-test_square",
+    "<span>test_square</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/test_square.js</span>",
+    "function"
   ],
   [
     "builtinexternal/ecmascriptexternal.js~array",
@@ -642,6 +726,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/board/board.js~board#mrimode",
+    "class/src/board/board.js~Board.html#instance-member-MRIMode",
+    "src/board/board.js~Board#MRIMode",
+    "member"
+  ],
+  [
     "src/board/board.js~board#_sendcommand",
     "class/src/board/board.js~Board.html#instance-method-_sendCommand",
     "src/board/board.js~Board#_sendCommand",
@@ -858,6 +948,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/board/command.js~boardcommand#board",
+    "class/src/board/command.js~BoardCommand.html#instance-member-board",
+    "src/board/command.js~BoardCommand#board",
+    "member"
+  ],
+  [
     "src/board/command.js~boardcommand#commandargs",
     "class/src/board/command.js~BoardCommand.html#instance-member-commandArgs",
     "src/board/command.js~BoardCommand#commandArgs",
@@ -882,6 +978,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/board/command.js~boardcommand#send",
+    "class/src/board/command.js~BoardCommand.html#instance-method-send",
+    "src/board/command.js~BoardCommand#send",
+    "method"
+  ],
+  [
     "src/board/commands/m999.js",
     "file/src/board/commands/M999.js.html",
     "src/board/commands/M999.js",
@@ -891,6 +993,12 @@ window.esdocSearchIndex = [
     "src/board/commands/abort.js",
     "file/src/board/commands/abort.js.html",
     "src/board/commands/abort.js",
+    "file"
+  ],
+  [
+    "src/board/commands/break.js",
+    "file/src/board/commands/break.js.html",
+    "src/board/commands/break.js",
     "file"
   ],
   [
@@ -909,6 +1017,36 @@ window.esdocSearchIndex = [
     "src/board/commands/cd.js",
     "file/src/board/commands/cd.js.html",
     "src/board/commands/cd.js",
+    "file"
+  ],
+  [
+    "src/board/commands/config_get.js",
+    "file/src/board/commands/config_get.js.html",
+    "src/board/commands/config_get.js",
+    "file"
+  ],
+  [
+    "src/board/commands/config_load.js",
+    "file/src/board/commands/config_load.js.html",
+    "src/board/commands/config_load.js",
+    "file"
+  ],
+  [
+    "src/board/commands/config_set.js",
+    "file/src/board/commands/config_set.js.html",
+    "src/board/commands/config_set.js",
+    "file"
+  ],
+  [
+    "src/board/commands/dfu.js",
+    "file/src/board/commands/dfu.js.html",
+    "src/board/commands/dfu.js",
+    "file"
+  ],
+  [
+    "src/board/commands/fire.js",
+    "file/src/board/commands/fire.js.html",
+    "src/board/commands/fire.js",
     "file"
   ],
   [
@@ -972,6 +1110,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/board/commands/load.js",
+    "file/src/board/commands/load.js.html",
+    "src/board/commands/load.js",
+    "file"
+  ],
+  [
     "src/board/commands/ls.js",
     "file/src/board/commands/ls.js.html",
     "src/board/commands/ls.js",
@@ -987,6 +1131,12 @@ window.esdocSearchIndex = [
     "src/board/commands/mem.js",
     "file/src/board/commands/mem.js.html",
     "src/board/commands/mem.js",
+    "file"
+  ],
+  [
+    "src/board/commands/mkdir.js",
+    "file/src/board/commands/mkdir.js.html",
+    "src/board/commands/mkdir.js",
     "file"
   ],
   [
@@ -1050,6 +1200,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/board/commands/save.js",
+    "file/src/board/commands/save.js.html",
+    "src/board/commands/save.js",
+    "file"
+  ],
+  [
     "src/board/commands/set_temp.js",
     "file/src/board/commands/set_temp.js.html",
     "src/board/commands/set_temp.js",
@@ -1065,6 +1221,36 @@ window.esdocSearchIndex = [
     "src/board/commands/switch.js",
     "file/src/board/commands/switch.js.html",
     "src/board/commands/switch.js",
+    "file"
+  ],
+  [
+    "src/board/commands/test.js",
+    "file/src/board/commands/test.js.html",
+    "src/board/commands/test.js",
+    "file"
+  ],
+  [
+    "src/board/commands/test_circle.js",
+    "file/src/board/commands/test_circle.js.html",
+    "src/board/commands/test_circle.js",
+    "file"
+  ],
+  [
+    "src/board/commands/test_jog.js",
+    "file/src/board/commands/test_jog.js.html",
+    "src/board/commands/test_jog.js",
+    "file"
+  ],
+  [
+    "src/board/commands/test_raw.js",
+    "file/src/board/commands/test_raw.js.html",
+    "src/board/commands/test_raw.js",
+    "file"
+  ],
+  [
+    "src/board/commands/test_square.js",
+    "file/src/board/commands/test_square.js.html",
+    "src/board/commands/test_square.js",
     "file"
   ],
   [

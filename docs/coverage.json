@@ -1,16 +1,16 @@
 {
   "coverage": "100%",
-  "expectCount": 150,
-  "actualCount": 150,
+  "expectCount": 167,
+  "actualCount": 167,
   "files": {
     "src/board/board.js": {
-      "expectCount": 33,
-      "actualCount": 33,
+      "expectCount": 34,
+      "actualCount": 34,
       "undocumentLines": []
     },
     "src/board/command.js": {
-      "expectCount": 5,
-      "actualCount": 5,
+      "expectCount": 7,
+      "actualCount": 7,
       "undocumentLines": []
     },
     "src/board/filetree.js": {
@@ -78,6 +78,11 @@
       "actualCount": 1,
       "undocumentLines": []
     },
+    "src/board/commands/break.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "src/board/commands/calc_thermistor.js": {
       "expectCount": 1,
       "actualCount": 1,
@@ -93,12 +98,42 @@
       "actualCount": 1,
       "undocumentLines": []
     },
+    "src/board/commands/config_get.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/config_load.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/config_set.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/dfu.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/fire.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "src/board/commands/get.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
     },
     "src/board/commands/help.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/load.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
@@ -114,6 +149,11 @@
       "undocumentLines": []
     },
     "src/board/commands/mem.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/mkdir.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
@@ -168,6 +208,11 @@
       "actualCount": 1,
       "undocumentLines": []
     },
+    "src/board/commands/save.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "src/board/commands/set_temp.js": {
       "expectCount": 1,
       "actualCount": 1,
@@ -179,6 +224,11 @@
       "undocumentLines": []
     },
     "src/board/commands/switch.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/test.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
@@ -239,6 +289,26 @@
       "undocumentLines": []
     },
     "src/request/settings.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/test_circle.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/test_jog.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/test_raw.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/test_square.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
