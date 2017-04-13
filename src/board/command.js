@@ -20,48 +20,46 @@ class BoardCommand extends BoardRequest {
     let commandArgs = commandLine.split(' ')
     let commandName = commandArgs.shift()
 
-    // response...
-    let response
-
     // parse response by default
     if (settings.parseResponse === undefined) {
       settings.parseResponse = true
     }
 
-    // response parser
-    let responseParser = boardCommands['cmd_' + commandName]
+    // response...
+    let response = r => {
+      let raw = r.trim()
 
-    // not yet implemented
-    if (! responseParser && settings.parseResponse) {
-      response = r => {
+      if (raw.startsWith('error:Unsupported command')) {
+        throw new Error('Unsupported command "' + commandName + '".')
+      }
+
+      // alarm/error ?
+      let test = raw.slice(0, 30).toLowerCase()
+
+      if (! raw.length || test === '!!' || test.startsWith('alarm') || test.startsWith('error')) {
+        if (! board.halted) {
+          board.halted = true
+          board.publish(boardTopics.STATE_HALT)
+        }
+
+        throw new Error('Alarm! System probably halted.')
+      }
+
+      if (commandName === 'M999') {
+        board.publish(boardTopics.STATE_CLEAR, test !== 'ok')
+      }
+
+      // response parser
+      let responseParser = boardCommands['cmd_' + commandName]
+
+      if (! responseParser && settings.parseResponse) {
         throw new Error('Sorry! The "' + commandName + '" command is not (yet) implemented.')
       }
-    }
-    else {
-      response = r => {
-        let test = r.trim()
 
-        if (test.startsWith('error:Unsupported command')) {
-          throw new Error('Unsupported command "' + commandName + '".')
-        }
+      // return (parsed) response
+      let args = [].concat(commandArgs) // make a copy
 
-        if (test === '!!') {
-          if (! board.halted) {
-            board.halted = true
-            board.publish(boardTopics.STATE_HALT)
-          }
-
-          throw new Error('System halted !')
-        }
-
-        if (commandName === 'M999') {
-          board.publish(boardTopics.STATE_CLEAR, test !== 'ok')
-        }
-
-        let args = [].concat(commandArgs) // make a copy
-
-        return settings.parseResponse ? responseParser(r, args) : r
-      }
+      return settings.parseResponse ? responseParser(r, args) : r
     }
 
     // call parent constructor
