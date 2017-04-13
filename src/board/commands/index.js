@@ -33,7 +33,7 @@ import { normalizePath } from '../util'
 // # pwd
 // # remount
 // # reset
-// - resume
+// # resume
 // # rm
 // - save
 // # set_temp
@@ -64,6 +64,7 @@ export { cmd_progress } from './progress'
 export { cmd_pwd } from './pwd'
 export { cmd_remount } from './remount'
 export { cmd_reset } from './reset'
+export { cmd_resume } from './resume'
 export { cmd_rm } from './rm'
 export { cmd_set_temp } from './set_temp'
 export { cmd_suspend } from './suspend'
