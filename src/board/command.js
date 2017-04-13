@@ -55,7 +55,13 @@ class BoardCommand extends BoardRequest {
       }
 
       // response parser
-      let responseParser = boardCommands['cmd_' + commandName]
+      let parserName = commandName
+
+      if (parserName.startsWith('config-')) {
+        parserName = 'config_' + parserName.slice(7)
+      }
+
+      let responseParser = boardCommands['cmd_' + parserName]
 
       if (! responseParser && settings.parseResponse) {
         throw new Error('Sorry! The "' + commandName + '" command is not (yet) implemented.')
