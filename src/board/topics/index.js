@@ -9,6 +9,7 @@ const boardTopics = {
 
   STATE_ALARM: 'state.alarm', // payload: {null}
   STATE_CLEAR: 'state.clear', // payload: {null}
+  STATE_MRI  : 'state.mri',   // payload: {null}
 
   COMMAND_QUEUE_ADD   : 'command.queue.add'   , // payload: {BoardCommand}
   COMMAND_QUEUE_SEND  : 'command.queue.send'  , // payload: {BoardCommand}

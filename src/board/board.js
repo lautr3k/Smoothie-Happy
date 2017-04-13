@@ -114,6 +114,13 @@ class Board {
     * @protected
     */
     this.alarm = false
+
+    /**
+    * Is system in MRI debug mode ?
+    * @type {Boolean}
+    * @protected
+    */
+    this.MRIMode = false
   }
 
   /**

@@ -18,7 +18,7 @@ class BoardCommand extends BoardRequest {
     commandLine = commandLine.trim().replace(/ +/g, ' ')
 
     let commandArgs = commandLine.split(' ')
-    let commandName = commandArgs.shift()
+    let commandName = commandArgs.shift().toLowerCase()
 
     // parse response by default
     if (settings.parseResponse === undefined) {
@@ -76,6 +76,13 @@ class BoardCommand extends BoardRequest {
     }))
 
     /**
+    * Board instance.
+    * @type {Board}
+    * @protected
+    */
+    this.board = board
+
+    /**
     * Command line.
     * @type {String}
     * @protected
@@ -95,6 +102,23 @@ class BoardCommand extends BoardRequest {
     * @protected
     */
     this.commandArgs = commandArgs
+  }
+
+  /**
+  * Send the request and return a Promise.
+  *
+  * @return {Promise<RequestEvent>}
+  */
+  send() {
+    if (this.commandName === 'break') {
+      this.board.MRIMode = true
+      this.board.publish(boardTopics.STATE_MRI)
+      // Fix for break command never respond
+      this.settings.timeout     = 5000 // 5 seconds
+      this.settings.maxAttempts = 1
+    }
+
+    return super.send()
   }
 }
 
