@@ -61,6 +61,11 @@ function updateCommandQueue(board) {
 commandsNames.forEach(function(commandName) {
   var $option  = $('<option />').text(commandName);
   var commands = SmoothieHappy.board.boardCommands;
+
+  if (commandName.startsWith('config-')) {
+    commandName = 'config_' + commandName.slice(7)
+  }
+
   var disabled = commandName !== 'raw' && ! commands['cmd_' + commandName];
 
   $option.prop('disabled', disabled);
