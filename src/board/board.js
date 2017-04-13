@@ -113,7 +113,7 @@ class Board {
     * @type {Boolean}
     * @protected
     */
-    this.halted = false
+    this.alarm = false
   }
 
   /**
@@ -583,7 +583,7 @@ class Board {
   */
   clearState() {
     return this.sendCommand('M999').then(event => {
-      this.halted = false
+      this.alarm = false
       return Promise.resolve(event)
     })
   }

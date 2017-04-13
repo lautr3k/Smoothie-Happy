@@ -37,9 +37,9 @@ class BoardCommand extends BoardRequest {
       let test = raw.slice(0, 30).toLowerCase()
 
       if (! raw.length || test === '!!' || test.startsWith('alarm') || test.startsWith('error')) {
-        if (! board.halted) {
-          board.halted = true
-          board.publish(boardTopics.STATE_HALT)
+        if (! board.alarm) {
+          board.alarm = true
+          board.publish(boardTopics.STATE_ALARM)
         }
 
         throw new Error('Alarm! System probably halted.')

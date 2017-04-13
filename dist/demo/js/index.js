@@ -26,7 +26,7 @@ function newBoard(address) {
 
   b.subscribe(topics.COMMAND_QUEUE_CLEAR, onQueueClear);
 
-  b.subscribe(topics.STATE_HALT , onStateHalt);
+  b.subscribe(topics.STATE_ALARM, onStateAlarm);
   b.subscribe(topics.STATE_CLEAR, onStateClear);
 
   updateCommandQueue(b);
@@ -141,8 +141,8 @@ function onQueueClear(event) {
   })
 }
 
-function onStateHalt(event) {
-  console.info('onStateHalt:', event);
+function onStateAlarm(event) {
+  console.info('onStateAlarm:', event);
 
   $systemHalted.modal('show');
   $('.navbar button.clearState').show();
