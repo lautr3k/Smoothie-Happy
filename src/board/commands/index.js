@@ -25,7 +25,7 @@ import { normalizePath } from '../util'
 // # md5sum
 // # mem
 // # mv
-// - mkdir
+// # mkdir
 // # net
 // # ok
 // # play
@@ -41,7 +41,7 @@ import { normalizePath } from '../util'
 // # switch
 // # test
 // # thermistors
-// - upload
+// - upload (<- not handled by BoardCommand)
 // # version
 //
 // # M999
@@ -61,6 +61,7 @@ export { cmd_ls } from './ls'
 export { cmd_md5sum } from './md5sum'
 export { cmd_mem } from './mem'
 export { cmd_mv } from './mv'
+export { cmd_mkdir } from './mkdir'
 export { cmd_net } from './net'
 export { cmd_ok } from './ok'
 export { cmd_play } from './play'
