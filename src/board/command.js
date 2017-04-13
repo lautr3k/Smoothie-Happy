@@ -41,7 +41,7 @@ class BoardCommand extends BoardRequest {
         test = '!!'
       }
 
-      if (test === '!!' || test.startsWith('alarm') || test.startsWith('error')) {
+      if (test === '!!' || test.startsWith('alarm')) {
         if (! board.alarm) {
           board.alarm = true
           board.publish(boardTopics.STATE_ALARM)
