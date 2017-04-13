@@ -39,7 +39,7 @@ import { normalizePath } from '../util'
 // # set_temp
 // # suspend
 // # switch
-// - test
+// # test
 // # thermistors
 // - upload
 // # version
@@ -72,6 +72,7 @@ export { cmd_rm } from './rm'
 export { cmd_set_temp } from './set_temp'
 export { cmd_suspend } from './suspend'
 export { cmd_switch } from './switch'
+export { cmd_test } from './test'
 export { cmd_thermistors } from './thermistors'
 export { cmd_version } from './version'
 
