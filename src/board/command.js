@@ -36,7 +36,12 @@ class BoardCommand extends BoardRequest {
       // alarm/error ?
       let test = raw.slice(0, 30).toLowerCase()
 
-      if (! raw.length || test === '!!' || test.startsWith('alarm') || test.startsWith('error')) {
+      // ! fire return empty string if laser module not enabled, even if state is not in alarm mode... !
+      if (! raw.length && ['fire', 'play', 'progress', 'abort', 'suspend', 'resume'].includes(commandName)) {
+        test = '!!'
+      }
+
+      if (test === '!!' || test.startsWith('alarm') || test.startsWith('error')) {
         if (! board.alarm) {
           board.alarm = true
           board.publish(boardTopics.STATE_ALARM)
