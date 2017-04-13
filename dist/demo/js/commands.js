@@ -33,7 +33,7 @@ var commands = {
   'switch'         : { placeholder: '<fan|misc> <on|off|value>' },
   'test'           : { placeholder: 'jog|circle|square|raw' },
   'thermistors'    : {},
-  'upload'         : {},
+  //'upload'         : {},
   'version'        : {},
   'M999'           : {}
 };
