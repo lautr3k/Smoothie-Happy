@@ -20,7 +20,7 @@ import { normalizePath } from '../util'
 // # fire
 // # get
 // # help
-// - load
+// # load
 // # ls
 // # md5sum
 // # mem
@@ -35,7 +35,7 @@ import { normalizePath } from '../util'
 // # reset
 // # resume
 // # rm
-// - save
+// # save
 // # set_temp
 // # suspend
 // # switch
@@ -56,6 +56,7 @@ export { cmd_dfu } from './dfu'
 export { cmd_fire } from './fire'
 export { cmd_get } from './get'
 export { cmd_help } from './help'
+export { cmd_load } from './load'
 export { cmd_ls } from './ls'
 export { cmd_md5sum } from './md5sum'
 export { cmd_mem } from './mem'
@@ -69,6 +70,7 @@ export { cmd_remount } from './remount'
 export { cmd_reset } from './reset'
 export { cmd_resume } from './resume'
 export { cmd_rm } from './rm'
+export { cmd_save } from './save'
 export { cmd_set_temp } from './set_temp'
 export { cmd_suspend } from './suspend'
 export { cmd_switch } from './switch'
