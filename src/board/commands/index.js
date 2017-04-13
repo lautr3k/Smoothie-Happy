@@ -13,9 +13,9 @@ import { normalizePath } from '../util'
 // # calc_thermistor
 // # cat
 // # cd
-// - config-load
-// - config-get
-// - config-set
+// # config-load
+// # config-get
+// # config-set
 // # dfu
 // # fire
 // # get
@@ -52,6 +52,9 @@ export { cmd_break } from './break'
 export { cmd_calc_thermistor } from './calc_thermistor'
 export { cmd_cat } from './cat'
 export { cmd_cd } from './cd'
+export { cmd_config_load } from './config_load'
+export { cmd_config_get } from './config_get'
+export { cmd_config_set } from './config_set'
 export { cmd_dfu } from './dfu'
 export { cmd_fire } from './fire'
 export { cmd_get } from './get'
