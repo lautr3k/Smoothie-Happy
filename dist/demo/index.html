@@ -92,9 +92,15 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">System halted !</h4>
+          <h4 class="modal-title"><strong>Alarm!</strong> System probably halted.</h4>
         </div>
         <div class="modal-body">
+          <ul>
+            <li>Waiting for temperature ?</li>
+            <li>Kill button pressed ?</li>
+            <li>Limit switch ?</li>
+            <li>...</li>
+          </ul>
           <div class="alert alert-warning" role="alert">After your press "Clear state" button you should HOME as position is unknown.</div>
           <button type="button" class="clearState btn btn-primary">Clear state</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Later</button>
