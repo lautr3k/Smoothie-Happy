@@ -16,7 +16,7 @@ import { normalizePath } from '../util'
 // - config-load
 // - config-get
 // - config-set
-// - dfu
+// # dfu
 // # fire
 // # get
 // # help
@@ -52,6 +52,7 @@ export { cmd_break } from './break'
 export { cmd_calc_thermistor } from './calc_thermistor'
 export { cmd_cat } from './cat'
 export { cmd_cd } from './cd'
+export { cmd_dfu } from './dfu'
 export { cmd_fire } from './fire'
 export { cmd_get } from './get'
 export { cmd_help } from './help'
