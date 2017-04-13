@@ -96,6 +96,18 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "smoothie-happy/src/board/commands/abort.js~cmd_abort",
+    "function/index.html#static-function-cmd_abort",
+    "<span>cmd_abort</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/abort.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/calc_thermistor.js~cmd_calc_thermistor",
+    "function/index.html#static-function-cmd_calc_thermistor",
+    "<span>cmd_calc_thermistor</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/calc_thermistor.js</span>",
+    "function"
+  ],
+  [
     "smoothie-happy/src/board/commands/cat.js~cmd_cat",
     "function/index.html#static-function-cmd_cat",
     "<span>cmd_cat</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/cat.js</span>",
@@ -126,6 +138,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "smoothie-happy/src/board/commands/md5sum.js~cmd_md5sum",
+    "function/index.html#static-function-cmd_md5sum",
+    "<span>cmd_md5sum</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/md5sum.js</span>",
+    "function"
+  ],
+  [
     "smoothie-happy/src/board/commands/mem.js~cmd_mem",
     "function/index.html#static-function-cmd_mem",
     "<span>cmd_mem</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/mem.js</span>",
@@ -138,9 +156,27 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "smoothie-happy/src/board/commands/net.js~cmd_net",
+    "function/index.html#static-function-cmd_net",
+    "<span>cmd_net</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/net.js</span>",
+    "function"
+  ],
+  [
     "smoothie-happy/src/board/commands/ok.js~cmd_ok",
     "function/index.html#static-function-cmd_ok",
     "<span>cmd_ok</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/ok.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/play.js~cmd_play",
+    "function/index.html#static-function-cmd_play",
+    "<span>cmd_play</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/play.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/progress.js~cmd_progress",
+    "function/index.html#static-function-cmd_progress",
+    "<span>cmd_progress</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/progress.js</span>",
     "function"
   ],
   [
@@ -150,9 +186,21 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "smoothie-happy/src/board/commands/remount.js~cmd_remount",
+    "function/index.html#static-function-cmd_remount",
+    "<span>cmd_remount</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/remount.js</span>",
+    "function"
+  ],
+  [
     "smoothie-happy/src/board/commands/reset.js~cmd_reset",
     "function/index.html#static-function-cmd_reset",
     "<span>cmd_reset</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/reset.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/resume.js~cmd_resume",
+    "function/index.html#static-function-cmd_resume",
+    "<span>cmd_resume</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/resume.js</span>",
     "function"
   ],
   [
@@ -168,9 +216,21 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "smoothie-happy/src/board/commands/suspend.js~cmd_suspend",
+    "function/index.html#static-function-cmd_suspend",
+    "<span>cmd_suspend</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/suspend.js</span>",
+    "function"
+  ],
+  [
     "smoothie-happy/src/board/commands/switch.js~cmd_switch",
     "function/index.html#static-function-cmd_switch",
     "<span>cmd_switch</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/switch.js</span>",
+    "function"
+  ],
+  [
+    "smoothie-happy/src/board/commands/thermistors.js~cmd_thermistors",
+    "function/index.html#static-function-cmd_thermistors",
+    "<span>cmd_thermistors</span> <span class=\"search-result-import-path\">smoothie-happy/src/board/commands/thermistors.js</span>",
     "function"
   ],
   [
@@ -606,6 +666,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/board/board.js~board#alarm",
+    "class/src/board/board.js~Board.html#instance-member-alarm",
+    "src/board/board.js~Board#alarm",
+    "member"
+  ],
+  [
     "src/board/board.js~board#clearcommandqueue",
     "class/src/board/board.js~Board.html#instance-method-clearCommandQueue",
     "src/board/board.js~Board#clearCommandQueue",
@@ -670,12 +736,6 @@ window.esdocSearchIndex = [
     "class/src/board/board.js~Board.html#instance-method-getInfo",
     "src/board/board.js~Board#getInfo",
     "method"
-  ],
-  [
-    "src/board/board.js~board#halted",
-    "class/src/board/board.js~Board.html#instance-member-halted",
-    "src/board/board.js~Board#halted",
-    "member"
   ],
   [
     "src/board/board.js~board#info",
@@ -828,6 +888,18 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/board/commands/abort.js",
+    "file/src/board/commands/abort.js.html",
+    "src/board/commands/abort.js",
+    "file"
+  ],
+  [
+    "src/board/commands/calc_thermistor.js",
+    "file/src/board/commands/calc_thermistor.js.html",
+    "src/board/commands/calc_thermistor.js",
+    "file"
+  ],
+  [
     "src/board/commands/cat.js",
     "file/src/board/commands/cat.js.html",
     "src/board/commands/cat.js",
@@ -906,6 +978,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/board/commands/md5sum.js",
+    "file/src/board/commands/md5sum.js.html",
+    "src/board/commands/md5sum.js",
+    "file"
+  ],
+  [
     "src/board/commands/mem.js",
     "file/src/board/commands/mem.js.html",
     "src/board/commands/mem.js",
@@ -918,9 +996,27 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/board/commands/net.js",
+    "file/src/board/commands/net.js.html",
+    "src/board/commands/net.js",
+    "file"
+  ],
+  [
     "src/board/commands/ok.js",
     "file/src/board/commands/ok.js.html",
     "src/board/commands/ok.js",
+    "file"
+  ],
+  [
+    "src/board/commands/play.js",
+    "file/src/board/commands/play.js.html",
+    "src/board/commands/play.js",
+    "file"
+  ],
+  [
+    "src/board/commands/progress.js",
+    "file/src/board/commands/progress.js.html",
+    "src/board/commands/progress.js",
     "file"
   ],
   [
@@ -930,9 +1026,21 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/board/commands/remount.js",
+    "file/src/board/commands/remount.js.html",
+    "src/board/commands/remount.js",
+    "file"
+  ],
+  [
     "src/board/commands/reset.js",
     "file/src/board/commands/reset.js.html",
     "src/board/commands/reset.js",
+    "file"
+  ],
+  [
+    "src/board/commands/resume.js",
+    "file/src/board/commands/resume.js.html",
+    "src/board/commands/resume.js",
     "file"
   ],
   [
@@ -948,9 +1056,21 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/board/commands/suspend.js",
+    "file/src/board/commands/suspend.js.html",
+    "src/board/commands/suspend.js",
+    "file"
+  ],
+  [
     "src/board/commands/switch.js",
     "file/src/board/commands/switch.js.html",
     "src/board/commands/switch.js",
+    "file"
+  ],
+  [
+    "src/board/commands/thermistors.js",
+    "file/src/board/commands/thermistors.js.html",
+    "src/board/commands/thermistors.js",
     "file"
   ],
   [

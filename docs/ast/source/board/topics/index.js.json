@@ -222,7 +222,7 @@
                 {
                   "type": "ObjectProperty",
                   "start": 211,
-                  "end": 236,
+                  "end": 237,
                   "loc": {
                     "start": {
                       "line": 10,
@@ -230,7 +230,7 @@
                     },
                     "end": {
                       "line": 10,
-                      "column": 27
+                      "column": 28
                     }
                   },
                   "method": false,
@@ -239,7 +239,7 @@
                   "key": {
                     "type": "Identifier",
                     "start": 211,
-                    "end": 221,
+                    "end": 222,
                     "loc": {
                       "start": {
                         "line": 10,
@@ -247,17 +247,17 @@
                       },
                       "end": {
                         "line": 10,
-                        "column": 12
+                        "column": 13
                       },
-                      "identifierName": "STATE_HALT"
+                      "identifierName": "STATE_ALARM"
                     },
-                    "name": "STATE_HALT",
+                    "name": "STATE_ALARM",
                     "leadingComments": null
                   },
                   "value": {
                     "type": "StringLiteral",
                     "start": 224,
-                    "end": 236,
+                    "end": 237,
                     "loc": {
                       "start": {
                         "line": 10,
@@ -265,14 +265,14 @@
                       },
                       "end": {
                         "line": 10,
-                        "column": 27
+                        "column": 28
                       }
                     },
                     "extra": {
-                      "rawValue": "state.halt",
-                      "raw": "'state.halt'"
+                      "rawValue": "state.alarm",
+                      "raw": "'state.alarm'"
                     },
-                    "value": "state.halt"
+                    "value": "state.alarm"
                   },
                   "leadingComments": [
                     {
@@ -3026,7 +3026,7 @@
                   {
                     "type": "ObjectProperty",
                     "start": 211,
-                    "end": 236,
+                    "end": 237,
                     "loc": {
                       "start": {
                         "line": 10,
@@ -3034,7 +3034,7 @@
                       },
                       "end": {
                         "line": 10,
-                        "column": 27
+                        "column": 28
                       }
                     },
                     "method": false,
@@ -3043,7 +3043,7 @@
                     "key": {
                       "type": "Identifier",
                       "start": 211,
-                      "end": 221,
+                      "end": 222,
                       "loc": {
                         "start": {
                           "line": 10,
@@ -3051,17 +3051,17 @@
                         },
                         "end": {
                           "line": 10,
-                          "column": 12
+                          "column": 13
                         },
-                        "identifierName": "STATE_HALT"
+                        "identifierName": "STATE_ALARM"
                       },
-                      "name": "STATE_HALT",
+                      "name": "STATE_ALARM",
                       "leadingComments": null
                     },
                     "value": {
                       "type": "StringLiteral",
                       "start": 224,
-                      "end": 236,
+                      "end": 237,
                       "loc": {
                         "start": {
                           "line": 10,
@@ -3069,14 +3069,14 @@
                         },
                         "end": {
                           "line": 10,
-                          "column": 27
+                          "column": 28
                         }
                       },
                       "extra": {
-                        "rawValue": "state.halt",
-                        "raw": "'state.halt'"
+                        "rawValue": "state.alarm",
+                        "raw": "'state.alarm'"
                       },
-                      "value": "state.halt"
+                      "value": "state.alarm"
                     },
                     "leadingComments": [
                       {
@@ -6286,9 +6286,9 @@
         "postfix": false,
         "binop": null
       },
-      "value": "STATE_HALT",
+      "value": "STATE_ALARM",
       "start": 211,
-      "end": 221,
+      "end": 222,
       "loc": {
         "start": {
           "line": 10,
@@ -6296,7 +6296,7 @@
         },
         "end": {
           "line": 10,
-          "column": 12
+          "column": 13
         }
       }
     },
@@ -6339,9 +6339,9 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "state.halt",
+      "value": "state.alarm",
       "start": 224,
-      "end": 236,
+      "end": 237,
       "loc": {
         "start": {
           "line": 10,
@@ -6349,7 +6349,7 @@
         },
         "end": {
           "line": 10,
-          "column": 27
+          "column": 28
         }
       }
     },
@@ -6366,16 +6366,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 236,
-      "end": 237,
+      "start": 237,
+      "end": 238,
       "loc": {
         "start": {
           "line": 10,
-          "column": 27
+          "column": 28
         },
         "end": {
           "line": 10,
-          "column": 28
+          "column": 29
         }
       }
     },

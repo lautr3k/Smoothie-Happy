@@ -1,7 +1,7 @@
 {
   "coverage": "100%",
-  "expectCount": 140,
-  "actualCount": 140,
+  "expectCount": 150,
+  "actualCount": 150,
   "files": {
     "src/board/board.js": {
       "expectCount": 33,
@@ -73,6 +73,16 @@
       "actualCount": 1,
       "undocumentLines": []
     },
+    "src/board/commands/abort.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/calc_thermistor.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "src/board/commands/cat.js": {
       "expectCount": 1,
       "actualCount": 1,
@@ -98,6 +108,11 @@
       "actualCount": 1,
       "undocumentLines": []
     },
+    "src/board/commands/md5sum.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "src/board/commands/mem.js": {
       "expectCount": 1,
       "actualCount": 1,
@@ -108,7 +123,22 @@
       "actualCount": 1,
       "undocumentLines": []
     },
+    "src/board/commands/net.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "src/board/commands/ok.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/play.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/progress.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
@@ -118,7 +148,17 @@
       "actualCount": 1,
       "undocumentLines": []
     },
+    "src/board/commands/remount.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "src/board/commands/reset.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/resume.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
@@ -133,7 +173,17 @@
       "actualCount": 1,
       "undocumentLines": []
     },
+    "src/board/commands/suspend.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "src/board/commands/switch.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/board/commands/thermistors.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []

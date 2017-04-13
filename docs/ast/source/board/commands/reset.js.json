@@ -1,150 +1,44 @@
 {
   "type": "File",
   "start": 0,
-  "end": 507,
+  "end": 454,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 19,
+      "line": 16,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 507,
+    "end": 454,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 19,
+        "line": 16,
         "column": 0
       }
     },
     "sourceType": "module",
     "body": [
       {
-        "type": "ImportDeclaration",
-        "start": 0,
-        "end": 39,
-        "loc": {
-          "start": {
-            "line": 1,
-            "column": 0
-          },
-          "end": {
-            "line": 1,
-            "column": 39
-          }
-        },
-        "specifiers": [
-          {
-            "type": "ImportSpecifier",
-            "start": 9,
-            "end": 22,
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 9
-              },
-              "end": {
-                "line": 1,
-                "column": 22
-              }
-            },
-            "imported": {
-              "type": "Identifier",
-              "start": 9,
-              "end": 22,
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 9
-                },
-                "end": {
-                  "line": 1,
-                  "column": 22
-                },
-                "identifierName": "normalizePath"
-              },
-              "name": "normalizePath"
-            },
-            "local": {
-              "type": "Identifier",
-              "start": 9,
-              "end": 22,
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 9
-                },
-                "end": {
-                  "line": 1,
-                  "column": 22
-                },
-                "identifierName": "normalizePath"
-              },
-              "name": "normalizePath"
-            }
-          }
-        ],
-        "source": {
-          "type": "StringLiteral",
-          "start": 30,
-          "end": 39,
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 30
-            },
-            "end": {
-              "line": 1,
-              "column": 39
-            }
-          },
-          "extra": {
-            "rawValue": "../util",
-            "raw": "'../util'"
-          },
-          "value": "../util",
-          "leadingComments": null,
-          "trailingComments": null
-        },
-        "trailingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n* Reset the board.\n*\n* ### on success\n* ```\n* return \"Smoothie out. Peace. Rebooting in 5 seconds...\\r\\n\"\n* ```\n* @param  {String}   raw  Raw command response string.\n* @param  {String[]} args Command arguments.\n* @return {String}\n* @throws {Error}\n* @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L647\n",
-            "start": 41,
-            "end": 445,
-            "loc": {
-              "start": {
-                "line": 3,
-                "column": 0
-              },
-              "end": {
-                "line": 15,
-                "column": 2
-              }
-            }
-          }
-        ]
-      },
-      {
         "type": "ExportNamedDeclaration",
-        "start": 446,
-        "end": 506,
+        "start": 393,
+        "end": 453,
         "loc": {
           "start": {
-            "line": 16,
+            "line": 13,
             "column": 0
           },
           "end": {
-            "line": 18,
+            "line": 15,
             "column": 1
           }
         },
@@ -152,29 +46,29 @@
         "source": null,
         "declaration": {
           "type": "FunctionDeclaration",
-          "start": 453,
-          "end": 506,
+          "start": 400,
+          "end": 453,
           "loc": {
             "start": {
-              "line": 16,
+              "line": 13,
               "column": 7
             },
             "end": {
-              "line": 18,
+              "line": 15,
               "column": 1
             }
           },
           "id": {
             "type": "Identifier",
-            "start": 462,
-            "end": 471,
+            "start": 409,
+            "end": 418,
             "loc": {
               "start": {
-                "line": 16,
+                "line": 13,
                 "column": 16
               },
               "end": {
-                "line": 16,
+                "line": 13,
                 "column": 25
               },
               "identifierName": "cmd_reset"
@@ -188,15 +82,15 @@
           "params": [
             {
               "type": "Identifier",
-              "start": 472,
-              "end": 475,
+              "start": 419,
+              "end": 422,
               "loc": {
                 "start": {
-                  "line": 16,
+                  "line": 13,
                   "column": 26
                 },
                 "end": {
-                  "line": 16,
+                  "line": 13,
                   "column": 29
                 },
                 "identifierName": "raw"
@@ -205,15 +99,15 @@
             },
             {
               "type": "Identifier",
-              "start": 477,
-              "end": 481,
+              "start": 424,
+              "end": 428,
               "loc": {
                 "start": {
-                  "line": 16,
+                  "line": 13,
                   "column": 31
                 },
                 "end": {
-                  "line": 16,
+                  "line": 13,
                   "column": 35
                 },
                 "identifierName": "args"
@@ -223,72 +117,72 @@
           ],
           "body": {
             "type": "BlockStatement",
-            "start": 483,
-            "end": 506,
+            "start": 430,
+            "end": 453,
             "loc": {
               "start": {
-                "line": 16,
+                "line": 13,
                 "column": 37
               },
               "end": {
-                "line": 18,
+                "line": 15,
                 "column": 1
               }
             },
             "body": [
               {
                 "type": "ReturnStatement",
-                "start": 487,
-                "end": 504,
+                "start": 434,
+                "end": 451,
                 "loc": {
                   "start": {
-                    "line": 17,
+                    "line": 14,
                     "column": 2
                   },
                   "end": {
-                    "line": 17,
+                    "line": 14,
                     "column": 19
                   }
                 },
                 "argument": {
                   "type": "CallExpression",
-                  "start": 494,
-                  "end": 504,
+                  "start": 441,
+                  "end": 451,
                   "loc": {
                     "start": {
-                      "line": 17,
+                      "line": 14,
                       "column": 9
                     },
                     "end": {
-                      "line": 17,
+                      "line": 14,
                       "column": 19
                     }
                   },
                   "callee": {
                     "type": "MemberExpression",
-                    "start": 494,
-                    "end": 502,
+                    "start": 441,
+                    "end": 449,
                     "loc": {
                       "start": {
-                        "line": 17,
+                        "line": 14,
                         "column": 9
                       },
                       "end": {
-                        "line": 17,
+                        "line": 14,
                         "column": 17
                       }
                     },
                     "object": {
                       "type": "Identifier",
-                      "start": 494,
-                      "end": 497,
+                      "start": 441,
+                      "end": 444,
                       "loc": {
                         "start": {
-                          "line": 17,
+                          "line": 14,
                           "column": 9
                         },
                         "end": {
-                          "line": 17,
+                          "line": 14,
                           "column": 12
                         },
                         "identifierName": "raw"
@@ -297,15 +191,15 @@
                     },
                     "property": {
                       "type": "Identifier",
-                      "start": 498,
-                      "end": 502,
+                      "start": 445,
+                      "end": 449,
                       "loc": {
                         "start": {
-                          "line": 17,
+                          "line": 14,
                           "column": 13
                         },
                         "end": {
-                          "line": 17,
+                          "line": 14,
                           "column": 17
                         },
                         "identifierName": "trim"
@@ -323,16 +217,16 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n* Reset the board.\n*\n* ### on success\n* ```\n* return \"Smoothie out. Peace. Rebooting in 5 seconds...\\r\\n\"\n* ```\n* @param  {String}   raw  Raw command response string.\n* @param  {String[]} args Command arguments.\n* @return {String}\n* @throws {Error}\n* @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L647\n",
-              "start": 41,
-              "end": 445,
+              "value": "*\n* Reset the board.\n*\n* ### on success\n* ```\n* return \"Smoothie out. Peace. Rebooting in 5 seconds...\\r\\n\"\n* ```\n* @param  {String}   raw  Raw command response string.\n* @param  {String[]} args Command arguments.\n* @return {String|Error}\n* @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L647\n",
+              "start": 0,
+              "end": 392,
               "loc": {
                 "start": {
-                  "line": 3,
+                  "line": 1,
                   "column": 0
                 },
                 "end": {
-                  "line": 15,
+                  "line": 12,
                   "column": 2
                 }
               }
@@ -343,16 +237,16 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n* Reset the board.\n*\n* ### on success\n* ```\n* return \"Smoothie out. Peace. Rebooting in 5 seconds...\\r\\n\"\n* ```\n* @param  {String}   raw  Raw command response string.\n* @param  {String[]} args Command arguments.\n* @return {String}\n* @throws {Error}\n* @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L647\n",
-            "start": 41,
-            "end": 445,
+            "value": "*\n* Reset the board.\n*\n* ### on success\n* ```\n* return \"Smoothie out. Peace. Rebooting in 5 seconds...\\r\\n\"\n* ```\n* @param  {String}   raw  Raw command response string.\n* @param  {String[]} args Command arguments.\n* @return {String|Error}\n* @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L647\n",
+            "start": 0,
+            "end": 392,
             "loc": {
               "start": {
-                "line": 3,
+                "line": 1,
                 "column": 0
               },
               "end": {
-                "line": 15,
+                "line": 12,
                 "column": 2
               }
             }
@@ -365,16 +259,16 @@
   "comments": [
     {
       "type": "CommentBlock",
-      "value": "*\n* Reset the board.\n*\n* ### on success\n* ```\n* return \"Smoothie out. Peace. Rebooting in 5 seconds...\\r\\n\"\n* ```\n* @param  {String}   raw  Raw command response string.\n* @param  {String[]} args Command arguments.\n* @return {String}\n* @throws {Error}\n* @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L647\n",
-      "start": 41,
-      "end": 445,
+      "value": "*\n* Reset the board.\n*\n* ### on success\n* ```\n* return \"Smoothie out. Peace. Rebooting in 5 seconds...\\r\\n\"\n* ```\n* @param  {String}   raw  Raw command response string.\n* @param  {String[]} args Command arguments.\n* @return {String|Error}\n* @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L647\n",
+      "start": 0,
+      "end": 392,
       "loc": {
         "start": {
-          "line": 3,
+          "line": 1,
           "column": 0
         },
         "end": {
-          "line": 15,
+          "line": 12,
           "column": 2
         }
       }
@@ -382,174 +276,17 @@
   ],
   "tokens": [
     {
-      "type": {
-        "label": "import",
-        "keyword": "import",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "import",
-      "start": 0,
-      "end": 6,
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 6
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "{",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 7,
-      "end": 8,
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 7
-        },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "normalizePath",
-      "start": 9,
-      "end": 22,
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 9
-        },
-        "end": {
-          "line": 1,
-          "column": 22
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "}",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 23,
-      "end": 24,
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 23
-        },
-        "end": {
-          "line": 1,
-          "column": 24
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "from",
-      "start": 25,
-      "end": 29,
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 25
-        },
-        "end": {
-          "line": 1,
-          "column": 29
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "string",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "../util",
-      "start": 30,
-      "end": 39,
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 30
-        },
-        "end": {
-          "line": 1,
-          "column": 39
-        }
-      }
-    },
-    {
       "type": "CommentBlock",
-      "value": "*\n* Reset the board.\n*\n* ### on success\n* ```\n* return \"Smoothie out. Peace. Rebooting in 5 seconds...\\r\\n\"\n* ```\n* @param  {String}   raw  Raw command response string.\n* @param  {String[]} args Command arguments.\n* @return {String}\n* @throws {Error}\n* @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L647\n",
-      "start": 41,
-      "end": 445,
+      "value": "*\n* Reset the board.\n*\n* ### on success\n* ```\n* return \"Smoothie out. Peace. Rebooting in 5 seconds...\\r\\n\"\n* ```\n* @param  {String}   raw  Raw command response string.\n* @param  {String[]} args Command arguments.\n* @return {String|Error}\n* @see https://github.com/Smoothieware/Smoothieware/blob/d79254323f4bb951426c6add29a4451130eaa018/src/modules/utils/simpleshell/SimpleShell.cpp#L647\n",
+      "start": 0,
+      "end": 392,
       "loc": {
         "start": {
-          "line": 3,
+          "line": 1,
           "column": 0
         },
         "end": {
-          "line": 15,
+          "line": 12,
           "column": 2
         }
       }
@@ -569,15 +306,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 446,
-      "end": 452,
+      "start": 393,
+      "end": 399,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 13,
           "column": 0
         },
         "end": {
-          "line": 16,
+          "line": 13,
           "column": 6
         }
       }
@@ -596,15 +333,15 @@
         "binop": null
       },
       "value": "function",
-      "start": 453,
-      "end": 461,
+      "start": 400,
+      "end": 408,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 13,
           "column": 7
         },
         "end": {
-          "line": 16,
+          "line": 13,
           "column": 15
         }
       }
@@ -622,15 +359,15 @@
         "binop": null
       },
       "value": "cmd_reset",
-      "start": 462,
-      "end": 471,
+      "start": 409,
+      "end": 418,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 13,
           "column": 16
         },
         "end": {
-          "line": 16,
+          "line": 13,
           "column": 25
         }
       }
@@ -647,15 +384,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 471,
-      "end": 472,
+      "start": 418,
+      "end": 419,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 13,
           "column": 25
         },
         "end": {
-          "line": 16,
+          "line": 13,
           "column": 26
         }
       }
@@ -673,15 +410,15 @@
         "binop": null
       },
       "value": "raw",
-      "start": 472,
-      "end": 475,
+      "start": 419,
+      "end": 422,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 13,
           "column": 26
         },
         "end": {
-          "line": 16,
+          "line": 13,
           "column": 29
         }
       }
@@ -699,15 +436,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 475,
-      "end": 476,
+      "start": 422,
+      "end": 423,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 13,
           "column": 29
         },
         "end": {
-          "line": 16,
+          "line": 13,
           "column": 30
         }
       }
@@ -725,15 +462,15 @@
         "binop": null
       },
       "value": "args",
-      "start": 477,
-      "end": 481,
+      "start": 424,
+      "end": 428,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 13,
           "column": 31
         },
         "end": {
-          "line": 16,
+          "line": 13,
           "column": 35
         }
       }
@@ -750,15 +487,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 481,
-      "end": 482,
+      "start": 428,
+      "end": 429,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 13,
           "column": 35
         },
         "end": {
-          "line": 16,
+          "line": 13,
           "column": 36
         }
       }
@@ -775,15 +512,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 483,
-      "end": 484,
+      "start": 430,
+      "end": 431,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 13,
           "column": 37
         },
         "end": {
-          "line": 16,
+          "line": 13,
           "column": 38
         }
       }
@@ -803,15 +540,15 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 487,
-      "end": 493,
+      "start": 434,
+      "end": 440,
       "loc": {
         "start": {
-          "line": 17,
+          "line": 14,
           "column": 2
         },
         "end": {
-          "line": 17,
+          "line": 14,
           "column": 8
         }
       }
@@ -829,15 +566,15 @@
         "binop": null
       },
       "value": "raw",
-      "start": 494,
-      "end": 497,
+      "start": 441,
+      "end": 444,
       "loc": {
         "start": {
-          "line": 17,
+          "line": 14,
           "column": 9
         },
         "end": {
-          "line": 17,
+          "line": 14,
           "column": 12
         }
       }
@@ -855,15 +592,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 497,
-      "end": 498,
+      "start": 444,
+      "end": 445,
       "loc": {
         "start": {
-          "line": 17,
+          "line": 14,
           "column": 12
         },
         "end": {
-          "line": 17,
+          "line": 14,
           "column": 13
         }
       }
@@ -881,15 +618,15 @@
         "binop": null
       },
       "value": "trim",
-      "start": 498,
-      "end": 502,
+      "start": 445,
+      "end": 449,
       "loc": {
         "start": {
-          "line": 17,
+          "line": 14,
           "column": 13
         },
         "end": {
-          "line": 17,
+          "line": 14,
           "column": 17
         }
       }
@@ -906,15 +643,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 502,
-      "end": 503,
+      "start": 449,
+      "end": 450,
       "loc": {
         "start": {
-          "line": 17,
+          "line": 14,
           "column": 17
         },
         "end": {
-          "line": 17,
+          "line": 14,
           "column": 18
         }
       }
@@ -931,15 +668,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 503,
-      "end": 504,
+      "start": 450,
+      "end": 451,
       "loc": {
         "start": {
-          "line": 17,
+          "line": 14,
           "column": 18
         },
         "end": {
-          "line": 17,
+          "line": 14,
           "column": 19
         }
       }
@@ -956,15 +693,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 505,
-      "end": 506,
+      "start": 452,
+      "end": 453,
       "loc": {
         "start": {
-          "line": 18,
+          "line": 15,
           "column": 0
         },
         "end": {
-          "line": 18,
+          "line": 15,
           "column": 1
         }
       }
@@ -982,15 +719,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 507,
-      "end": 507,
+      "start": 454,
+      "end": 454,
       "loc": {
         "start": {
-          "line": 19,
+          "line": 16,
           "column": 0
         },
         "end": {
-          "line": 19,
+          "line": 16,
           "column": 0
         }
       }
