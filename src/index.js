@@ -1,11 +1,14 @@
+import command from './command'
+import * as commands from './commands'
+
 /**
 * API version
-* @type {String}
+* @type {string}
 */
-export const VERSION = '2.0.0'
+const version = '2.1.0'
 
-// public interface
-import * as request from './request'
-import * as board from './board'
-
-export { request, board }
+export default {
+  version,
+  command,
+  commands
+}

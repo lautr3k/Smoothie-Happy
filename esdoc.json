@@ -1,8 +1,8 @@
 {
   "source": "./src",
   "destination": "./docs",
-  "access": ["public", "protected", "private"],
-  "experimentalProposal": {
-    "objectRestSpread": true
-  }
+  "plugins": [
+    { "name": "esdoc-standard-plugin" },
+    { "name": "esdoc-ecmascript-proposal-plugin", "option": { "all": true } }
+  ]
 }

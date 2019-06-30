@@ -1,8 +1,24 @@
 # Smoothie-Happy
-A Smoothie firmware network communication API.
+A Smoothie firmware HTTP communication API
 
 - Work In Progress...
 
-Docs : http://lautr3k.github.io/smoothie-happy/docs/
+# API Documentation
+http://lautr3k.github.io/smoothie-happy/docs/
 
-Demo : http://lautr3k.github.io/smoothie-happy/dist/demo/
+# Development
+
+### Install
+`yarn install`
+
+### Run dev server
+`yarn dev`
+
+### Build bundle
+`yarn bundle`
+
+### Lint code
+`yarn lint`
+
+### Build docs
+`yarn docs`
