@@ -43,7 +43,6 @@ export default function version ({ ...params }) {
       }
       // test the pattern
       const matches = data.match(pattern)
-      console.log(response)
       // positive match
       if (matches) {
         // split branch-hash on dash
