@@ -6,7 +6,7 @@
 * @throws {Error} in any case
 */
 export function requiredParam (name) {
-  const error = new Error(`Required parameter, "${name}" is missing.`)
+  const error = new Error(`Required parameter "${name}" is missing.`)
   if (typeof Error.captureStackTrace === 'function') {
     // preserve original stack trace
     Error.captureStackTrace(error, requiredParam)
