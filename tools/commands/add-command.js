@@ -1,4 +1,6 @@
 const { exit, makeTemplate, makeIndex } = require('../commons')
+const readlineSync = require('readline-sync')
+const addExample = require('./add-example').default
 
 const usage = 'tools add command <name>'
 
@@ -14,4 +16,9 @@ module.exports.default = function (args) {
   ])
 
   makeIndex('../src/commands.js', '../src/commands')
+
+  const answer = readlineSync.question(`> Add example file ? (y/n) `)
+  if (answer.toLowerCase() === 'y') {
+    addExample([ name ])
+  }
 }

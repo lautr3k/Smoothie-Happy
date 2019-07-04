@@ -2,7 +2,7 @@ import { requiredParam, requiredTypes } from '../utils.js'
 import command from '../command'
 
 /**
-* Send __dummyCommandName__ command.
+* Send [ __dummyCommandName__ ] command.
 *
 * @param {Object} settings - command settings
 * @param {string} settings.address - ip or hostname (without protocle http://)
@@ -10,20 +10,10 @@ import command from '../command'
 * @param {number} [settings.timeout = 2000] - connexion timeout
 * @param {Object} [settings.axiosConfig = {}] - axios config ([documentation ](https://github.com/axios/axios#axiosconfig))
 *
-* @return {Promise}
+* @return {Promise<CommandPayload|Error>}
 *
 * @example
-* __dummyCommandName__({
-*   address: '192.168.1.121',
-*   customParam: 'customValue'
-* })
-*   .then(response => {
-*     console.log(response)
-*   })
-*   .catch(error => {
-*     console.log(error)
-*   })
-*
+* [EXAMPLE ../../examples/__dummyCommandName__.js]
 */
 export default function __dummyCommandName__ ({
   customParam = requiredParam('customParam'),
@@ -41,16 +31,17 @@ export default function __dummyCommandName__ ({
     command: '__dummyCommandName__'
   }
   // send command
-  return command(settings)
-    .then(response => {
-      // trim response data
-      const data = response.data.trim()
-      // do somthing with data
-      if (data.length) {
-        // allaways return an object with settings and data properties
-        return { settings, data }
-      }
-      // throw an Error if somthing gose wrong
-      throw new Error('Unknown response string.')
-    })
+  return command(settings).then(payload => {
+    // do somthing with the response string
+    if (payload.responseString.length) {
+      // set some data
+      payload.data = { hello: 'world' }
+    } else {
+      // set an Error if somthing gose wrong
+      // and return the payload
+      payload.error = new Error('Unknown response string')
+    }
+    // allaways return the payload
+    return payload
+  })
 }

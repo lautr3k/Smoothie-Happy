@@ -10,7 +10,7 @@ module.exports.default = function (args) {
   const name = args.shift()
 
   makeTemplate('example', '../examples', name, [
-    { name: '__dummyExampleName__', value: name }
+    { name: '__dummyCommandName__', value: name }
   ])
 
   makeIndex('../examples/index.js', '../examples')
