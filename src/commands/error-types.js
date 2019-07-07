@@ -1,0 +1,1 @@
+export const COULD_NOT_OPEN_PATH = 'COULD_NOT_OPEN_PATH'
