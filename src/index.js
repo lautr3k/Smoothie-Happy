@@ -1,14 +1,20 @@
+import { request, post, get } from './request'
 import command from './command'
 import * as commands from './commands'
+import * as errorTypes from './error-types'
 
 /**
 * API version
-* @type {string}
+* @type {String}
 */
-const version = '2.1.0'
+export const VERSION = '2.1.0'
 
 export default {
-  version,
+  VERSION,
+  request,
+  post,
+  get,
   command,
-  commands
+  commands,
+  errorTypes
 }
