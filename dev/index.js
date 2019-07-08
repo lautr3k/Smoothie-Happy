@@ -15,3 +15,4 @@ const address = '192.168.1.121'
 // examples.rm({ address, path: '/sd/upload2.txt' })
 // examples.cd({ address, path: '/' })
 // examples.pwd({ address })
+examples.mkdir({ address, path: '/sd/gcodes/dir' })

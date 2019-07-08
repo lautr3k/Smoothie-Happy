@@ -1,6 +1,7 @@
 import cd from './cd'
 import command from './command'
 import ls from './ls'
+import mkdir from './mkdir'
 import pwd from './pwd'
 import request from './request'
 import rm from './rm'
@@ -11,6 +12,7 @@ export {
   cd,
   command,
   ls,
+  mkdir,
   pwd,
   request,
   rm,
