@@ -42,6 +42,13 @@ export function isSent (address) {
  *
  * @return {Promise<responsePayload|RequestError>}
  *
+ * @throws {RequestError} {@link REQUEST_OPEN}
+ * @throws {RequestError} {@link SERVER_ERROR}
+ * @throws {RequestError} {@link NETWORK_ERROR}
+ * @throws {RequestError} {@link REQUEST_ABORTED}
+ * @throws {RequestError} {@link REQUEST_TIMEOUT}
+ * @throws {RequestError} {@link PARALLEL_REQUEST}
+ *
  * @example
  * [EXAMPLE ../../examples/request.js]
  */

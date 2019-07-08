@@ -16,6 +16,8 @@ import post from '../request/post'
  *
  * @return {Promise<responsePayload|RequestError>}
  *
+ * @throws {RequestError} {@link UNSUPPORTED_COMMAND}
+ *
  * @example
  * [EXAMPLE ../../examples/command.js]
  */

@@ -4,6 +4,7 @@ import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 import ls from './ls'
 
+/** @ignore */
 function rmRecursive (params) {
   return new Promise((resolve, reject) => {
     // fetch folder tree
@@ -39,6 +40,7 @@ function rmRecursive (params) {
       .catch(reject)
   })
 }
+
 /**
  * Send rm command.
  *
@@ -51,6 +53,8 @@ function rmRecursive (params) {
  * @param {...any} ...rest                     - Optional params passed to {@link command} request
  *
  * @return {Promise<responsePayload|RequestError>}
+ *
+ * @throws {RequestError} {@link COULD_NOT_DELETE}
  *
  * @example
  * [EXAMPLE ../../examples/rm.js]

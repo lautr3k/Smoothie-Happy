@@ -14,6 +14,8 @@ import command from '../command'
  *
  * @return {Promise<responsePayload|RequestError>}
  *
+ * @throws {RequestError} {@link UNKNOWN_RESPONSE}
+ *
  * @example
  * [EXAMPLE ../../examples/version.js]
  */

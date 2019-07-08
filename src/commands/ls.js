@@ -68,6 +68,8 @@ function lsRecursive ({ params, response, folders }) {
  *
  * @return {Promise<responsePayload|RequestError>}
  *
+ * @throws {RequestError} {@link COULD_NOT_OPEN_PATH}
+ *
  * @example
  * [EXAMPLE ../../examples/ls.js]
  */

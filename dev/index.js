@@ -12,4 +12,4 @@ const address = '192.168.1.121'
 // examples.upload({ address, path: '/sd', name: 'upload.txt', file: 'UPLOAD...\n' })
 // const file = new Blob(['hahahaha...\n'], { 'type': 'text/plain' })
 // examples.upload({ address, path: '/sd/front', name: 'upload2.txt', file })
-examples.rm({ address, path: '/sd/upload2.txt' })
+// examples.rm({ address, path: '/sd/upload2.txt' })

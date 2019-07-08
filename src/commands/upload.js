@@ -18,6 +18,8 @@ import post from '../request/post'
  *
  * @return {Promise<responsePayload|RequestError>}
  *
+ * @throws {RequestError} {@link COULD_NOT_UPLOAD}
+ *
  * @example
  * [EXAMPLE ../../examples/upload.js]
  */
