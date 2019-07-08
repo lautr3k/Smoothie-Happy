@@ -1,66 +1,9 @@
+
+import { normalizePath, requiredParam, requiredTypes } from '../utils'
 import { COULD_NOT_OPEN_PATH } from './error-types'
 import { errorFactory } from '../request/factory'
+import { folderFactory, fileFactory } from './factory'
 import command from '../command'
-
-/**
- * Folder factory.
- *
- * @param  {Object} params
- * @param  {String} params.path
- * @param  {String} params.line
- * @return {boardFolder}
- * @private
- */
-function folderFactory ({ path, line }) {
-  const name = line.slice(0, -1)
-  const folderPath = `${path}/${name}`
-  /**
-   * @typedef  {Object} boardFolder - Board folder
-   * @property {String} type        - Allaways === 'folder'
-   * @property {String} name        - Folder name
-   * @property {String} path        - Folder path
-   * @property {String} parent      - Folder parent
-   */
-  return {
-    type: 'folder',
-    name,
-    path: folderPath,
-    parent: path
-  }
-}
-
-/**
- * File factory.
- *
- * @param  {Object} params
- * @param  {String} params.path
- * @param  {String} params.line
- * @return {boardFile}
- * @private
- */
-function fileFactory ({ path, line }) {
-  let name = line
-  let parts = line.split(' ')
-  let size = parseInt(parts.pop())
-  name = parts.join(' ')
-  /**
-   * @typedef  {Object} boardFile - Board file
-   * @property {String} type      - Allaways === 'file'
-   * @property {String} name      - File name
-   * @property {Number} size      - File size
-   * @property {String} path      - File path
-   * @property {String} parent    - File parent
-   * @property {String} extension - File extension
-   */
-  return {
-    name,
-    size,
-    type: 'file',
-    parent: path,
-    path: `${path}/${name}`,
-    extension: name.split('.').pop()
-  }
-}
 
 /**
  * Sort files collection by path.
@@ -120,7 +63,7 @@ function lsRecursive ({ params, response, folders }) {
  * @param {String}      params.address             - Board address without protocol
  * @param {String}      [params.path = '/']        - Path to list file from
  * @param {Boolean}     [params.recursive = false] - List subfolders ?
- * @param {onFile|null} [params.onFile = null]     - called when a file is found
+ * @param {null|onFile} [params.onFile = null]     - called when a file is found
  * @param {...any}      ...rest                    - Optional params passed to {@link command} request
  *
  * @return {Promise<responsePayload|RequestError>}
@@ -129,16 +72,21 @@ function lsRecursive ({ params, response, folders }) {
  * [EXAMPLE ../../examples/ls.js]
  */
 export default function ls ({
-  address,
+  address = requiredParam('address'),
   path = '/',
   recursive = false,
   onFile = null,
   ...rest
 } = {}) {
-  path = '/' + path.replace(/^\/+|\/+$/g, '')
+  requiredTypes('address', address, ['string'])
+  requiredTypes('path', path, ['string'])
+  requiredTypes('recursive', recursive, ['boolean'])
+  requiredTypes('onFile', onFile, ['null', 'function'])
+  path = '/' + normalizePath(path)
   const params = {
     ...rest,
     address,
+    path,
     recursive,
     onFile,
     command: `ls -s ${path}`
