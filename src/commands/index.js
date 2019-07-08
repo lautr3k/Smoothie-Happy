@@ -2,6 +2,7 @@ import cd from './cd'
 import dfu from './dfu'
 import getPosition from './getPosition'
 import getTemp from './getTemp'
+import getWCS from './getWCS'
 import kinematics from './kinematics'
 import ls from './ls'
 import mem from './mem'
@@ -18,6 +19,7 @@ export {
   dfu,
   getPosition,
   getTemp,
+  getWCS,
   kinematics,
   ls,
   mem,
