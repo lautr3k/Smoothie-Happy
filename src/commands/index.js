@@ -1,4 +1,5 @@
 import cd from './cd'
+import dfu from './dfu'
 import ls from './ls'
 import mkdir from './mkdir'
 import pwd from './pwd'
@@ -9,6 +10,7 @@ import version from './version'
 
 export {
   cd,
+  dfu,
   ls,
   mkdir,
   pwd,
