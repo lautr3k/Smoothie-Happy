@@ -13,7 +13,7 @@ function rmRecursive (params) {
       let removedFiles = []
       let rmResponse = null
       const recursive = () => {
-        let file = files.pop()
+        const file = files.pop()
         rm({
           ...params,
           path: file.path,
