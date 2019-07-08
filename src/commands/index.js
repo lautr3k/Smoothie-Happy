@@ -1,5 +1,6 @@
 import cd from './cd'
 import dfu from './dfu'
+import kinematics from './kinematics'
 import getTemp from './getTemp'
 import ls from './ls'
 import mem from './mem'
@@ -14,6 +15,7 @@ import version from './version'
 export {
   cd,
   dfu,
+  kinematics,
   getTemp,
   ls,
   mem,
