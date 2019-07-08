@@ -1,8 +1,9 @@
 import cd from './cd'
 import command from './command'
 import dfu from './dfu'
-import kinematics from './kinematics'
+import getPosition from './getPosition'
 import getTemp from './getTemp'
+import kinematics from './kinematics'
 import ls from './ls'
 import mem from './mem'
 import mkdir from './mkdir'
@@ -18,8 +19,9 @@ export {
   cd,
   command,
   dfu,
-  kinematics,
+  getPosition,
   getTemp,
+  kinematics,
   ls,
   mem,
   mkdir,

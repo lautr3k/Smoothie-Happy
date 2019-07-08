@@ -22,4 +22,5 @@ const address = '192.168.1.121'
 // examples.mem({ address })
 // examples.getTemp({ address, device: 'all' })
 // examples.forwardKinematics({ address, x: 20, y: 50, z: 10, move: true })
-examples.kinematics({ address, x: 20, y: 50, z: 10, move: true })
+// examples.kinematics({ address, x: 20, y: 50, z: 10, move: true })
+examples.getPosition({ address })
