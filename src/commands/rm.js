@@ -56,6 +56,8 @@ function rmRecursive (params) {
  *
  * @throws {RequestError} {@link COULD_NOT_DELETE}
  *
+ * @see https://github.com/Smoothieware/Smoothieware/blob/edge/src/modules/utils/simpleshell/SimpleShell.cpp#L348
+ *
  * @example
  * [EXAMPLE ../../examples/rm.js]
  */

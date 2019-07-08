@@ -70,6 +70,8 @@ function lsRecursive ({ params, response, folders }) {
  *
  * @throws {RequestError} {@link COULD_NOT_OPEN_PATH}
  *
+ * @see https://github.com/Smoothieware/Smoothieware/blob/edge/src/modules/utils/simpleshell/SimpleShell.cpp#L301
+ *
  * @example
  * [EXAMPLE ../../examples/ls.js]
  */

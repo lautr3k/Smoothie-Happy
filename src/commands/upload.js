@@ -20,6 +20,9 @@ import post from '../request/post'
  *
  * @throws {RequestError} {@link COULD_NOT_UPLOAD}
  *
+ * @see https://github.com/Smoothieware/Smoothieware/blob/d82d66f550ce6bdd7f33e8f4998ac6d963fd7376/src/libs/Network/uip/webserver/httpd.c#L340
+ * @see https://github.com/Smoothieware/Smoothieware/blob/d82d66f550ce6bdd7f33e8f4998ac6d963fd7376/src/libs/Network/uip/webserver/httpd.c#L543
+ *
  * @example
  * [EXAMPLE ../../examples/upload.js]
  */
