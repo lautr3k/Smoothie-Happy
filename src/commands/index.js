@@ -1,3 +1,4 @@
+import mri from './mri'
 import cd from './cd'
 import dfu from './dfu'
 import ls from './ls'
@@ -9,6 +10,7 @@ import upload from './upload'
 import version from './version'
 
 export {
+  mri,
   cd,
   dfu,
   ls,
