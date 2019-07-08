@@ -17,6 +17,8 @@ import command from '../command'
  *
  * @throws {RequestError} {@link COULD_NOT_CREATE}
  *
+ * @see https://github.com/Smoothieware/Smoothieware/blob/edge/src/modules/utils/simpleshell/SimpleShell.cpp#L366
+ *
  * @example
  * [EXAMPLE ../../examples/mkdir.js]
  */
