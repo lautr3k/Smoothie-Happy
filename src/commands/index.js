@@ -1,5 +1,6 @@
 import cd from './cd'
 import dfu from './dfu'
+import getTemp from './getTemp'
 import ls from './ls'
 import mem from './mem'
 import mkdir from './mkdir'
@@ -13,6 +14,7 @@ import version from './version'
 export {
   cd,
   dfu,
+  getTemp,
   ls,
   mem,
   mkdir,
