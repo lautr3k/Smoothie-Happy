@@ -25,9 +25,10 @@ function makeIndex (filePath, fromPath) {
   let relativePath = relative(dirname(filePath), fromPath)
   let _imports = []
   let _exports = []
+  const ignores = ['index.js', 'error-types.js', 'factory.js']
 
   readdirSync(fromPath).forEach(file => {
-    if (file === 'index.js' || file === 'error-types.js') {
+    if (ignores.includes(file)) {
       return // skip index
     }
     const fileName = file.slice(0, -3)
