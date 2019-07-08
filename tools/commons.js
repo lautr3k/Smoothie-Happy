@@ -27,7 +27,7 @@ function makeIndex (filePath, fromPath) {
   let _exports = []
 
   readdirSync(fromPath).forEach(file => {
-    if (file === 'index.js') {
+    if (file === 'index.js' || file === 'error-types.js') {
       return // skip index
     }
     const fileName = file.slice(0, -3)

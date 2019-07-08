@@ -1,19 +1,15 @@
 import sh from '../src'
 
-export default function (address) {
+export default function ({ address }) {
   sh.commands.__dummyCommandName__({
-    address // @esdoc address: '192.168.1.121'
+    address, // @esdoc address: '192.168.1.121',
+    timeout: 2000
   })
-    .then(payload => {
-      if (payload.error) {
-        console.error('Command error:', payload.error)
-        return
-      }
-      console.log('Command:', payload.settings.command)
-      console.log('Raw data:', payload.responseString)
-      console.log('Data:', payload.data)
+    .then(response => {
+      console.log('response:', response)
+      console.log('>>>', JSON.stringify(response.data, null, 2))
     })
     .catch(error => {
-      console.error('Network error:', error)
+      console.log(`${error.type}: ${error.message}`, error.response)
     })
 }

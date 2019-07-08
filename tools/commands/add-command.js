@@ -15,7 +15,7 @@ module.exports.default = function (args) {
     { name: '__dummyCommandName__', value: name }
   ])
 
-  makeIndex('../src/commands.js', '../src/commands')
+  makeIndex('../src/commands/index.js', '../src/commands')
 
   const answer = readlineSync.question(`> Add example file ? (y/n) `)
   if (answer.toLowerCase() === 'y') {

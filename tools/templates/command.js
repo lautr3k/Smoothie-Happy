@@ -1,47 +1,42 @@
-import { requiredParam, requiredTypes } from '../utils.js'
+import { UNKNOWN_RESPONSE } from '../command/error-types'
+import { errorFactory } from '../request/factory'
+import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /**
-* Send [ __dummyCommandName__ ] command.
-*
-* @param {Object} settings - command settings
-* @param {string} settings.address - ip or hostname (without protocle http://)
-* @param {string} settings.customParam - Custom param description...
-* @param {number} [settings.timeout = 2000] - connexion timeout
-* @param {Object} [settings.axiosConfig = {}] - axios config ([documentation ](https://github.com/axios/axios#axiosconfig))
-*
-* @return {Promise<CommandPayload|Error>}
-*
-* @example
-* [EXAMPLE ../../examples/__dummyCommandName__.js]
-*/
+ * Send __dummyCommandName__ command.
+ *
+ * - See {@link post}, {@link request} and {@link command} for more details.
+ *
+ * @param  {Object} params         - Params...
+ * @param  {String} params.address - Board address without protocol
+ * @param  {...any} ...rest        - Optional params passed to {@link command} request
+ *
+ * @return {Promise<responsePayload|RequestError>}
+ *
+ * @example
+ * [EXAMPLE ../../examples/__dummyCommandName__.js]
+ */
 export default function __dummyCommandName__ ({
-  customParam = requiredParam('customParam'),
-  ...params
+  address = requiredParam('address'),
+  ...rest
 } = {}) {
-  // type check
-  requiredTypes('customParam', customParam, ['string'])
-  // command settings
-  const settings = {
-    // overwritable settings
-    timeout: 2000,
-    // user settings
-    ...params,
-    // fixed settings
+  requiredTypes('address', address, ['string'])
+  const params = {
+    ...rest,
+    address,
     command: '__dummyCommandName__'
   }
-  // send command
-  return command(settings).then(payload => {
-    // do somthing with the response string
-    if (payload.responseString.length) {
-      // set some data
-      payload.data = { hello: 'world' }
-    } else {
-      // set an Error if somthing gose wrong
-      // and return the payload
-      payload.error = new Error('Unknown response string')
+  return command(params).then(response => {
+    // throw an Error if somthing gose wrong
+    if (!response.text.length) {
+      throw errorFactory({
+        ...response,
+        type: UNKNOWN_RESPONSE,
+        message: 'Unknown response'
+      })
     }
-    // allaways return the payload
-    return payload
+    // allaways return the response
+    return response
   })
 }
