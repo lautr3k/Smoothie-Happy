@@ -1,10 +1,12 @@
 import { errorFactory, responseFactory } from './factory.js'
+import { requiredTypes } from '../utils'
 import {
   REQUEST_OPEN,
   SERVER_ERROR,
   NETWORK_ERROR,
   REQUEST_ABORTED,
-  REQUEST_TIMEOUT
+  REQUEST_TIMEOUT,
+  PARALLEL_REQUEST
 } from './error-types'
 
 /** @external {XMLHttpRequest} https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest */
@@ -12,16 +14,31 @@ import {
 /** @external {Promise}        https://developer.mozilla.org/en-US/docs/Web/API/Promise        */
 
 /**
+ * True if a request is waiting for a response.
+ * @type {Object}
+ */
+let sent = {}
+
+/**
+ * Test if a request is waiting for a response.
+ * @param  {String} address
+ * @return {Boolean}
+ */
+export function isSent (address) {
+  return !!sent[address]
+}
+
+/**
  * Send a {@link XMLHttpRequest} request wrapped in a {@link Promise}.
  *
- * @param {Object}                [params = {}]                    - Request params
- * @param {String}                [params.method = 'POST']         - Request method
- * @param {String}                [params.url = '/']               - Request URL
- * @param {String}                [params.data = null]             - Request data
- * @param {Number}                [params.timeout = 0]             - Request timeout
- * @param {Array<Array<String>>}  [params.headers = null]          - Array of [ key, val ]
- * @param {onUploadProgress|null} [params.onUploadProgress = null] - On upload progress callback
- * @param {...any}                ...rest                          - Additional params
+ * @param {Object}                    [params = {}]                    - Request params
+ * @param {String}                    [params.method = 'POST']         - Request method
+ * @param {String}                    [params.url = '/']               - Request URL
+ * @param {null|String|Blob}          [params.data = null]             - Request data
+ * @param {Number}                    [params.timeout = 0]             - Request timeout
+ * @param {null|Array<Array<String>>} [params.headers = null]          - Array of [ key, val ]
+ * @param {null|onUploadProgress}     [params.onUploadProgress = null] - On upload progress callback
+ * @param {...any}                ...rest                              - Additional params
  *
  * @return {Promise<responsePayload|RequestError>}
  *
@@ -37,6 +54,16 @@ export default function request ({
   onUploadProgress = null,
   ...rest
 } = {}) {
+  requiredTypes('method', method, ['string'])
+  requiredTypes('url', url, ['string'])
+  requiredTypes('data', data, ['null', 'string', Blob])
+  requiredTypes('timeout', timeout, ['number'])
+  requiredTypes('headers', headers, ['null', 'array'])
+  requiredTypes('onUploadProgress', onUploadProgress, ['null', 'function'])
+  // force http protocol
+  if (!url.startsWith('http://')) {
+    url = `http://${url}`
+  }
   // request params
   const params = {
     ...rest,
@@ -51,6 +78,9 @@ export default function request ({
   return new Promise((resolve, reject) => {
     // create http request object
     let xhr = new XMLHttpRequest()
+    // extract address
+    const matches = url.match(/http:\/\/([^/]+)/)
+    const address = matches ? matches[1] : 'localhost'
     // open the request (async)
     try {
       xhr.open(method, url, true)
@@ -72,6 +102,7 @@ export default function request ({
     xhr.onreadystatechange = function onReadyStateChange () {
       if (!xhr || xhr.readyState !== 4) return
       if (xhr.status === 0) return // => onError
+      sent[address] = false
       if (xhr.status >= 200 && xhr.status < 300) {
         resolve(responseFactory({ params, xhr }))
       } else {
@@ -86,6 +117,7 @@ export default function request ({
     }
     // on network errors
     xhr.onerror = function onError () {
+      sent[address] = false
       reject(errorFactory({
         type: NETWORK_ERROR,
         message: 'Network Error',
@@ -97,6 +129,7 @@ export default function request ({
     // on browser abord
     xhr.onabort = function onAbort () {
       if (!xhr) return
+      sent[address] = false
       reject(errorFactory({
         type: REQUEST_ABORTED,
         message: 'Request aborted',
@@ -107,6 +140,7 @@ export default function request ({
     }
     // on timeout
     xhr.ontimeout = function onTimeout () {
+      sent[address] = false
       reject(errorFactory({
         type: REQUEST_TIMEOUT,
         message: `Timeout of ${timeout}ms exceeded`,
@@ -138,6 +172,17 @@ export default function request ({
         })
       })
     }
+    // parallel request prohibited
+    if (isSent(address)) {
+      reject(errorFactory({
+        type: PARALLEL_REQUEST,
+        message: 'Parallel request prohibited. Please wait for the end of a request before sending another',
+        params,
+        xhr
+      }))
+      return
+    }
+    sent[address] = true
     // send request
     xhr.send(data)
   })
