@@ -1,11 +1,15 @@
-import request from './request'
 import command from './command'
-import version from './version'
 import ls from './ls'
+import request from './request'
+import rm from './rm'
+import upload from './upload'
+import version from './version'
 
 export {
-  request,
   command,
-  version,
-  ls
+  ls,
+  request,
+  rm,
+  upload,
+  version
 }
