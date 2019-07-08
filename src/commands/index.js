@@ -1,6 +1,7 @@
 import cd from './cd'
 import dfu from './dfu'
 import getPosition from './getPosition'
+import getState from './getState'
 import getTemp from './getTemp'
 import getWCS from './getWCS'
 import kinematics from './kinematics'
@@ -18,6 +19,7 @@ export {
   cd,
   dfu,
   getPosition,
+  getState,
   getTemp,
   getWCS,
   kinematics,
