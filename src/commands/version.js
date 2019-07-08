@@ -1,5 +1,6 @@
 import { UNKNOWN_RESPONSE } from '../command/error-types'
 import { errorFactory } from '../request/factory'
+import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /**
@@ -17,9 +18,10 @@ import command from '../command'
  * [EXAMPLE ../../examples/version.js]
  */
 export default function version ({
-  address,
+  address = requiredParam('address'),
   ...rest
 } = {}) {
+  requiredTypes('address', address, ['string'])
   const params = {
     ...rest,
     address,
