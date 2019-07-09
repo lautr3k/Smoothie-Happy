@@ -13,6 +13,7 @@ import mri from './mri'
 import pwd from './pwd'
 import reset from './reset'
 import rm from './rm'
+import setTemp from './setTemp'
 import upload from './upload'
 import version from './version'
 
@@ -32,6 +33,7 @@ export {
   pwd,
   reset,
   rm,
+  setTemp,
   upload,
   version
 }

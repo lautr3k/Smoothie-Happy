@@ -15,6 +15,7 @@ import pwd from './pwd'
 import request from './request'
 import reset from './reset'
 import rm from './rm'
+import setTemp from './setTemp'
 import upload from './upload'
 import version from './version'
 
@@ -36,6 +37,7 @@ export {
   request,
   reset,
   rm,
+  setTemp,
   upload,
   version
 }
