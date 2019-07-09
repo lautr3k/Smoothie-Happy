@@ -9,21 +9,29 @@ export default function ({ address, device }) {
     .then(response => {
       console.log('response:', response)
       console.log('>>>', JSON.stringify(response.data, null, 2))
-      // >>> {
+      // [ device: 'all' ] >>> {
       //   "devices": [
       //     {
-      //       "name": "hotend",
-      //       "currentTemp": 0,
+      //       "currentTemp": null,
       //       "targetTemp": 0,
-      //       "pwm": 0
+      //       "pwm": 0,
+      //       "id": 57988,
+      //       "designator": "T"
       //     },
       //     {
-      //       "name": "bed",
-      //       "currentTemp": 0,
+      //       "currentTemp": null,
       //       "targetTemp": 0,
-      //       "pwm": 0
+      //       "pwm": 0,
+      //       "id": 22060,
+      //       "designator": "B"
       //     }
       //   ]
+      // }
+      // [ device: 'bed' ] >>> {
+      //   "currentTemp": null,
+      //   "targetTemp": 0,
+      //   "pwm": 0,
+      //   "name": "bed"
       // }
     })
     .catch(error => {
