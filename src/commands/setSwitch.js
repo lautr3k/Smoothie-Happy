@@ -4,7 +4,7 @@ import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /**
- * Send setSwitch command.
+ * Send [ set switch <name> <value> ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

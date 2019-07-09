@@ -2,9 +2,9 @@ import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /**
- * Send mri (break) command.
+ * Send [ break ] command.
  *
- * - NOTE: this command allaways throw a REQUEST_TIMEOUT RequestError
+ * - NOTE: This command allaways throw a RequestError REQUEST_TIMEOUT
  * - See {@link post}, {@link request} and {@link command} for more details.
  *
  * @param {Object} params         - Params...

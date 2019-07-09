@@ -2,7 +2,7 @@ import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /**
- * Send pwd command.
+ * Send [ pwd ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

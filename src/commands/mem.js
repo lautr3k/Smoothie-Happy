@@ -2,7 +2,7 @@ import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /**
- * Send mem command.
+ * Send [ mem [-v] ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

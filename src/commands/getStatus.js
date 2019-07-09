@@ -81,7 +81,7 @@ function parse (response) {
 }
 
 /**
- * Send getStatus command.
+ * Send [ get status ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

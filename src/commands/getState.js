@@ -23,7 +23,7 @@ function parse (response) {
 }
 
 /**
- * Send getState command.
+ * Send [ get state ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

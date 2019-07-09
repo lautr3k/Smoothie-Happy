@@ -55,7 +55,7 @@ function parsePositionString (line) {
 }
 
 /**
- * Send getPosition command.
+ * Send [ get pos ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

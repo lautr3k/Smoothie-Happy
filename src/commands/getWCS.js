@@ -29,7 +29,7 @@ function parse (response) {
 }
 
 /**
- * Send getWCS command.
+ * Send [ get wcs ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

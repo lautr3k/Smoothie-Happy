@@ -4,7 +4,7 @@ import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /**
- * Send setTemp command.
+ * Send [ set temp <device> <value> ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

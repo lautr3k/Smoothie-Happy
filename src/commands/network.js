@@ -32,7 +32,7 @@ function parse (response) {
 }
 
 /**
- * Send network command.
+ * Send [ net ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

@@ -27,9 +27,9 @@ function parseTemp (line) {
 }
 
 /** @ignore */
-function parse (device, text) {
+function parse (name, text) {
   let data = {}
-  if (device === 'all') {
+  if (name === 'all') {
     data.devices = text.split('\n').map(line => {
       return parseTemp(line)
     })
@@ -40,14 +40,14 @@ function parse (device, text) {
 }
 
 /**
- * Send getTemp command.
+ * Send [ get temp <name> ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *
- * @param {Object} params                  - Params...
- * @param {String} params.address          - Board address without protocol
- * @param {String} [params.device = 'all'] - Device [ all, hotend, bed, ... ]
- * @param {...any} ...rest                 - Optional params passed to {@link command} request
+ * @param {Object} params                - Params...
+ * @param {String} params.address        - Board address without protocol
+ * @param {String} [params.name = 'all'] - Device name [ all, hotend, bed, ... ]
+ * @param {...any} ...rest               - Optional params passed to {@link command} request
  *
  * @return {Promise<responsePayload|RequestError>}
  *
@@ -62,16 +62,16 @@ function parse (device, text) {
  */
 export default function getTemp ({
   address = requiredParam('address'),
-  device = 'all',
+  name = 'all',
   ...rest
 } = {}) {
   requiredTypes('address', address, ['string'])
-  requiredTypes('device', device, ['string'])
+  requiredTypes('name', name, ['string'])
   const params = {
     ...rest,
     address,
-    device,
-    command: 'get temp' + (device !== 'all' ? ` ${device}` : '')
+    name,
+    command: 'get temp' + (name !== 'all' ? ` ${name}` : '')
   }
   return command(params).then(response => {
     let text = response.text.trim()
@@ -86,12 +86,12 @@ export default function getTemp ({
       throw errorFactory({
         ...response,
         type: UNKNOWN_DEVICE,
-        message: `Unknown device [ ${device} ]`
+        message: `Unknown device [ ${name} ]`
       })
     }
     // set data
     try {
-      response.data = parse(device, text)
+      response.data = parse(name, text)
     } catch (error) {
       throw errorFactory({
         ...response,

@@ -16,7 +16,7 @@ function parse (name, text) {
 }
 
 /**
- * Send getSwitch command.
+ * Send [ switch <name> ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

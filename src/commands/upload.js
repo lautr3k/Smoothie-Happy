@@ -5,7 +5,7 @@ import { fileFactory } from './factory'
 import post from '../request/post'
 
 /**
- * Send upload command.
+ * Upload a file to the SD card.
  *
  * - See {@link post} and {@link request}  for more details.
  *

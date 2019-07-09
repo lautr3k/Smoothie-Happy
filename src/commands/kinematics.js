@@ -4,7 +4,7 @@ import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /**
- * Send kinematics (ik|fk) command.
+ * Send [ get <ik|fk> [-m] x[,y,z] ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

@@ -42,7 +42,7 @@ function mkdirRecursive (params) {
 }
 
 /**
- * Send mkdir command.
+ * Send [ mkdir <path> ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *
