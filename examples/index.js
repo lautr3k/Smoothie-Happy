@@ -15,6 +15,7 @@ import mkdir from './mkdir'
 import mri from './mri'
 import network from './network'
 import pwd from './pwd'
+import remount from './remount'
 import request from './request'
 import reset from './reset'
 import rm from './rm'
@@ -42,6 +43,7 @@ export {
   mri,
   network,
   pwd,
+  remount,
   request,
   reset,
   rm,

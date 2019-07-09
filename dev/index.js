@@ -34,3 +34,4 @@ const address = '192.168.1.121'
 // examples.loadConfig({ address, file: '/sd/custom-config.txt' })
 // examples.saveConfig({ address })
 // examples.saveConfig({ address, file: '/sd/custom-config.txt' })
+examples.remount({ address })

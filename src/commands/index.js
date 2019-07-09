@@ -14,6 +14,7 @@ import mkdir from './mkdir'
 import mri from './mri'
 import network from './network'
 import pwd from './pwd'
+import remount from './remount'
 import reset from './reset'
 import rm from './rm'
 import saveConfig from './saveConfig'
@@ -39,6 +40,7 @@ export {
   mri,
   network,
   pwd,
+  remount,
   reset,
   rm,
   saveConfig,
