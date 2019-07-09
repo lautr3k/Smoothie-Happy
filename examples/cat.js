@@ -9,6 +9,9 @@ export default function ({ address, file }) {
     .then(response => {
       console.log('response:', response)
       console.log('>>>', JSON.stringify(response.data, null, 2))
+      // >>> {
+      //   "text": "# Smoothieboard configuration file..."
+      // }
     })
     .catch(error => {
       console.log(`${error.type}: ${error.message}`, error.response)
