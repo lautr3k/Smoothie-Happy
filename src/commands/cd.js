@@ -1,4 +1,4 @@
-import { COULD_NOT_OPEN_PATH } from './error-types'
+import { COULD_NOT_OPEN } from './error-types'
 import { errorFactory } from '../request/factory'
 import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
@@ -15,7 +15,7 @@ import command from '../command'
  *
  * @return {Promise<responsePayload|RequestError>}
  *
- * @throws {RequestError} {@link COULD_NOT_OPEN_PATH}
+ * @throws {RequestError} {@link COULD_NOT_OPEN}
  *
  * @see https://github.com/Smoothieware/Smoothieware/blob/edge/src/modules/utils/simpleshell/SimpleShell.cpp#L375
  *
@@ -40,7 +40,7 @@ export default function cd ({
       // set an Error if somthing gose wrong
       throw errorFactory({
         ...response,
-        type: COULD_NOT_OPEN_PATH,
+        type: COULD_NOT_OPEN,
         message: `Could not open [ ${path} ]`
       })
     }

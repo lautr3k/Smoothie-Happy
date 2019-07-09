@@ -1,4 +1,4 @@
-import { UNKNOWN_RESPONSE } from '../command/error-types'
+import { UNKNOWN_RESPONSE } from './error-types'
 import { errorFactory } from '../request/factory'
 import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'

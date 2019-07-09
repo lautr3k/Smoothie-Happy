@@ -1,6 +1,5 @@
-
 import { normalizePath, requiredParam, requiredTypes } from '../utils'
-import { COULD_NOT_OPEN_PATH } from './error-types'
+import { COULD_NOT_OPEN } from './error-types'
 import { errorFactory } from '../request/factory'
 import { folderFactory, fileFactory } from './factory'
 import command from '../command'
@@ -68,7 +67,7 @@ function lsRecursive ({ params, response, folders }) {
  *
  * @return {Promise<responsePayload|RequestError>}
  *
- * @throws {RequestError} {@link COULD_NOT_OPEN_PATH}
+ * @throws {RequestError} {@link COULD_NOT_OPEN}
  *
  * @see https://github.com/Smoothieware/Smoothieware/blob/edge/src/modules/utils/simpleshell/SimpleShell.cpp#L301
  *
@@ -100,7 +99,7 @@ export default function ls ({
     if (response.text.startsWith('Could not open')) {
       throw errorFactory({
         ...response,
-        type: COULD_NOT_OPEN_PATH,
+        type: COULD_NOT_OPEN,
         message: `Could not open path [ ${path} ]`
       })
     }
