@@ -1,4 +1,5 @@
 import calculateThermistor from './calculateThermistor'
+import cat from './cat'
 import cd from './cd'
 import dfu from './dfu'
 import getPosition from './getPosition'
@@ -32,6 +33,7 @@ import version from './version'
 
 export {
   calculateThermistor,
+  cat,
   cd,
   dfu,
   getPosition,

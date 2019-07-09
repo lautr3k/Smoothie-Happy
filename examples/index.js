@@ -1,4 +1,5 @@
 import calculateThermistor from './calculateThermistor'
+import cat from './cat'
 import cd from './cd'
 import command from './command'
 import dfu from './dfu'
@@ -34,6 +35,7 @@ import version from './version'
 
 export {
   calculateThermistor,
+  cat,
   cd,
   command,
   dfu,
