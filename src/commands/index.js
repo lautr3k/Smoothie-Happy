@@ -1,6 +1,7 @@
 import calculateThermistor from './calculateThermistor'
 import cat from './cat'
 import cd from './cd'
+import configCache from './configCache'
 import dfu from './dfu'
 import getConfig from './getConfig'
 import getPosition from './getPosition'
@@ -38,6 +39,7 @@ export {
   calculateThermistor,
   cat,
   cd,
+  configCache,
   dfu,
   getConfig,
   getPosition,

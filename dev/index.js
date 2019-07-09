@@ -45,4 +45,5 @@ const address = '192.168.1.121'
 // examples.cat({ address, file: '/sd/config.txt' })
 // examples.mv({ address, source: '/sd/test.txt', target: '/sd/test2.txt' })
 // examples.getConfig({ address, setting: 'extruder.hotend.steps_per_mm', source: 'sd' })
-examples.setConfig({ address, setting: 'extruder.hotend.steps_per_mm', value: 150, source: 'sd' })
+// examples.setConfig({ address, setting: 'extruder.hotend.steps_per_mm', value: 150, source: 'sd' })
+examples.configCache({ address, option: 'checksum', value: '42' })
