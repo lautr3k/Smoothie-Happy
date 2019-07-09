@@ -15,6 +15,7 @@ import mem from './mem'
 import mkdir from './mkdir'
 import mri from './mri'
 import network from './network'
+import printThermistors from './printThermistors'
 import pwd from './pwd'
 import remount from './remount'
 import request from './request'
@@ -44,6 +45,7 @@ export {
   mkdir,
   mri,
   network,
+  printThermistors,
   pwd,
   remount,
   request,
