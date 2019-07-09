@@ -25,6 +25,7 @@ import rm from './rm'
 import saveConfig from './saveConfig'
 import setSwitch from './setSwitch'
 import setTemp from './setTemp'
+import testCircle from './testCircle'
 import testJog from './testJog'
 import upload from './upload'
 import version from './version'
@@ -57,6 +58,7 @@ export {
   saveConfig,
   setSwitch,
   setTemp,
+  testCircle,
   testJog,
   upload,
   version
