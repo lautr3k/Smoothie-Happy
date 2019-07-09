@@ -24,6 +24,7 @@ import remount from './remount'
 import reset from './reset'
 import rm from './rm'
 import saveConfig from './saveConfig'
+import setConfig from './setConfig'
 import setSwitch from './setSwitch'
 import setTemp from './setTemp'
 import testCircle from './testCircle'
@@ -60,6 +61,7 @@ export {
   reset,
   rm,
   saveConfig,
+  setConfig,
   setSwitch,
   setTemp,
   testCircle,
