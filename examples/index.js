@@ -12,6 +12,7 @@ import ls from './ls'
 import mem from './mem'
 import mkdir from './mkdir'
 import mri from './mri'
+import network from './network'
 import pwd from './pwd'
 import request from './request'
 import reset from './reset'
@@ -36,6 +37,7 @@ export {
   mem,
   mkdir,
   mri,
+  network,
   pwd,
   request,
   reset,
