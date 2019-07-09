@@ -6,7 +6,8 @@ import {
   NETWORK_ERROR,
   REQUEST_ABORTED,
   REQUEST_TIMEOUT,
-  PARALLEL_REQUEST
+  PARALLEL_REQUEST,
+  ERROR_404
 } from './error-types'
 
 /** @external {XMLHttpRequest} https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest */
@@ -114,7 +115,7 @@ export default function request ({
         resolve(responseFactory({ params, xhr }))
       } else {
         reject(errorFactory({
-          type: SERVER_ERROR,
+          type: xhr.status === 404 ? ERROR_404 : SERVER_ERROR,
           message: `Error ${xhr.status}`,
           params,
           xhr
