@@ -1,3 +1,4 @@
+import calculateThermistor from './calculateThermistor'
 import cd from './cd'
 import command from './command'
 import dfu from './dfu'
@@ -26,6 +27,7 @@ import upload from './upload'
 import version from './version'
 
 export {
+  calculateThermistor,
   cd,
   command,
   dfu,
