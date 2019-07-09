@@ -4,7 +4,7 @@ import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /** @ignore */
-function parseTemp (response, line) {
+function parseTemp (line) {
   // single: bed temp: inf/0.000000 @0
   // all: T (57988) temp: inf/0.000000 @0
   let matches = line.match(/([^ ]+) (\(([0-9]+)\))? ?temp: (inf|[0-9.]+)\/(inf|[0-9.]+) @([0-9]+)/)
@@ -27,21 +27,14 @@ function parseTemp (response, line) {
 }
 
 /** @ignore */
-function parse (response) {
+function parse (device, text) {
   let data = {}
-  let text = response.text.trim()
-  if (text.startsWith('no heaters found')) {
-    throw new Error('No heaters found')
-  }
-  if (text.endsWith('is not a known temperature device')) {
-    throw new Error(`Unknown device [ ${response.params.device} ]`)
-  }
-  if (response.params.device === 'all') {
+  if (device === 'all') {
     data.devices = text.split('\n').map(line => {
-      return parseTemp(response, line)
+      return parseTemp(line)
     })
   } else {
-    data = parseTemp(response, text)
+    data = parseTemp(text)
   }
   return data
 }
@@ -81,9 +74,24 @@ export default function getTemp ({
     command: 'get temp' + (device !== 'all' ? ` ${device}` : '')
   }
   return command(params).then(response => {
+    let text = response.text.trim()
+    if (text.startsWith('no heaters found')) {
+      throw errorFactory({
+        ...response,
+        type: NO_HEATERS_FOUND,
+        message: 'No heaters found'
+      })
+    }
+    if (text.endsWith('is not a known temperature device')) {
+      throw errorFactory({
+        ...response,
+        type: UNKNOWN_DEVICE,
+        message: `Unknown device [ ${device} ]`
+      })
+    }
     // set data
     try {
-      response.data = parse(response)
+      response.data = parse(device, text)
     } catch (error) {
       throw errorFactory({
         ...response,
