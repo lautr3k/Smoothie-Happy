@@ -24,4 +24,6 @@ const address = '192.168.1.121'
 // examples.forwardKinematics({ address, x: 20, y: 50, z: 10, move: true })
 // examples.kinematics({ address, x: 20, y: 50, z: 10, move: true })
 // examples.getPosition({ address })
-examples.getWCS({ address })
+// examples.getWCS({ address })
+// examples.getState({ address })
+examples.getStatus({ address })
