@@ -1,4 +1,4 @@
-import { UNKNOWN_RESPONSE, UNKNOWN_DEVICE } from './error-types'
+import { UNKNOWN_DEVICE } from './error-types'
 import { errorFactory } from '../request/factory'
 import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
@@ -17,7 +17,6 @@ import command from '../command'
  * @return {Promise<responsePayload|RequestError>}
  *
  * @throws {RequestError} {@link UNKNOWN_DEVICE}
- * @throws {RequestError} {@link UNKNOWN_RESPONSE}
  *
  * @see https://github.com/Smoothieware/Smoothieware/blob/edge/src/modules/utils/simpleshell/SimpleShell.cpp#L957
  *
