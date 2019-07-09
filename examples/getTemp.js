@@ -12,14 +12,14 @@ export default function ({ address, device }) {
       // [ device: 'all' ] >>> {
       //   "devices": [
       //     {
-      //       "currentTemp": null,
+      //       "currentTemp": Infinity,
       //       "targetTemp": 0,
       //       "pwm": 0,
       //       "id": 57988,
       //       "designator": "T"
       //     },
       //     {
-      //       "currentTemp": null,
+      //       "currentTemp": Infinity,
       //       "targetTemp": 0,
       //       "pwm": 0,
       //       "id": 22060,
@@ -28,7 +28,7 @@ export default function ({ address, device }) {
       //   ]
       // }
       // [ device: 'bed' ] >>> {
-      //   "currentTemp": null,
+      //   "currentTemp": Infinity,
       //   "targetTemp": 0,
       //   "pwm": 0,
       //   "name": "bed"
