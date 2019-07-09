@@ -26,4 +26,6 @@ const address = '192.168.1.121'
 // examples.getWCS({ address })
 // examples.getState({ address })
 // examples.getStatus({ address })
-examples.setTemp({ address, device: 'hotend', value: 190 })
+// examples.setTemp({ address, device: 'hotend', value: 190 })
+// examples.setSwitch({ address, name: 'fan', value: true })
+// examples.getSwitch({ address, name: 'fan' })
