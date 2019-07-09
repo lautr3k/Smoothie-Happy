@@ -54,11 +54,11 @@ export default function getState ({
     // set data
     try {
       response.data = parse(response)
-    } catch (e) {
+    } catch (error) {
       throw errorFactory({
         ...response,
         type: UNKNOWN_RESPONSE,
-        message: 'Unknown response'
+        message: error.message
       })
     }
     // allaways return the response

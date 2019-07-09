@@ -13,7 +13,7 @@ import command from '../command'
  * LMP : M114.5 - Last machine position.
  *  @ignore
  */
-function parsePositionString (line) {
+function parse (line) {
   let parts = line.toLowerCase().split(':')
   let key = parts.shift().replace(' ', '_')
   let coords = parts.join(':').trim().split(' ')
@@ -86,12 +86,12 @@ export default function getPosition ({
   return command(params).then(response => {
     // set data
     try {
-      response.data = response.text.trim().split('\n').map(parsePositionString)
-    } catch (e) {
+      response.data = response.text.trim().split('\n').map(parse)
+    } catch (error) {
       throw errorFactory({
         ...response,
         type: UNKNOWN_RESPONSE,
-        message: 'Unknown response'
+        message: error.message
       })
     }
     // allaways return the response
