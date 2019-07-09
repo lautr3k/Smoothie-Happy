@@ -27,6 +27,7 @@ import setSwitch from './setSwitch'
 import setTemp from './setTemp'
 import testCircle from './testCircle'
 import testJog from './testJog'
+import testRaw from './testRaw'
 import testSquare from './testSquare'
 import upload from './upload'
 import version from './version'
@@ -61,6 +62,7 @@ export {
   setTemp,
   testCircle,
   testJog,
+  testRaw,
   testSquare,
   upload,
   version

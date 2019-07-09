@@ -40,4 +40,5 @@ const address = '192.168.1.121'
 // examples.md5sum({ address, file: '/sd/config.txt' })
 // examples.testJog({ address, axis: 'x', distance: 10, iterations: 10, feedrate: 3000 })
 // examples.testCircle({ address, radius: 10, iterations: 10, feedrate: 3000 })
-examples.testSquare({ address, size: 10, iterations: 5, feedrate: 3000 })
+// examples.testSquare({ address, size: 10, iterations: 5, feedrate: 3000 })
+examples.testRaw({ address, axis: 'x', steps: 1042, speed: 3000 })

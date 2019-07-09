@@ -1,0 +1,60 @@
+import { INVALID_PARAMETERS } from './error-types'
+import { errorFactory } from '../request/factory'
+import { requiredParam, requiredTypes } from '../utils'
+import command from '../command'
+
+/**
+ * Send [ test circle <axis> <steps> [speed] ] command.
+ *
+ * - See {@link post}, {@link request} and {@link command} for more details.
+ *
+ * @param {Object} params         - Params...
+ * @param {String} params.address - Board address without protocol
+ * @param {String} params.axis    - One of [x, y, z, a, b, c]
+ * @param {Number} params.steps   - Number of steps
+ * @param {Number} params.speed   - In steps/sec
+ * @param {...any} ...rest        - Optional params passed to {@link command} request
+ *
+ * @return {Promise<responsePayload|RequestError>}
+ *
+ * @throws {RequestError} {@link INVALID_PARAMETERS}
+ *
+ * @see https://github.com/Smoothieware/Smoothieware/blob/9e5477518b1c85498a68e81be894faea45d6edca/src/modules/utils/simpleshell/SimpleShell.cpp#LXXX
+ *
+ * @example
+ * [EXAMPLE ../../examples/testRaw.js]
+ */
+export default function testRaw ({
+  address = requiredParam('address'),
+  axis = requiredParam('axis'),
+  steps = requiredParam('steps'),
+  speed = requiredParam('speed'),
+  ...rest
+} = {}) {
+  requiredTypes('address', address, ['string'])
+  requiredTypes('axis', axis, ['string'])
+  requiredTypes('steps', steps, ['number'])
+  requiredTypes('speed', speed, ['number'])
+  const params = {
+    ...rest,
+    address,
+    steps,
+    speed,
+    command: `test raw ${axis} ${steps} ${speed}`
+  }
+  let millis = Date.now()
+  return command(params).then(response => {
+    let text = response.text.trim()
+    // throw an Error if somthing gose wrong
+    if (text.startsWith('error:')) {
+      throw errorFactory({
+        ...response,
+        type: INVALID_PARAMETERS,
+        message: 'Invalid parameters'
+      })
+    }
+    // allaways return the response
+    response.data = { millis: Date.now() - millis }
+    return response
+  })
+}
