@@ -17,7 +17,7 @@ import command from '../command'
  *
  * @throws {RequestError} {@link COULD_NOT_OPEN}
  *
- * @see https://github.com/Smoothieware/Smoothieware/blob/edge/src/modules/utils/simpleshell/SimpleShell.cpp#L375
+ * @see https://github.com/Smoothieware/Smoothieware/blob/9e5477518b1c85498a68e81be894faea45d6edca/src/modules/utils/simpleshell/SimpleShell.cpp#L375
  *
  * @example
  * [EXAMPLE ../../examples/cd.js]

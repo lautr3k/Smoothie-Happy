@@ -55,7 +55,7 @@ function parse (device, text) {
  * @throws {RequestError} {@link NO_HEATERS_FOUND}
  * @throws {RequestError} {@link UNKNOWN_DEVICE}
  *
- * @see https://github.com/Smoothieware/Smoothieware/blob/edge/src/modules/utils/simpleshell/SimpleShell.cpp#L783
+ * @see https://github.com/Smoothieware/Smoothieware/blob/9e5477518b1c85498a68e81be894faea45d6edca/src/modules/utils/simpleshell/SimpleShell.cpp#L783
  *
  * @example
  * [EXAMPLE ../../examples/getTemp.js]

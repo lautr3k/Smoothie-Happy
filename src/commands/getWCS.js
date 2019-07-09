@@ -41,7 +41,7 @@ function parse (response) {
  *
  * @throws {RequestError} {@link UNKNOWN_RESPONSE}
  *
- * @see https://github.com/Smoothieware/Smoothieware/blob/edge/src/modules/utils/simpleshell/SimpleShell.cpp#L866
+ * @see https://github.com/Smoothieware/Smoothieware/blob/9e5477518b1c85498a68e81be894faea45d6edca/src/modules/utils/simpleshell/SimpleShell.cpp#L866
  *
  * @example
  * [EXAMPLE ../../examples/getWCS.js]

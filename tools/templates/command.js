@@ -16,6 +16,8 @@ import command from '../command'
  *
  * @throws {RequestError} {@link UNKNOWN_RESPONSE}
  *
+ * @see https://github.com/Smoothieware/Smoothieware/blob/9e5477518b1c85498a68e81be894faea45d6edca/src/modules/utils/simpleshell/SimpleShell.cpp#LXXX
+ *
  * @example
  * [EXAMPLE ../../examples/__dummyCommandName__.js]
  */

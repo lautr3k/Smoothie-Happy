@@ -13,7 +13,7 @@ import command from '../command'
  *
  * @return {Promise<responsePayload|RequestError>}
  *
- * @see https://github.com/Smoothieware/Smoothieware/blob/edge/src/modules/utils/simpleshell/SimpleShell.cpp#L599
+ * @see https://github.com/Smoothieware/Smoothieware/blob/9e5477518b1c85498a68e81be894faea45d6edca/src/modules/utils/simpleshell/SimpleShell.cpp#L599
  * @see https://github.com/Smoothieware/Smoothieware/blob/92c787f87829434a3abdbb2c10eb36154d45bae9/src/libs/MemoryPool.cpp#L209
  *
  * @example
