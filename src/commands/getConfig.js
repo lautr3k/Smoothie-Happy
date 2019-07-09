@@ -4,7 +4,7 @@ import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /**
- * Send [ get-config [source] <setting> ] command.
+ * Send [ config-get [source] <setting> ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *
