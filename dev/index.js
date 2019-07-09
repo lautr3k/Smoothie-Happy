@@ -43,4 +43,5 @@ const address = '192.168.1.121'
 // examples.testSquare({ address, size: 10, iterations: 5, feedrate: 3000 })
 // examples.testRaw({ address, axis: 'x', steps: 1042, speed: 3000 })
 // examples.cat({ address, file: '/sd/config.txt' })
-examples.mv({ address, source: '/sd/test.txt', target: '/sd/test2.txt' })
+// examples.mv({ address, source: '/sd/test.txt', target: '/sd/test2.txt' })
+examples.getConfig({ address, setting: 'extruder.hotend.steps_per_mm', source: 'sd' })

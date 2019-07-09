@@ -3,6 +3,7 @@ import cat from './cat'
 import cd from './cd'
 import command from './command'
 import dfu from './dfu'
+import getConfig from './getConfig'
 import getPosition from './getPosition'
 import getState from './getState'
 import getStatus from './getStatus'
@@ -40,6 +41,7 @@ export {
   cd,
   command,
   dfu,
+  getConfig,
   getPosition,
   getState,
   getStatus,
