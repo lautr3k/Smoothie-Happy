@@ -16,6 +16,7 @@ import md5sum from './md5sum'
 import mem from './mem'
 import mkdir from './mkdir'
 import mri from './mri'
+import mv from './mv'
 import network from './network'
 import printThermistors from './printThermistors'
 import pwd from './pwd'
@@ -52,6 +53,7 @@ export {
   mem,
   mkdir,
   mri,
+  mv,
   network,
   printThermistors,
   pwd,
