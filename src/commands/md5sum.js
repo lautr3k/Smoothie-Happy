@@ -4,7 +4,7 @@ import { requiredParam, requiredTypes } from '../utils'
 import command from '../command'
 
 /**
- * Send [ md5sum ] command.
+ * Send [ md5sum <file> ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *

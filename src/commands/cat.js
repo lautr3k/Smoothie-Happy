@@ -5,7 +5,7 @@ import { requiredParam, requiredTypes, normalizePath } from '../utils'
 import get from '../request/get'
 
 /**
- * Send cat command.
+ * Send [ cat <file> ] command.
  *
  * - See {@link post}, {@link request} and {@link command} for more details.
  *
