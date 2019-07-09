@@ -36,4 +36,5 @@ const address = '192.168.1.121'
 // examples.saveConfig({ address, file: '/sd/custom-config.txt' })
 // examples.remount({ address })
 // examples.calculateThermistor({ address, save: 0, values: [25, 100000.0, 150, 1655.0, 240, 269.0] })
-examples.printThermistors({ address })
+// examples.printThermistors({ address })
+examples.md5sum({ address, file: '/sd/config.txt' })

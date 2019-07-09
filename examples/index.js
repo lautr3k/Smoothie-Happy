@@ -11,6 +11,7 @@ import getWCS from './getWCS'
 import kinematics from './kinematics'
 import loadConfig from './loadConfig'
 import ls from './ls'
+import md5sum from './md5sum'
 import mem from './mem'
 import mkdir from './mkdir'
 import mri from './mri'
@@ -41,6 +42,7 @@ export {
   kinematics,
   loadConfig,
   ls,
+  md5sum,
   mem,
   mkdir,
   mri,
